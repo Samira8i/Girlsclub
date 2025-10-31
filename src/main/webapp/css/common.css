@@ -1,0 +1,186 @@
+/* src/main/webapp/css/common.css */
+@import url('https://fonts.googleapis.com/css2?family=Parisienne&family=Cormorant:wght@300;400;700&display=swap');
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Cormorant', serif;
+    background: linear-gradient(135deg, #19171b 0%, #2b0307 100%);
+    color: #EDEBDD;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    overflow-x: hidden;
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+header {
+    text-align: center;
+    padding: 30px 0;
+}
+
+.logo {
+    font-family: 'Parisienne', cursive;
+    font-size: 3.5rem;
+    color: #EDEBDD;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+    margin-bottom: 10px;
+    letter-spacing: 2px;
+}
+
+.tagline {
+    font-size: 1.2rem;
+    color: #EDEBDD;
+    opacity: 0.8;
+    margin-bottom: 40px;
+}
+
+footer {
+    text-align: center;
+    padding: 20px;
+    margin-top: 40px;
+    font-size: 0.9rem;
+    opacity: 0.7;
+}
+
+.btn {
+    padding: 15px 40px;
+    border: none;
+    border-radius: 30px;
+    font-size: 1.1rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    text-decoration: none;
+    display: inline-block;
+    text-align: center;
+}
+
+.btn-login {
+    background: #810100;
+    color: #EDEBDD;
+}
+
+.btn-register {
+    background: #EDEBDD;
+    color: #2b0307;
+}
+
+.btn:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+}
+
+.btn-login:hover {
+    background: #51080d;
+    color: #EDEBDD;
+}
+
+.btn-register:hover {
+    background: #ffffff;
+    color: #2b0307;
+}
+/* Добавьте в common.css если нужно */
+.meeting-actions {
+    display: flex;
+    gap: 0.5rem;
+}
+
+.edit-btn, .delete-btn {
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 0.5rem;
+    border-radius: 4px;
+    transition: background-color 0.3s ease;
+}
+
+.edit-btn {
+    color: #2196f3;
+}
+
+.edit-btn:hover {
+    background: #e3f2fd;
+}
+
+.delete-btn {
+    color: #f44336;
+}
+
+.delete-btn:hover {
+    background: #ffebee;
+}
+.decoration {
+    position: absolute;
+    opacity: 0.1;
+}
+
+.decoration-1 {
+    top: 50px;
+    left: 5%;
+    font-size: 5rem;
+    transform: rotate(-15deg);
+}
+
+.decoration-2 {
+    bottom: 100px;
+    right: 10%;
+    font-size: 4rem;
+    transform: rotate(10deg);
+}
+
+.rose {
+    color: #810100;
+}
+
+.page {
+    display: none;
+}
+
+.page.active {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+@media (max-width: 768px) {
+    .logo {
+        font-size: 2.5rem;
+    }
+
+    .btn {
+        width: 250px;
+    }
+
+    .container {
+        padding: 15px;
+    }
+
+    h1, h2, h3, h4, h5, h6 {
+        font-family: 'Parisienne', cursive;
+        font-weight: 400;
+    }
+
+    .btn {
+        font-family: 'Cormorant', serif;
+        font-weight: 500;
+    }
+
+    .form-title {
+        font-family: 'Parisienne', cursive;
+    }
+}

@@ -1,0 +1,439 @@
+/* src/main/webapp/css/main.css */
+
+/* Основные стили header */
+.user-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 0;
+    margin-bottom: 20px;
+    border-bottom: 1px solid rgba(237, 235, 221, 0.3);
+}
+/*ава */
+.user-info {
+    display: flex;
+    align-items: center;
+}
+
+.user-avatar {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    background: #810100;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-right: 15px;
+    font-size: 1.5rem;
+    overflow: hidden;
+}
+
+.user-avatar img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.user-name {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.4rem;
+    color: #EDEBDD;
+}
+
+.logout-btn {
+    padding: 8px 20px;
+    background: transparent;
+    border: 1px solid #810100;
+    color: #EDEBDD;
+    border-radius: 20px;
+    cursor: pointer;
+    transition: all 0.3s;
+    text-decoration: none;
+    font-family: 'Montserrat', sans-serif;
+}
+
+.logout-btn:hover {
+    background: #810100;
+    text-decoration: none;
+    color: #EDEBDD;
+}
+
+/* Основная структура контента */
+.main-content {
+    display: flex;
+    gap: 30px;
+    margin-top: 30px;
+}
+
+.sidebar {
+    flex: 0 0 250px;
+    background: linear-gradient(135deg, rgba(24, 23, 23, 0.9) 0%, rgba(43, 3, 7, 0.9) 100%);
+    border-radius: 15px;
+    padding: 25px;
+    border: 1px solid rgba(129, 1, 0, 0.3);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+}
+
+.sidebar-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.5rem;
+    margin-bottom: 25px;
+    text-align: center;
+    color: #EDEBDD;
+}
+
+.nav-item {
+    padding: 15px;
+    margin-bottom: 10px;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background 0.3s;
+    display: flex;
+    align-items: center;
+    color: #EDEBDD;
+    font-family: 'Montserrat', sans-serif;
+}
+
+.nav-item i {
+    margin-right: 10px;
+    color: #810100;
+}
+
+.nav-item:hover {
+    background: rgba(129, 1, 0, 0.2);
+}
+
+.nav-item.active {
+    background: rgba(129, 1, 0, 0.3);
+}
+
+.content {
+    flex: 1;
+    background: linear-gradient(135deg, rgba(24, 23, 23, 0.9) 0%, rgba(43, 3, 7, 0.9) 100%);
+    border-radius: 15px;
+    padding: 30px;
+    border: 1px solid rgba(129, 1, 0, 0.3);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+}
+
+/* Секции контента */
+.content-section {
+    display: none;
+}
+
+.content-section.active {
+    display: block;
+    animation: fadeIn 0.5s ease-out;
+}
+
+
+/* Заголовок секции */
+.section-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 30px;
+    padding: 0 0 20px 0;
+    gap: 30px;
+
+}
+
+.section-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 2rem;
+    color: #EDEBDD;
+    margin: 0;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+    flex: 1;
+}
+
+
+/* кнопка создания встречи */
+.create-meeting-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 12px 24px;
+    background: linear-gradient(135deg, #810100 0%, #51080d 100%);
+    color: #EDEBDD;
+    text-decoration: none;
+    border-radius: 10px;
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 500;
+    font-size: 0.9rem;
+    box-shadow: 0 3px 12px rgba(129, 1, 0, 0.3);
+    border: 1px solid rgba(129, 1, 0, 0.5);
+    position: relative;
+    overflow: hidden;
+}
+
+
+.create-meeting-btn:hover {
+    transform: translateY(-2px); /* ну просто прикольно выглядит */
+    box-shadow: 0 5px 18px rgba(129, 1, 0, 0.4);
+    background: linear-gradient(135deg, #51080d 0%, #810100 100%);
+    text-decoration: none;
+    color: #EDEBDD;
+}
+
+.create-meeting-btn:hover::before {
+    left: 100%; /* ну просто прикольно выглядит */
+}
+
+
+/* Карточки встреч */
+.meeting-card {
+    background: linear-gradient(135deg, rgba(24, 23, 23, 0.9) 0%, rgba(43, 3, 7, 0.9) 100%);
+    border-radius: 15px;
+    padding: 25px;
+    margin-bottom: 20px;
+    border: 1px solid rgba(129, 1, 0, 0.3);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+    transition: all 0.3s ease;
+    animation: slideIn 0.5s ease-out;
+}
+
+.meeting-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 12px 35px rgba(129, 1, 0, 0.2);
+    border-color: rgba(129, 1, 0, 0.5);
+}
+
+.meeting-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 15px;
+    flex-wrap: wrap;
+    gap: 15px;
+}
+
+.meeting-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.5rem;
+    color: #EDEBDD;
+    margin: 0;
+    flex: 1;
+}
+
+.meeting-actions {
+    display: flex;
+    gap: 10px;
+    margin-left: 15px;
+}
+
+.edit-btn, .delete-btn {
+    background: rgba(237, 235, 221, 0.1);
+    border: 1px solid rgba(129, 1, 0, 0.5);
+    color: #EDEBDD;
+    padding: 8px 12px;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-size: 0.9rem;
+}
+
+.edit-btn:hover {
+    background: rgba(76, 175, 80, 0.2);
+    border-color: #4CAF50;
+    color: #4CAF50;
+}
+
+.delete-btn:hover {
+    background: rgba(244, 67, 54, 0.2);
+    border-color: #F44336;
+    color: #F44336;
+}
+
+.meeting-description {
+    color: rgba(237, 235, 221, 0.8);
+    line-height: 1.6;
+    margin-bottom: 20px;
+    font-family: 'Montserrat', sans-serif;
+}
+
+.meeting-details {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 15px;
+    margin-bottom: 15px;
+}
+
+.meeting-detail {
+    display: flex;
+    align-items: center;
+    color: rgba(237, 235, 221, 0.9);
+    font-family: 'Montserrat', sans-serif;
+}
+
+.meeting-detail i {
+    margin-right: 10px;
+    color: #810100;
+    width: 16px;
+}
+
+.meeting-author {
+    display: flex;
+    align-items: center;
+    color: rgba(237, 235, 221, 0.7);
+    font-size: 0.9rem;
+    font-family: 'Montserrat', sans-serif;
+    border-top: 1px solid rgba(129, 1, 0, 0.3);
+    padding-top: 15px;
+}
+
+.meeting-author i {
+    margin-right: 8px;
+    color: #810100;
+}
+
+/* Сообщения */
+.success-message {
+    background: linear-gradient(135deg, rgba(40, 167, 69, 0.9) 0%, rgba(33, 136, 56, 0.9) 100%);
+    color: #EDEBDD;
+    padding: 15px 20px;
+    border-radius: 8px;
+    margin-bottom: 20px;
+    border-left: 5px solid #28a745;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 1rem;
+    box-shadow: 0 5px 15px rgba(40, 167, 69, 0.3);
+}
+
+/* Состояния пустого контента */
+.no-meetings, .no-content {
+    text-align: center;
+    padding: 60px 20px;
+    color: rgba(237, 235, 221, 0.7);
+}
+
+.no-meetings i, .no-content i {
+    font-size: 4rem;
+    color: rgba(129, 1, 0, 0.5);
+    margin-bottom: 20px;
+}
+
+.no-meetings p, .no-content p {
+    font-size: 1.2rem;
+    margin-bottom: 20px;
+    font-family: 'Montserrat', sans-serif;
+}
+
+.create-first-meeting {
+    display: inline-block;
+    background: linear-gradient(135deg, #810100 0%, #51080d 100%);
+    color: #EDEBDD;
+    padding: 12px 25px;
+    border-radius: 8px;
+    text-decoration: none;
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 500;
+    transition: all 0.3s ease;
+}
+
+.create-first-meeting:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(129, 1, 0, 0.4);
+    text-decoration: none;
+    color: #EDEBDD;
+}
+
+/* Секция цитат */
+.quote-display {
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    padding: 40px 20px;
+}
+
+.main-quote {
+    font-family: 'Playfair Display', serif;
+    font-size: 2.5rem;
+    line-height: 1.4;
+    margin-bottom: 20px;
+    max-width: 800px;
+    text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.6);
+    color: #EDEBDD;
+}
+
+.quote-author {
+    font-size: 1.2rem;
+    opacity: 0.8;
+    font-style: italic;
+    color: #EDEBDD;
+}
+
+.quote-controls {
+    margin-top: 40px;
+}
+
+.next-quote {
+    padding: 12px 30px;
+    background: transparent;
+    border: 2px solid #810100;
+    color: #EDEBDD;
+    border-radius: 30px;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: all 0.3s;
+    font-family: 'Montserrat', sans-serif;
+}
+
+.next-quote:hover {
+    background: #810100;
+}
+
+/* Адаптивность */
+@media (max-width: 768px) {
+    .main-content {
+        flex-direction: column;
+    }
+
+    .sidebar {
+        width: 100%;
+        margin-right: 0;
+        margin-bottom: 20px;
+    }
+
+    .section-header {
+        flex-direction: column;
+        gap: 20px;
+        align-items: flex-start;
+    }
+
+    .create-meeting-btn {
+        align-self: stretch;
+        justify-content: center;
+        text-align: center;
+    }
+
+    .section-title {
+        font-size: 1.8rem;
+    }
+
+    .meeting-header {
+        flex-direction: column;
+    }
+
+    .meeting-details {
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    .main-quote {
+        font-size: 1.8rem;
+    }
+
+    .user-name {
+        font-size: 1.2rem;
+    }
+
+    .user-avatar {
+        width: 40px;
+        height: 40px;
+        font-size: 1.2rem;
+    }
+}

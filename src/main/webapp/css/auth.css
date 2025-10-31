@@ -1,0 +1,112 @@
+/* src/main/webapp/css/auth.css */
+.welcome-section {
+    text-align: center;
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 20px;
+}
+
+.form-container {
+    background: rgba(237, 235, 221, 0.1);
+    border-radius: 10px;
+    padding: 40px;
+    max-width: 500px;
+    margin: 0 auto;
+    backdrop-filter: blur(10px);
+}
+
+.form-title {
+    text-align: center;
+    font-family: 'Playfair Display', serif;
+    font-size: 2rem;
+    margin-bottom: 30px;
+    color: #EDEBDD;
+}
+
+.form-group {
+    margin-bottom: 25px;
+}
+
+.form-label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: 500;
+}
+
+.form-input {
+    width: 100%;
+    padding: 15px;
+    border: 1px solid rgba(237, 235, 221, 0.3);
+    border-radius: 8px;
+    background: rgba(24, 23, 23, 0.5);
+    color: #EDEBDD;
+    font-size: 1rem;
+}
+
+.form-input:focus {
+    outline: none;
+    border-color: #810100;
+}
+
+.form-submit {
+    width: 100%;
+    padding: 15px;
+    background: #810100;
+    color: #EDEBDD;
+    border: none;
+    border-radius: 8px;
+    font-size: 1.1rem;
+    cursor: pointer;
+    transition: background 0.3s;
+    margin-top: 10px;
+}
+
+.form-submit:hover {
+    background: #51080d;
+}
+
+.form-footer {
+    text-align: center;
+    margin-top: 25px;
+}
+
+.form-link {
+    color: #EDEBDD;
+    text-decoration: none;
+    border-bottom: 1px dotted #810100;
+    transition: color 0.3s;
+}
+
+.form-link:hover {
+    color: #810100;
+}
+
+.error-message {
+    background: rgba(129, 1, 0, 0.3);
+    border: 1px solid #810100;
+    color: #EDEBDD;
+    padding: 15px;
+    border-radius: 5px;
+    margin-bottom: 20px;
+}
+
+.success-message {
+    background: rgba(0, 128, 0, 0.3);
+    border: 1px solid green;
+    color: #EDEBDD;
+    padding: 15px;
+    border-radius: 5px;
+    margin-bottom: 20px;
+}
+
+@media (max-width: 768px) {
+    .form-container {
+        padding: 25px;
+    }
+
+    .form-title {
+        font-size: 1.7rem;
+    }
+}

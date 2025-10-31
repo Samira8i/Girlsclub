@@ -1,0 +1,84 @@
+# Build outputs
+target/
+build/
+out/
+bin/
+*.war
+*.ear
+*.jar
+*.zip
+
+# Maven
+!.mvn/wrapper/maven-wrapper.jar
+.mvn/wrapper/maven-wrapper.properties
+
+# Logs
+logs/
+*.log
+*.log.*
+*.log.*
+
+# Temporary files
+temp/
+tmp/
+*.tmp
+*.temp
+*.cache
+
+### IntelliJ IDEA ###
+.idea/
+*.iws
+*.iml
+*.ipr
+*.idea
+out/
+
+### Eclipse ###
+.apt_generated
+.classpath
+.factorypath
+.project
+.settings
+.springBeans
+.sts4-cache
+
+### NetBeans ###
+/nbproject/private/
+/nbbuild/
+/dist/
+/nbdist/
+/.nb-gradle/
+
+### VS Code ###
+.vscode/
+
+### OS ###
+.DS_Store
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+
+### Database files ###
+*.db
+*.mv.db
+*.h2.db
+
+### Server directories ###
+tomcat/
+apache-tomcat-*/
+server/
+
+### Sensitive configuration files ###
+# Игнорируем ВСЕ чувствительные конфиги
+src/main/resources/database.properties
+src/main/resources/application-prod.properties
+src/main/resources/security.properties
+*.env
+*.key
+*.p12
+*.jks
+
+# Но разрешаем основные НЕчувствительные конфиги
+!src/main/resources/*.xml
+!src/main/resources/application.properties
+!src/main/resources/messages.properties
