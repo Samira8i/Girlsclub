@@ -1,4 +1,3 @@
-<%-- src/main/webapp/WEB-INF/views/main.jsp --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
@@ -69,6 +68,156 @@
             background: linear-gradient(135deg, #51080d 0%, #810100 100%);
             transform: translateY(-2px);
         }
+
+        /* Стили для секции обсуждений */
+        .discussion-card {
+            background: rgba(237, 235, 221, 0.05);
+            border: 1px solid rgba(129, 1, 0, 0.3);
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 20px;
+            transition: all 0.3s ease;
+        }
+
+        .discussion-card:hover {
+            border-color: rgba(129, 1, 0, 0.6);
+            transform: translateY(-2px);
+        }
+
+        .discussion-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 15px;
+        }
+
+        .discussion-title {
+            color: #EDEBDD;
+            font-size: 1.4em;
+            margin: 0;
+            flex: 1;
+        }
+
+        .discussion-actions {
+            display: flex;
+            gap: 10px;
+        }
+
+        .discussion-content {
+            color: #EDEBDD;
+            line-height: 1.6;
+            margin-bottom: 15px;
+            white-space: pre-wrap;
+        }
+
+        .discussion-stats {
+            display: flex;
+            gap: 20px;
+            color: #B8B4A6;
+            font-size: 0.9em;
+            margin-bottom: 15px;
+        }
+
+        .discussion-stat {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .like-btn, .comment-btn {
+            background: none;
+            border: 1px solid rgba(129, 1, 0, 0.5);
+            color: #EDEBDD;
+            padding: 5px 10px;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .like-btn:hover, .comment-btn:hover {
+            background: rgba(129, 1, 0, 0.2);
+        }
+
+        .like-btn.liked {
+            background: rgba(129, 1, 0, 0.5);
+            color: #EDEBDD;
+        }
+
+        .comments-section {
+            margin-top: 15px;
+            border-top: 1px solid rgba(129, 1, 0, 0.3);
+            padding-top: 15px;
+        }
+
+        .comment-form {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 15px;
+        }
+
+        .comment-input {
+            flex: 1;
+            background: rgba(237, 235, 221, 0.1);
+            border: 1px solid rgba(129, 1, 0, 0.5);
+            border-radius: 6px;
+            padding: 8px 12px;
+            color: #EDEBDD;
+            font-family: 'Montserrat', sans-serif;
+        }
+
+        .comment-list {
+            space-y: 10px;
+        }
+
+        .comment-item {
+            background: rgba(237, 235, 221, 0.05);
+            border-radius: 8px;
+            padding: 10px;
+            margin-bottom: 10px;
+        }
+
+        .comment-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 5px;
+        }
+
+        .comment-author {
+            font-weight: 500;
+            color: #EDEBDD;
+        }
+
+        .comment-content {
+            color: #B8B4A6;
+            line-height: 1.4;
+        }
+
+        .delete-comment-btn {
+            background: none;
+            border: none;
+            color: #ff6b6b;
+            cursor: pointer;
+            font-size: 0.8em;
+        }
+
+        .discussion-author {
+            color: #B8B4A6;
+            font-size: 0.9em;
+            margin-top: 10px;
+        }
+
+        .no-discussions {
+            text-align: center;
+            padding: 40px;
+            color: #B8B4A6;
+        }
+
+        .no-discussions i {
+            font-size: 3em;
+            margin-bottom: 20px;
+            color: rgba(129, 1, 0, 0.5);
+        }
     </style>
 </head>
 <body>
@@ -107,14 +256,7 @@
 
             <div class="user-info">
                 <div class="user-avatar">
-                    <c:choose>
-                        <c:when test="${not empty user.avatarUrl}">
-                            <img src="${user.avatarUrl}" alt="Аватар">
-                        </c:when>
-                        <c:otherwise>
-                            <i class="fas fa-user"></i>
-                        </c:otherwise>
-                    </c:choose>
+                    <i class="fas fa-user"></i>
                 </div>
                 <div class="user-name">
                     ${user.username}
@@ -181,7 +323,7 @@
 
                                 <div class="meeting-description">${meeting.description}</div>
 
-                                <!-- ✅ ПЕРЕМЕСТИТЬ ВНУТРЬ ЦИКЛА: Информация о регистрации -->
+                                <!-- Блок регистрации и участников -->
                                 <div class="meeting-participation">
                                     <div class="spots-info">
                                         <i class="fas fa-users"></i>
@@ -216,21 +358,16 @@
                                     </c:if>
                                 </div>
 
-                                <!-- ✅ ПЕРЕМЕСТИТЬ ВНУТРЬ ЦИКЛА: Список участников -->
+                                <!-- Список участников -->
                                 <div class="participants-list">
                                     <h4>Участницы (${fn:length(meeting.participants)}):</h4>
                                     <div class="participants">
                                         <c:forEach items="${meeting.participants}" var="participant">
                                             <div class="participant">
-                                                <c:choose>
-                                                    <c:when test="${not empty participant.user.avatarUrl}">
-                                                        <img src="${participant.user.avatarUrl}" alt="${participant.user.username}">
-                                                    </c:when>
-                                                    <c:otherwise>
-                                                        <i class="fas fa-user"></i>
-                                                    </c:otherwise>
-                                                </c:choose>
-                                                <span>${participant.user.username}</span>
+                                                <div class="participant-avatar">
+                                                    <i class="fas fa-user"></i>
+                                                </div>
+                                                <span class="participant-name">${participant.user.username}</span>
                                             </div>
                                         </c:forEach>
                                         <c:if test="${empty meeting.participants}">
@@ -285,12 +422,19 @@
 
                 <!-- Секция обсуждений -->
                 <div id="discussions-section" class="content-section">
-                    <h2 class="section-title">Обсуждения</h2>
+                    <div class="section-header">
+                        <h2 class="section-title">Обсуждения</h2>
+                        <a href="${pageContext.request.contextPath}/discussion/create" class="create-meeting-btn">
+                            <i class="fas fa-plus"></i> Создать обсуждение
+                        </a>
+                    </div>
                     <div id="discussions-container">
-                        <!-- Данные будут загружены через JavaScript -->
                         <div class="no-content">
                             <i class="fas fa-comments"></i>
-                            <p>Раздел обсуждений скоро будет доступен</p>
+                            <p>Для просмотра обсуждений перейдите в раздел "Обсуждения"</p>
+                            <a href="${pageContext.request.contextPath}/discussions" class="create-first-meeting">
+                                Перейти к обсуждениям
+                            </a>
                         </div>
                     </div>
                 </div>
@@ -358,6 +502,11 @@
 
         // Активируем соответствующий пункт меню
         event.currentTarget.classList.add('active');
+
+        // Если выбрана секция обсуждений, перенаправляем на страницу обсуждений
+        if (sectionName === 'discussions') {
+            window.location.href = contextPath + '/discussions';
+        }
     }
 
     function nextQuote() {

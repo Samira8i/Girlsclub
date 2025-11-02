@@ -1,7 +1,6 @@
 package dao;
 
 import model.User;
-
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -14,13 +13,12 @@ public class UserDao {
                     "id BIGSERIAL PRIMARY KEY, " +
                     "username VARCHAR(100) NOT NULL UNIQUE, " +
                     "password_hash VARCHAR(512) NOT NULL, " +
-                    "salt VARCHAR(50) NOT NULL, " + // Добавляем поле для соли
-                    "avatar_url VARCHAR(500)" +
+                    "salt VARCHAR(50) NOT NULL" +
                     ");";
 
     private static final String CREATE_USER_QUERY =
-            "INSERT INTO users (username, password_hash, salt, avatar_url) " +
-                    "VALUES (?, ?, ?, ?) RETURNING id;";
+            "INSERT INTO users (username, password_hash, salt) " +
+                    "VALUES (?, ?, ?) RETURNING id;";
 
     private static final String FIND_BY_USERNAME_QUERY =
             "SELECT * FROM users WHERE username = ?;";
@@ -30,9 +28,6 @@ public class UserDao {
 
     private static final String FIND_ALL_QUERY =
             "SELECT * FROM users ORDER BY id;";
-
-    private static final String UPDATE_AVATAR_QUERY =
-            "UPDATE users SET avatar_url = ? WHERE id = ?;";
 
     private static final String DELETE_USER_QUERY =
             "DELETE FROM users WHERE id = ?;";
@@ -52,11 +47,9 @@ public class UserDao {
 
     public boolean create(User user) {
         try (PreparedStatement statement = connection.prepareStatement(CREATE_USER_QUERY)) {
-            // Пароль УЖЕ хэширован с солью в UserService
             statement.setString(1, user.getUsername());
             statement.setString(2, user.getPasswordHash());
             statement.setString(3, user.getSalt());
-            statement.setString(4, user.getAvatarUrl());
 
             ResultSet resultSet = statement.executeQuery();
 
@@ -117,20 +110,6 @@ public class UserDao {
         return users;
     }
 
-    public boolean updateAvatar(Long userId, String avatarUrl) {
-        try (PreparedStatement statement = connection.prepareStatement(UPDATE_AVATAR_QUERY)) {
-            statement.setString(1, avatarUrl);
-            statement.setLong(2, userId);
-
-            int affectedRows = statement.executeUpdate();
-            return affectedRows > 0;
-        } catch (SQLException e) {
-            System.err.println("Ошибка при обновлении аватара: " + e.getMessage());
-            e.printStackTrace();
-        }
-        return false;
-    }
-
     public boolean delete(Long userId) {
         try (PreparedStatement statement = connection.prepareStatement(DELETE_USER_QUERY)) {
             statement.setLong(1, userId);
@@ -149,8 +128,7 @@ public class UserDao {
         user.setId(resultSet.getLong("id"));
         user.setUsername(resultSet.getString("username"));
         user.setPasswordHash(resultSet.getString("password_hash"));
-        user.setSalt(resultSet.getString("salt")); // Добавляем получение соли
-        user.setAvatarUrl(resultSet.getString("avatar_url"));
+        user.setSalt(resultSet.getString("salt"));
         return user;
     }
 }

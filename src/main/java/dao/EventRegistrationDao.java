@@ -32,7 +32,7 @@ public class EventRegistrationDao {
             "SELECT * FROM event_registrations WHERE post_id = ? AND user_id = ?;";
 
     private static final String FIND_REGISTERED_USERS_BY_POST_QUERY =
-            "SELECT er.*, u.username, u.avatar_url " +
+            "SELECT er.*, u.username " +
                     "FROM event_registrations er " +
                     "JOIN users u ON er.user_id = u.id " +
                     "WHERE er.post_id = ? AND er.status = 'registered' " +
@@ -113,7 +113,6 @@ public class EventRegistrationDao {
                 User user = new User();
                 user.setId(resultSet.getLong("user_id"));
                 user.setUsername(resultSet.getString("username"));
-                user.setAvatarUrl(resultSet.getString("avatar_url"));
                 registration.setUser(user);
 
                 registrations.add(registration);

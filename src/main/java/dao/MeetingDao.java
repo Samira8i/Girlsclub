@@ -27,13 +27,13 @@ public class MeetingDao {
                     "VALUES (?, ?, ?, ?, ?, ?) RETURNING id;";
 
     private static final String FIND_ALL_MEETINGS_QUERY =
-            "SELECT mp.*, u.username, u.avatar_url " +
+            "SELECT mp.*, u.username " +
                     "FROM meeting_posts mp " +
                     "LEFT JOIN users u ON mp.author_id = u.id " +
                     "ORDER BY mp.event_date ASC;";
 
     private static final String FIND_MEETING_BY_ID_QUERY =
-            "SELECT mp.*, u.username, u.avatar_url " +
+            "SELECT mp.*, u.username " +
                     "FROM meeting_posts mp " +
                     "LEFT JOIN users u ON mp.author_id = u.id " +
                     "WHERE mp.id = ?;";
@@ -160,7 +160,6 @@ public class MeetingDao {
         // Создаем объект User для автора
         User author = new User();
         author.setUsername(resultSet.getString("username"));
-        author.setAvatarUrl(resultSet.getString("avatar_url"));
         meeting.setAuthor(author);
 
         return meeting;

@@ -28,4 +28,12 @@ public class ServiceFactory {
             throw new RuntimeException("Ошибка создания EventRegistrationService", e);
         }
     }
+
+    public static DiscussionService getDiscussionService() {
+        try {
+            return new DiscussionService(DatabaseUtil.getConnection());
+        } catch (SQLException e) {
+            throw new RuntimeException("Ошибка создания DiscussionService", e);
+        }
+    }
 }
