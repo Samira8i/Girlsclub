@@ -1,6 +1,6 @@
-
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <!DOCTYPE html>
 <html lang="ru">
 <head>
@@ -11,6 +11,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Montserrat:wght@300;400;500&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="${pageContext.request.contextPath}/css/common.css">
     <style>
+        /* Стили остаются без изменений */
         .form-container {
             max-width: 800px;
             margin: 0 auto;
@@ -104,11 +105,16 @@
             cursor: pointer;
             text-decoration: none;
             transition: all 0.3s ease;
+            display: inline-block;
         }
 
         .cancel-btn:hover {
             background: rgba(129, 1, 0, 0.2);
             transform: translateY(-2px);
+        }
+
+        .delete-form {
+            display: inline;
         }
 
         .delete-btn {
@@ -187,7 +193,7 @@
                 ${user.username}
             </div>
         </div>
-        <a href="${pageContext.request.contextPath}/discussions" class="logout-btn">Назад к обсуждениям</a>
+        <a href="${pageContext.request.contextPath}/main?section=discussions" class="logout-btn">Назад к обсуждениям</a>
     </div>
 
     <div class="form-container">
@@ -253,14 +259,14 @@
             </div>
 
             <div class="form-actions">
-                <form action="${pageContext.request.contextPath}/discussion/delete" method="post" style="display: inline;">
+                <form action="${pageContext.request.contextPath}/discussion/delete" method="post" class="delete-form">
                     <input type="hidden" name="id" value="${discussion.id}">
                     <button type="submit" class="delete-btn" onclick="return confirm('Вы уверены, что хотите удалить это обсуждение? Это действие нельзя отменить.')">
                         <i class="fas fa-trash"></i> Удалить
                     </button>
                 </form>
                 <div>
-                    <a href="${pageContext.request.contextPath}/discussions" class="cancel-btn">
+                    <a href="${pageContext.request.contextPath}/main?section=discussions" class="cancel-btn">
                         <i class="fas fa-times"></i> Отмена
                     </a>
                     <button type="submit" class="submit-btn">

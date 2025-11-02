@@ -35,8 +35,8 @@ public class DeleteDiscussionServlet extends HttpServlet {
             System.out.println("📨 Получен ID параметр: " + idParam);
 
             if (idParam == null || idParam.trim().isEmpty()) {
-                request.setAttribute("error", "ID обсуждения не указан");
-                response.sendRedirect(request.getContextPath() + "/discussions");
+                // ПЕРЕНАПРАВЛЯЕМ НА ГЛАВНУЮ
+                response.sendRedirect(request.getContextPath() + "/main?error=ID_обсуждения_не_указан&section=discussions");
                 return;
             }
 
@@ -47,8 +47,8 @@ public class DeleteDiscussionServlet extends HttpServlet {
             var post = discussionService.getPostById(id);
             if (post == null) {
                 System.out.println("❌ Обсуждение с ID " + id + " не найдено");
-                request.setAttribute("error", "Обсуждение не найдено");
-                response.sendRedirect(request.getContextPath() + "/discussions");
+                // ПЕРЕНАПРАВЛЯЕМ НА ГЛАВНУЮ
+                response.sendRedirect(request.getContextPath() + "/main?error=Обсуждение_не_найдено&section=discussions");
                 return;
             }
 
@@ -61,15 +61,18 @@ public class DeleteDiscussionServlet extends HttpServlet {
                 System.out.println("🗑️ Результат удаления: " + deleted);
 
                 if (deleted) {
-                    request.setAttribute("message", "Обсуждение успешно удалено!");
                     System.out.println("✅ Обсуждение удалено успешно");
+                    // ПЕРЕНАПРАВЛЯЕМ НА ГЛАВНУЮ С УСПЕХОМ
+                    response.sendRedirect(request.getContextPath() + "/main?success=discussion_deleted&section=discussions");
                 } else {
-                    request.setAttribute("error", "Ошибка при удалении обсуждения из базы данных");
                     System.out.println("❌ Ошибка при удалении из базы");
+                    // ПЕРЕНАПРАВЛЯЕМ НА ГЛАВНУЮ С ОШИБКОЙ
+                    response.sendRedirect(request.getContextPath() + "/main?error=Ошибка_при_удалении_обсуждения&section=discussions");
                 }
             } else {
                 System.out.println("❌ Пользователь НЕ является автором обсуждения");
-                request.setAttribute("error", "Вы можете удалять только свои обсуждения");
+                // ПЕРЕНАПРАВЛЯЕМ НА ГЛАВНУЮ С ОШИБКОЙ
+                response.sendRedirect(request.getContextPath() + "/main?error=Вы_можете_удалять_только_свои_обсуждения&section=discussions");
             }
 
         } catch (AuthenticationException e) {
@@ -77,14 +80,14 @@ public class DeleteDiscussionServlet extends HttpServlet {
             return;
         } catch (NumberFormatException e) {
             System.out.println("❌ Ошибка парсинга ID: " + e.getMessage());
-            request.setAttribute("error", "Неверный идентификатор обсуждения");
+            // ПЕРЕНАПРАВЛЯЕМ НА ГЛАВНУЮ С ОШИБКОЙ
+            response.sendRedirect(request.getContextPath() + "/main?error=Неверный_идентификатор_обсуждения&section=discussions");
         } catch (Exception e) {
             System.out.println("❌ Общая ошибка: " + e.getMessage());
             e.printStackTrace();
-            request.setAttribute("error", "Ошибка сервера: " + e.getMessage());
+            // ПЕРЕНАПРАВЛЯЕМ НА ГЛАВНУЮ С ОШИБКОЙ
+            response.sendRedirect(request.getContextPath() + "/main?error=Ошибка_сервера&section=discussions");
         }
-
-        response.sendRedirect(request.getContextPath() + "/discussions");
     }
 
     private String extractSessionId(Cookie[] cookies) {

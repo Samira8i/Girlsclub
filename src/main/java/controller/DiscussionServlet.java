@@ -30,26 +30,20 @@ public class DiscussionServlet extends HttpServlet {
             request.setAttribute("user", user);
 
             DiscussionService discussionService = ServiceFactory.getDiscussionService();
-
-            // Используем правильный метод сервиса
             List<DiscussionPost> posts = discussionService.getAllPostsWithLikes(user.getId());
 
             request.setAttribute("posts", posts);
 
-            String success = request.getParameter("success");
-            String error = request.getParameter("error");
-            if (success != null) request.setAttribute("success", success);
-            if (error != null) request.setAttribute("error", error);
-
-            request.getRequestDispatcher("/WEB-INF/views/discussions.jsp").forward(request, response);
+            // УБИРАЕМ redirect и используем forward
+            request.getRequestDispatcher("/WEB-INF/views/main.jsp").forward(request, response);
 
         } catch (AuthenticationException e) {
             response.sendRedirect(request.getContextPath() + "/login");
         } catch (Exception e) {
             System.err.println("❌ Ошибка при загрузке обсуждений: " + e.getMessage());
             e.printStackTrace();
-            request.setAttribute("error", "Ошибка при загрузке обсуждений: " + e.getMessage());
-            request.getRequestDispatcher("/WEB-INF/views/discussions.jsp").forward(request, response);
+            request.setAttribute("error", "Ошибка при загрузке обсуждений");
+            request.getRequestDispatcher("/WEB-INF/views/main.jsp").forward(request, response);
         }
     }
 

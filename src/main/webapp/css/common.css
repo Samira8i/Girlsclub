@@ -94,7 +94,7 @@ footer {
     background: #ffffff;
     color: #2b0307;
 }
-/* Добавьте в common.css если нужно */
+
 .meeting-actions {
     display: flex;
     gap: 0.5rem;
@@ -124,6 +124,7 @@ footer {
 .delete-btn:hover {
     background: #ffebee;
 }
+
 .decoration {
     position: absolute;
     opacity: 0.1;

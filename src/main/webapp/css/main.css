@@ -1,5 +1,70 @@
 /* src/main/webapp/css/main.css */
 
+/* Стили для красивого отображения даты */
+.meeting-date {
+    font-weight: 500;
+    color: #EDEBDD;
+}
+
+.date-picker-container {
+    margin: 20px 0;
+    padding: 20px;
+    background: rgba(129, 1, 0, 0.1);
+    border-radius: 10px;
+    border: 1px solid rgba(129, 1, 0, 0.3);
+}
+
+.date-filter {
+    display: flex;
+    gap: 15px;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+.date-filter label {
+    color: #EDEBDD;
+    font-weight: 500;
+    font-family: 'Montserrat', sans-serif;
+    margin: 0;
+}
+
+.date-filter input {
+    background: rgba(237, 235, 221, 0.1);
+    border: 2px solid rgba(129, 1, 0, 0.5);
+    border-radius: 8px;
+    padding: 10px 12px;
+    color: #EDEBDD;
+    font-family: 'Montserrat', sans-serif;
+    min-width: 200px;
+}
+
+.date-filter input:focus {
+    outline: none;
+    border-color: #810100;
+    background: rgba(237, 235, 221, 0.15);
+    box-shadow: 0 0 0 2px rgba(129, 1, 0, 0.3);
+}
+
+.filter-btn {
+    background: linear-gradient(135deg, #810100 0%, #51080d 100%);
+    color: #EDEBDD;
+    border: none;
+    border-radius: 8px;
+    padding: 10px 20px;
+    cursor: pointer;
+    font-family: 'Montserrat', sans-serif;
+    transition: all 0.3s ease;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.filter-btn:hover {
+    background: linear-gradient(135deg, #51080d 0%, #810100 100%);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(129, 1, 0, 0.3);
+}
+
 /* Основные стили header */
 .user-header {
     display: flex;
@@ -440,11 +505,11 @@
 
 .create-first-meeting {
     display: inline-block;
+    padding: 12px 24px;
     background: linear-gradient(135deg, #810100 0%, #51080d 100%);
     color: #EDEBDD;
-    padding: 12px 25px;
-    border-radius: 8px;
     text-decoration: none;
+    border-radius: 8px;
     font-family: 'Montserrat', sans-serif;
     font-weight: 500;
     transition: all 0.3s ease;
@@ -459,59 +524,55 @@
 
 /* Секция цитат */
 .quote-display {
-    flex-grow: 1;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
     text-align: center;
-    padding: 40px 20px;
+    padding: 60px 40px;
+    background: linear-gradient(135deg, rgba(129, 1, 0, 0.1) 0%, rgba(43, 3, 7, 0.1) 100%);
+    border-radius: 15px;
+    border: 1px solid rgba(129, 1, 0, 0.3);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
 }
 
 .main-quote {
     font-family: 'Playfair Display', serif;
-    font-size: 2.5rem;
-    line-height: 1.4;
-    margin-bottom: 20px;
-    max-width: 800px;
-    text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.6);
+    font-size: 2rem;
     color: #EDEBDD;
+    margin-bottom: 20px;
+    line-height: 1.4;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
 }
 
 .quote-author {
+    font-family: 'Montserrat', sans-serif;
     font-size: 1.2rem;
-    opacity: 0.8;
+    color: rgba(237, 235, 221, 0.8);
+    margin-bottom: 30px;
     font-style: italic;
-    color: #EDEBDD;
 }
 
 .quote-controls {
-    margin-top: 40px;
+    margin-top: 30px;
 }
 
 .next-quote {
     padding: 12px 30px;
-    background: transparent;
-    border: 2px solid #810100;
+    background: linear-gradient(135deg, #810100 0%, #51080d 100%);
     color: #EDEBDD;
-    border-radius: 30px;
-    font-size: 1rem;
+    border: none;
+    border-radius: 8px;
     cursor: pointer;
-    transition: all 0.3s;
     font-family: 'Montserrat', sans-serif;
+    font-weight: 500;
+    transition: all 0.3s ease;
 }
 
 .next-quote:hover {
-    background: #810100;
+    background: linear-gradient(135deg, #51080d 0%, #810100 100%);
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(129, 1, 0, 0.4);
 }
 
 /* Анимации */
 @keyframes fadeIn {
-    from { opacity: 0; }
-    to { opacity: 1; }
-}
-
-@keyframes slideIn {
     from {
         opacity: 0;
         transform: translateY(20px);
@@ -522,65 +583,75 @@
     }
 }
 
+@keyframes slideIn {
+    from {
+        opacity: 0;
+        transform: translateX(-30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
 /* Адаптивность */
 @media (max-width: 768px) {
     .main-content {
         flex-direction: column;
+        gap: 20px;
     }
 
     .sidebar {
+        flex: none;
         width: 100%;
-        margin-right: 0;
-        margin-bottom: 20px;
     }
 
     .section-header {
-        flex-direction: column;
-        gap: 20px;
-        align-items: flex-start;
-    }
-
-    .create-meeting-btn {
-        align-self: stretch;
-        justify-content: center;
-        text-align: center;
-    }
-
-    .section-title {
-        font-size: 1.8rem;
-    }
-
-    .meeting-header {
-        flex-direction: column;
-    }
-
-    .meeting-participation {
         flex-direction: column;
         align-items: flex-start;
         gap: 15px;
     }
 
+    .meeting-header {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .meeting-actions {
+        margin-left: 0;
+        margin-top: 10px;
+    }
+
+    .meeting-participation {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
     .meeting-details {
+        grid-template-columns: 1fr;
+    }
+
+    .date-filter {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .date-filter input {
+        min-width: 100%;
+    }
+
+    .user-header {
+        flex-direction: column;
+        gap: 15px;
+        text-align: center;
+    }
+
+    .user-info {
         flex-direction: column;
         gap: 10px;
     }
 
-    .main-quote {
-        font-size: 1.8rem;
-    }
-
-    .user-name {
-        font-size: 1.2rem;
-    }
-
     .user-avatar {
-        width: 40px;
-        height: 40px;
-        font-size: 1.2rem;
-    }
-
-    .participants {
-        flex-direction: column;
-        align-items: flex-start;
+        margin-right: 0;
     }
 }

@@ -31,7 +31,8 @@ public class DiscussionLikeServlet extends HttpServlet {
             String action = request.getParameter("action");
 
             if (postIdParam == null || action == null) {
-                response.sendRedirect(request.getContextPath() + "/discussions");
+                // ПЕРЕНАПРАВЛЯЕМ НА ГЛАВНУЮ
+                response.sendRedirect(request.getContextPath() + "/main?error=Неверные_параметры&section=discussions");
                 return;
             }
 
@@ -48,9 +49,11 @@ public class DiscussionLikeServlet extends HttpServlet {
             }
 
             if (success) {
-                response.sendRedirect(request.getContextPath() + "/discussions?success=like_updated");
+                // ПЕРЕНАПРАВЛЯЕМ НА ГЛАВНУЮ С УСПЕХОМ
+                response.sendRedirect(request.getContextPath() + "/main?success=like_updated&section=discussions");
             } else {
-                response.sendRedirect(request.getContextPath() + "/discussions?error=like_failed");
+                // ПЕРЕНАПРАВЛЯЕМ НА ГЛАВНУЮ С ОШИБКОЙ
+                response.sendRedirect(request.getContextPath() + "/main?error=like_failed&section=discussions");
             }
 
         } catch (AuthenticationException e) {
@@ -58,7 +61,8 @@ public class DiscussionLikeServlet extends HttpServlet {
         } catch (Exception e) {
             System.err.println("❌ Ошибка при обработке лайка: " + e.getMessage());
             e.printStackTrace();
-            response.sendRedirect(request.getContextPath() + "/discussions?error=server_error");
+            // ПЕРЕНАПРАВЛЯЕМ НА ГЛАВНУЮ С ОШИБКОЙ
+            response.sendRedirect(request.getContextPath() + "/main?error=server_error&section=discussions");
         }
     }
 

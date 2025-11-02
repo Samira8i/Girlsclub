@@ -190,9 +190,6 @@
                 <div class="character-count">
                     <span id="content-count">0</span>/2000 символов
                 </div>
-                <div class="form-hint">
-                    💡 Вы можете использовать Markdown для форматирования текста
-                </div>
             </div>
 
             <div class="form-actions">

@@ -78,7 +78,8 @@ public class CreateDiscussionServlet extends HttpServlet {
 
             if (success) {
                 System.out.println("✅ Пост обсуждения успешно создан!");
-                response.sendRedirect(request.getContextPath() + "/discussions?success=discussion_created");
+                // ПЕРЕНАПРАВЛЯЕМ НА ГЛАВНУЮ СТРАНИЦУ В РАЗДЕЛ ОБСУЖДЕНИЙ
+                response.sendRedirect(request.getContextPath() + "/main?success=discussion_created&section=discussions");
             } else {
                 System.err.println("❌ Ошибка при создании поста обсуждения в сервисе");
                 request.setAttribute("error", "❌ Ошибка при создании обсуждения. Проверьте введенные данные.");

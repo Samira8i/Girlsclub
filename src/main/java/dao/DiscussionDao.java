@@ -172,6 +172,9 @@ public class DiscussionDao {
     /**
      * Получить все посты с информацией о лайках текущего пользователя
      */
+    /**
+     * Получить все посты с информацией о лайках текущего пользователя И КОММЕНТАРИЯМИ
+     */
     public List<DiscussionPost> findAllWithLikes(Long currentUserId) {
         List<DiscussionPost> posts = new ArrayList<>();
         String query = "SELECT dp.*, u.username, " +
@@ -187,6 +190,11 @@ public class DiscussionDao {
             while (resultSet.next()) {
                 DiscussionPost post = mapResultSetToDiscussionPost(resultSet);
                 post.setUserLiked(resultSet.getBoolean("user_liked"));
+
+                // ВАЖНО: ЗАГРУЖАЕМ КОММЕНТАРИИ ДЛЯ КАЖДОГО ПОСТА
+                List<DiscussionComment> comments = getCommentsByPost(post.getId());
+                post.setComments(comments);
+
                 posts.add(post);
             }
         } catch (SQLException e) {

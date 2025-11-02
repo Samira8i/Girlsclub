@@ -29,8 +29,7 @@ public class EditDiscussionServlet extends HttpServlet {
 
             String idParam = request.getParameter("id");
             if (idParam == null || idParam.trim().isEmpty()) {
-                request.setAttribute("error", "ID обсуждения не указан");
-                response.sendRedirect(request.getContextPath() + "/discussions");
+                response.sendRedirect(request.getContextPath() + "/main?error=ID_обсуждения_не_указан&section=discussions");
                 return;
             }
 
@@ -40,15 +39,13 @@ public class EditDiscussionServlet extends HttpServlet {
             DiscussionPost discussion = discussionService.getPostById(discussionId);
 
             if (discussion == null) {
-                request.setAttribute("error", "Обсуждение не найдено");
-                response.sendRedirect(request.getContextPath() + "/discussions");
+                response.sendRedirect(request.getContextPath() + "/main?error=Обсуждение_не_найдено&section=discussions");
                 return;
             }
 
             // Проверяем, является ли пользователь автором
             if (!discussion.getAuthorId().equals(user.getId())) {
-                request.setAttribute("error", "Вы можете редактировать только свои обсуждения");
-                response.sendRedirect(request.getContextPath() + "/discussions");
+                response.sendRedirect(request.getContextPath() + "/main?error=Вы_можете_редактировать_только_свои_обсуждения&section=discussions");
                 return;
             }
 
@@ -59,13 +56,11 @@ public class EditDiscussionServlet extends HttpServlet {
         } catch (AuthenticationException e) {
             response.sendRedirect(request.getContextPath() + "/login");
         } catch (NumberFormatException e) {
-            request.setAttribute("error", "Неверный идентификатор обсуждения");
-            response.sendRedirect(request.getContextPath() + "/discussions");
+            response.sendRedirect(request.getContextPath() + "/main?error=Неверный_идентификатор_обсуждения&section=discussions");
         } catch (Exception e) {
             System.err.println("❌ Ошибка при загрузке обсуждения для редактирования: " + e.getMessage());
             e.printStackTrace();
-            request.setAttribute("error", "Ошибка при загрузке обсуждения");
-            response.sendRedirect(request.getContextPath() + "/discussions");
+            response.sendRedirect(request.getContextPath() + "/main?error=Ошибка_при_загрузке_обсуждения&section=discussions");
         }
     }
 
@@ -85,7 +80,6 @@ public class EditDiscussionServlet extends HttpServlet {
             String title = request.getParameter("title");
             String content = request.getParameter("content");
 
-            // Логируем полученные данные для отладки
             System.out.println("=== ДЕБАГ ИНФОРМАЦИЯ РЕДАКТИРОВАНИЯ ОБСУЖДЕНИЯ ===");
             System.out.println("ID: " + idParam);
             System.out.println("Title: " + title);
@@ -99,6 +93,14 @@ public class EditDiscussionServlet extends HttpServlet {
                     content == null || content.trim().isEmpty()) {
 
                 request.setAttribute("error", "❌ Все поля обязательны для заполнения");
+
+                // Восстанавливаем данные для формы
+                DiscussionPost discussion = new DiscussionPost();
+                discussion.setId(Long.parseLong(idParam));
+                discussion.setTitle(title);
+                discussion.setContent(content);
+
+                request.setAttribute("discussion", discussion);
                 request.setAttribute("user", user);
                 request.getRequestDispatcher("/WEB-INF/views/edit-discussion.jsp").forward(request, response);
                 return;
@@ -110,28 +112,26 @@ public class EditDiscussionServlet extends HttpServlet {
             // Проверяем существование обсуждения и авторство
             DiscussionPost existingDiscussion = discussionService.getPostById(discussionId);
             if (existingDiscussion == null) {
-                request.setAttribute("error", "Обсуждение не найдено");
-                response.sendRedirect(request.getContextPath() + "/discussions");
+                response.sendRedirect(request.getContextPath() + "/main?error=Обсуждение_не_найдено&section=discussions");
                 return;
             }
 
             if (!existingDiscussion.getAuthorId().equals(user.getId())) {
-                request.setAttribute("error", "Вы можете редактировать только свои обсуждения");
-                response.sendRedirect(request.getContextPath() + "/discussions");
+                response.sendRedirect(request.getContextPath() + "/main?error=Вы_можете_редактировать_только_свои_обсуждения&section=discussions");
                 return;
             }
 
-            // Исправленный вызов метода - добавляем authorId
+            // Обновляем обсуждение
             boolean success = discussionService.updatePost(
                     discussionId,
                     title.trim(),
                     content.trim(),
-                    user.getId()  // Добавляем authorId
+                    user.getId()
             );
 
             if (success) {
                 System.out.println("✅ Обсуждение успешно обновлено!");
-                response.sendRedirect(request.getContextPath() + "/discussions?success=discussion_updated");
+                response.sendRedirect(request.getContextPath() + "/main?success=discussion_updated&section=discussions");
             } else {
                 System.err.println("❌ Ошибка при обновлении обсуждения в сервисе");
                 request.setAttribute("error", "❌ Ошибка при обновлении обсуждения. Проверьте введенные данные.");
@@ -145,6 +145,19 @@ public class EditDiscussionServlet extends HttpServlet {
             System.err.println("❌ Системная ошибка: " + e.getMessage());
             e.printStackTrace();
             request.setAttribute("error", "❌ Системная ошибка: " + e.getMessage());
+
+            // Восстанавливаем данные для формы при ошибке
+            try {
+                DiscussionPost discussion = new DiscussionPost();
+                discussion.setId(Long.parseLong(request.getParameter("id")));
+                discussion.setTitle(request.getParameter("title"));
+                discussion.setContent(request.getParameter("content"));
+                request.setAttribute("discussion", discussion);
+                request.setAttribute("user", ServiceFactory.getUserService().getUserBySessionId(extractSessionId(request.getCookies())));
+            } catch (Exception ex) {
+                // Игнорируем ошибки восстановления
+            }
+
             request.getRequestDispatcher("/WEB-INF/views/edit-discussion.jsp").forward(request, response);
         }
     }
