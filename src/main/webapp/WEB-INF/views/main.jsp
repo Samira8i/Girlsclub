@@ -56,7 +56,7 @@
             </c:if>
             <c:if test="${not empty error}">
                 <div class="error-message">
-                    ❌ ${error}
+                     ${error}
                 </div>
             </c:if>
 
@@ -120,9 +120,13 @@
                                                class="edit-btn" title="Редактировать">
                                                 <i class="fas fa-edit"></i>
                                             </a>
-                                            <button class="delete-btn" onclick="deleteMeeting(${meeting.id})" title="Удалить">
-                                                <i class="fas fa-trash"></i>
-                                            </button>
+                                            <form action="${pageContext.request.contextPath}/meeting/delete" method="post" class="delete-form" style="display: inline;">
+                                                <input type="hidden" name="id" value="${meeting.id}">
+                                                <button type="submit" class="delete-btn" title="Удалить"
+                                                        onclick="return confirm('Вы уверены, что хотите удалить эту встречу?')">
+                                                    <i class="fas fa-trash"></i>
+                                                </button>
+                                            </form>
                                         </div>
                                     </c:if>
                                 </div>

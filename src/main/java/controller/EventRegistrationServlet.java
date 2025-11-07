@@ -22,14 +22,11 @@ public class EventRegistrationServlet extends HttpServlet {
             response.sendRedirect(request.getContextPath() + "/login");
             return;
         }
-
         try {
             UserService userService = ServiceFactory.getUserService();
             User user = userService.getUserBySessionId(sessionId);
-
             String postIdParam = request.getParameter("postId");
             String action = request.getParameter("action");
-
             if (postIdParam == null || action == null) {
                 response.sendRedirect(request.getContextPath() + "/main");
                 return;
@@ -57,7 +54,6 @@ public class EventRegistrationServlet extends HttpServlet {
             } else if ("cancel".equals(action)) {
                 success = registrationService.cancelRegistration(postId, user.getId());
             }
-
             if (success) {
                 response.sendRedirect(request.getContextPath() + "/main?success=registration_updated");
             } else {
@@ -65,7 +61,7 @@ public class EventRegistrationServlet extends HttpServlet {
             }
 
         } catch (Exception e) {
-            System.err.println("❌ Ошибка при обработке записи: " + e.getMessage());
+            System.err.println("Ошибка при обработке записи: " + e.getMessage());
             e.printStackTrace();
             response.sendRedirect(request.getContextPath() + "/main?error=server_error");
         }

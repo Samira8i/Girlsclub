@@ -5,7 +5,7 @@ import java.time.LocalDateTime;
 public class Session {
     private String sessionId;
     private Long userId;
-    private LocalDateTime expireAt;
+    private LocalDateTime expireAt; //только дату истечения
 
     public Session(String sessionId, Long userId, LocalDateTime expireAt) {
         this.sessionId = sessionId;

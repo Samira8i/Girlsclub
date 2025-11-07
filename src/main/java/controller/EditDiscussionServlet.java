@@ -80,19 +80,11 @@ public class EditDiscussionServlet extends HttpServlet {
             String title = request.getParameter("title");
             String content = request.getParameter("content");
 
-            System.out.println("=== ДЕБАГ ИНФОРМАЦИЯ РЕДАКТИРОВАНИЯ ОБСУЖДЕНИЯ ===");
-            System.out.println("ID: " + idParam);
-            System.out.println("Title: " + title);
-            System.out.println("Content: " + content);
-            System.out.println("User ID: " + user.getId());
-            System.out.println("======================");
-
-            // Валидация
             if (idParam == null || idParam.trim().isEmpty() ||
                     title == null || title.trim().isEmpty() ||
                     content == null || content.trim().isEmpty()) {
 
-                request.setAttribute("error", "❌ Все поля обязательны для заполнения");
+                request.setAttribute("error", "Все поля обязательны для заполнения");
 
                 // Восстанавливаем данные для формы
                 DiscussionPost discussion = new DiscussionPost();
@@ -108,8 +100,6 @@ public class EditDiscussionServlet extends HttpServlet {
 
             DiscussionService discussionService = ServiceFactory.getDiscussionService();
             Long discussionId = Long.parseLong(idParam);
-
-            // Проверяем существование обсуждения и авторство
             DiscussionPost existingDiscussion = discussionService.getPostById(discussionId);
             if (existingDiscussion == null) {
                 response.sendRedirect(request.getContextPath() + "/main?error=Обсуждение_не_найдено&section=discussions");
@@ -146,7 +136,6 @@ public class EditDiscussionServlet extends HttpServlet {
             e.printStackTrace();
             request.setAttribute("error", "❌ Системная ошибка: " + e.getMessage());
 
-            // Восстанавливаем данные для формы при ошибке
             try {
                 DiscussionPost discussion = new DiscussionPost();
                 discussion.setId(Long.parseLong(request.getParameter("id")));
@@ -155,7 +144,6 @@ public class EditDiscussionServlet extends HttpServlet {
                 request.setAttribute("discussion", discussion);
                 request.setAttribute("user", ServiceFactory.getUserService().getUserBySessionId(extractSessionId(request.getCookies())));
             } catch (Exception ex) {
-                // Игнорируем ошибки восстановления
             }
 
             request.getRequestDispatcher("/WEB-INF/views/edit-discussion.jsp").forward(request, response);

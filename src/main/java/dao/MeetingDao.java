@@ -50,9 +50,6 @@ public class MeetingDao {
         initializeTable();
     }
 
-    /**
-     * Инициализация таблицы встреч
-     */
     private void initializeTable() {
         try (Statement statement = connection.createStatement()) {
             statement.executeUpdate(MEETING_TABLE_CREATE_QUERY);
@@ -157,7 +154,6 @@ public class MeetingDao {
         meeting.setCreatedAt(resultSet.getTimestamp("created_at").toLocalDateTime());
         meeting.setAuthorId(resultSet.getLong("author_id"));
 
-        // Создаем объект User для автора
         User author = new User();
         author.setUsername(resultSet.getString("username"));
         meeting.setAuthor(author);

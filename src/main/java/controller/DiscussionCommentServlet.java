@@ -33,7 +33,6 @@ public class DiscussionCommentServlet extends HttpServlet {
             String commentIdParam = request.getParameter("commentId");
 
             if (postIdParam == null) {
-                // ПЕРЕНАПРАВЛЯЕМ НА ГЛАВНУЮ
                 response.sendRedirect(request.getContextPath() + "/main?error=ID_поста_не_указан&section=discussions");
                 return;
             }
@@ -44,28 +43,23 @@ public class DiscussionCommentServlet extends HttpServlet {
             boolean success = false;
 
             if ("add".equals(action) && content != null && !content.trim().isEmpty()) {
-                // Добавление комментария
                 success = discussionService.addComment(postId, user.getId(), content.trim());
             } else if ("delete".equals(action) && commentIdParam != null) {
-                // Удаление комментария
                 Long commentId = Long.parseLong(commentIdParam);
                 success = discussionService.deleteComment(commentId, user.getId());
             }
 
             if (success) {
-                // ПЕРЕНАПРАВЛЯЕМ НА ГЛАВНУЮ С УСПЕХОМ
                 response.sendRedirect(request.getContextPath() + "/main?success=comment_added&section=discussions");
             } else {
-                // ПЕРЕНАПРАВЛЯЕМ НА ГЛАВНУЮ С ОШИБКОЙ
                 response.sendRedirect(request.getContextPath() + "/main?error=comment_failed&section=discussions");
             }
 
         } catch (AuthenticationException e) {
             response.sendRedirect(request.getContextPath() + "/login");
         } catch (Exception e) {
-            System.err.println("❌ Ошибка при обработке комментария: " + e.getMessage());
+            System.err.println("Ошибка при обработке комментария: " + e.getMessage());
             e.printStackTrace();
-            // ПЕРЕНАПРАВЛЯЕМ НА ГЛАВНУЮ С ОШИБКОЙ
             response.sendRedirect(request.getContextPath() + "/main?error=server_error&section=discussions");
         }
     }

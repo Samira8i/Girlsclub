@@ -111,28 +111,6 @@ function clearFilter() {
     }
 }
 
-// Удаление встречи с подтверждением
-function deleteMeeting(meetingId) {
-    if (confirm('Вы уверены, что хотите удалить эту встречу? Все записи участников также будут удалены.')) {
-        fetch(`${pageContext.request.contextPath}/meeting/delete?id=${meetingId}`, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/x-www-form-urlencoded',
-            }
-        })
-            .then(response => {
-                if (response.ok) {
-                    window.location.href = `${pageContext.request.contextPath}/main?success=meeting_deleted`;
-                } else {
-                    alert('Ошибка при удалении встречи');
-                }
-            })
-            .catch(error => {
-                console.error('Error:', error);
-                alert('Ошибка при удалении встречи');
-            });
-    }
-}
 
 // Система цитат
 const quotes = [

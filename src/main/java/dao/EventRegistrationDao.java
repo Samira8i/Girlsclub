@@ -108,8 +108,6 @@ public class EventRegistrationDao {
 
             while (resultSet.next()) {
                 EventRegistration registration = mapResultSetToEventRegistration(resultSet);
-
-                // Создаем объект User
                 User user = new User();
                 user.setId(resultSet.getLong("user_id"));
                 user.setUsername(resultSet.getString("username"));
@@ -139,6 +137,7 @@ public class EventRegistrationDao {
         return 0;
     }
 
+    //по факту при отписывания от события у нас статус меняется и смысла в этом методе нет, но пока пусть будет
     public boolean deleteRegistration(Long postId, Long userId) {
         try (PreparedStatement statement = connection.prepareStatement(DELETE_REGISTRATION_QUERY)) {
             statement.setLong(1, postId);

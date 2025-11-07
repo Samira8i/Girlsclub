@@ -50,19 +50,10 @@ public class CreateDiscussionServlet extends HttpServlet {
 
             String title = request.getParameter("title");
             String content = request.getParameter("content");
-
-            // Логируем полученные данные для отладки
-            System.out.println("=== ДЕБАГ ИНФОРМАЦИЯ СОЗДАНИЯ ОБСУЖДЕНИЯ ===");
-            System.out.println("Title: " + title);
-            System.out.println("Content: " + content);
-            System.out.println("AuthorId: " + user.getId());
-            System.out.println("======================");
-
-            // Валидация
             if (title == null || title.trim().isEmpty() ||
                     content == null || content.trim().isEmpty()) {
 
-                request.setAttribute("error", "❌ Все поля обязательны для заполнения");
+                request.setAttribute("error", "Все поля обязательны для заполнения");
                 request.setAttribute("user", user);
                 request.getRequestDispatcher("/WEB-INF/views/create-discussion.jsp").forward(request, response);
                 return;
@@ -77,21 +68,19 @@ public class CreateDiscussionServlet extends HttpServlet {
             );
 
             if (success) {
-                System.out.println("✅ Пост обсуждения успешно создан!");
-                // ПЕРЕНАПРАВЛЯЕМ НА ГЛАВНУЮ СТРАНИЦУ В РАЗДЕЛ ОБСУЖДЕНИЙ
                 response.sendRedirect(request.getContextPath() + "/main?success=discussion_created&section=discussions");
             } else {
-                System.err.println("❌ Ошибка при создании поста обсуждения в сервисе");
-                request.setAttribute("error", "❌ Ошибка при создании обсуждения. Проверьте введенные данные.");
+                System.err.println(" Ошибка при создании поста обсуждения в сервисе");
+                request.setAttribute("error", "Ошибка при создании обсуждения. Проверьте введенные данные.");
                 request.setAttribute("user", user);
                 request.getRequestDispatcher("/WEB-INF/views/create-discussion.jsp").forward(request, response);
             }
         } catch (AuthenticationException e) {
             response.sendRedirect(request.getContextPath() + "/login");
         } catch (Exception e) {
-            System.err.println("❌ Системная ошибка: " + e.getMessage());
+            System.err.println("Системная ошибка: " + e.getMessage());
             e.printStackTrace();
-            request.setAttribute("error", "❌ Системная ошибка: " + e.getMessage());
+            request.setAttribute("error", "Системная ошибка: " + e.getMessage());
             request.getRequestDispatcher("/WEB-INF/views/create-discussion.jsp").forward(request, response);
         }
     }

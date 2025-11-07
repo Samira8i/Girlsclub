@@ -14,25 +14,12 @@ public class MeetingPost {
     private LocalDateTime createdAt;
     private Long authorId;
     private User author;
-    //TODO: понять не излишни ли все эти поля , как будто можно все высчитать
     private boolean userRegistered; //зарегестрирован ли текущий пользователь на встречу
     private List<EventRegistration> participants; //участники
     private int availableSpots; //количество свободных мест
     private boolean full; //занято полностью или нет
 
     public MeetingPost() {}
-
-    public MeetingPost(String title, String description, LocalDateTime eventDate,
-                       Integer maxAttendance, String location, Long authorId) {
-        this.title = title;
-        this.description = description;
-        this.eventDate = eventDate;
-        this.maxAttendance = maxAttendance;
-        this.location = location;
-        this.authorId = authorId;
-        this.createdAt = LocalDateTime.now();
-    }
-
 
     public Long getId() { return id; }
     public void setId(Long id) { this.id = id; }
@@ -84,13 +71,4 @@ public class MeetingPost {
         }
     }
 
-    public String getEventDateForInput() {
-        if (eventDate == null) return "";
-        try {
-            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm");
-            return eventDate.format(formatter);
-        } catch (Exception e) {
-            return "";
-        }
-    }
 }

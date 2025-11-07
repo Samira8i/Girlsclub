@@ -53,25 +53,13 @@ public class CreateMeetingServlet extends HttpServlet {
             String eventDate = request.getParameter("eventDate");
             String maxAttendanceStr = request.getParameter("maxAttendance");
             String location = request.getParameter("location");
-
-            // Логируем полученные данные для отладки
-            System.out.println("=== ДЕБАГ ИНФОРМАЦИЯ ===");
-            System.out.println("Title: " + title);
-            System.out.println("Description: " + description);
-            System.out.println("EventDate: " + eventDate);
-            System.out.println("MaxAttendance: " + maxAttendanceStr);
-            System.out.println("Location: " + location);
-            System.out.println("AuthorId: " + user.getId());
-            System.out.println("======================");
-
-            // Валидация
             if (title == null || title.trim().isEmpty() ||
                     description == null || description.trim().isEmpty() ||
                     eventDate == null || eventDate.trim().isEmpty() ||
                     maxAttendanceStr == null || maxAttendanceStr.trim().isEmpty() ||
                     location == null || location.trim().isEmpty()) {
 
-                request.setAttribute("error", "❌ Все поля обязательны для заполнения");
+                request.setAttribute("error", " Все поля обязательны для заполнения");
                 request.setAttribute("user", user);
                 request.getRequestDispatcher("/WEB-INF/views/create-meeting.jsp").forward(request, response);
                 return;
@@ -80,9 +68,7 @@ public class CreateMeetingServlet extends HttpServlet {
             MeetingService meetingService = ServiceFactory.getMeetingService();
             int maxAttendance = Integer.parseInt(maxAttendanceStr);
 
-            // Преобразуем дату в правильный формат
             String formattedDate = eventDate.replace("T", " ") + ":00";
-            System.out.println("📅 Форматированная дата: " + formattedDate);
 
             boolean success = meetingService.createMeeting(
                     title.trim(),
@@ -94,24 +80,23 @@ public class CreateMeetingServlet extends HttpServlet {
             );
 
             if (success) {
-                System.out.println("✅ Встреча успешно создана!");
                 response.sendRedirect(request.getContextPath() + "/main?success=meeting_created");
             } else {
-                System.err.println("❌ Ошибка при создании встречи в сервисе");
-                request.setAttribute("error", "❌ Ошибка при создании встречи. Проверьте введенные данные.");
+                System.err.println(" Ошибка при создании встречи в сервисе");
+                request.setAttribute("error", "Ошибка при создании встречи. Проверьте введенные данные.");
                 request.setAttribute("user", user);
                 request.getRequestDispatcher("/WEB-INF/views/create-meeting.jsp").forward(request, response);
             }
         } catch (AuthenticationException e) {
             response.sendRedirect(request.getContextPath() + "/login");
         } catch (NumberFormatException e) {
-            System.err.println("❌ Ошибка парсинга числа: " + e.getMessage());
-            request.setAttribute("error", "❌ Некорректное значение для количества участников");
+            System.err.println("Ошибка парсинга числа: " + e.getMessage());
+            request.setAttribute("error", "Некорректное значение для количества участников");
             request.getRequestDispatcher("/WEB-INF/views/create-meeting.jsp").forward(request, response);
         } catch (Exception e) {
-            System.err.println("❌ Системная ошибка: " + e.getMessage());
+            System.err.println("Системная ошибка: " + e.getMessage());
             e.printStackTrace();
-            request.setAttribute("error", "❌ Системная ошибка: " + e.getMessage());
+            request.setAttribute("error", "Системная ошибка: " + e.getMessage());
             request.getRequestDispatcher("/WEB-INF/views/create-meeting.jsp").forward(request, response);
         }
     }

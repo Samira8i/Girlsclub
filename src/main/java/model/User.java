@@ -4,9 +4,8 @@ public class User {
     private Long id;
     private String username;
     private String passwordHash;
-    private String salt;
+    private String salt; //cоль для учеличивания безопасности
 
-    // Конструкторы
     public User() {}
 
     public User(Long id, String username, String passwordHash, String salt) {
@@ -16,7 +15,6 @@ public class User {
         this.salt = salt;
     }
 
-    // Геттеры и сеттеры
     public Long getId() { return id; }
     public void setId(Long id) { this.id = id; }
 

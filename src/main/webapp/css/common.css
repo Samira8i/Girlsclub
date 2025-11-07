@@ -1,4 +1,3 @@
-/* src/main/webapp/css/common.css */
 @import url('https://fonts.googleapis.com/css2?family=Parisienne&family=Cormorant:wght@300;400;700&display=swap');
 
 * {
@@ -183,5 +182,102 @@ footer {
 
     .form-title {
         font-family: 'Parisienne', cursive;
+    }
+}
+
+
+.user-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 0;
+    margin-bottom: 30px;
+    border-bottom: 1px solid rgba(237, 235, 221, 0.3);
+}
+
+.user-info {
+    display: flex;
+    align-items: center;
+}
+
+.user-avatar {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    background: #810100;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-right: 15px;
+    font-size: 1.5rem;
+    overflow: hidden;
+    color: #EDEBDD;
+}
+
+.user-name {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.4rem;
+    color: #EDEBDD;
+}
+
+/* Стили для кнопки "Назад" */
+.back-btn {
+    padding: 10px 20px;
+    background: rgba(129, 1, 0, 0.2);
+    border: 1px solid rgba(129, 1, 0, 0.5);
+    color: #EDEBDD;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.3s;
+    text-decoration: none;
+    font-family: 'Montserrat', sans-serif;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.back-btn:hover {
+    background: rgba(129, 1, 0, 0.4);
+    text-decoration: none;
+    color: #EDEBDD;
+    transform: translateX(-3px);
+}
+
+/* Стили для кнопки "Выйти" */
+.logout-btn {
+    padding: 10px 20px;
+    background: rgba(129, 1, 0, 0.2);
+    border: 1px solid rgba(129, 1, 0, 0.5);
+    color: #EDEBDD;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.3s;
+    text-decoration: none;
+    font-family: 'Montserrat', sans-serif;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.logout-btn:hover {
+    background: rgba(129, 1, 0, 0.4);
+    text-decoration: none;
+    color: #EDEBDD;
+    transform: translateX(-3px);
+}
+@media (max-width: 768px) {
+    .user-header {
+        flex-direction: column;
+        gap: 15px;
+        text-align: center;
+    }
+
+    .user-info {
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    .user-avatar {
+        margin-right: 0;
     }
 }

@@ -21,25 +21,19 @@ public class MainServlet extends HttpServlet {
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-
         try {
             UserService userService = ServiceFactory.getUserService();
-
             String sessionId = extractSessionId(request.getCookies());
             if (sessionId == null) {
                 response.sendRedirect(request.getContextPath() + "/login");
                 return;
             }
-
             User user = userService.getUserBySessionId(sessionId);
             request.setAttribute("user", user);
-
-            // Загружаем встречи
+            // Загружаю встречи
             MeetingService meetingService = ServiceFactory.getMeetingService();
             EventRegistrationService registrationService = ServiceFactory.getEventRegistrationService();
-
             List<MeetingPost> meetings = meetingService.getAllMeetings();
-
             for (MeetingPost meeting : meetings) {
                 boolean isRegistered = registrationService.isUserRegistered(meeting.getId(), user.getId());
                 meeting.setUserRegistered(isRegistered);
@@ -53,42 +47,21 @@ public class MainServlet extends HttpServlet {
                 boolean isFull = registrationService.isEventFull(meeting.getId(), meeting.getMaxAttendance());
                 meeting.setFull(isFull);
             }
-
             request.setAttribute("meetings", meetings);
-
-            // ЗАГРУЖАЕМ ОБСУЖДЕНИЯ С КОММЕНТАРИЯМИ
+            // загружаю посты с обсуждениями
             DiscussionService discussionService = ServiceFactory.getDiscussionService();
             List<DiscussionPost> posts = discussionService.getAllPostsWithLikes(user.getId());
-            System.out.println("=== ОТЛАДКА: Загружено постов: " + posts.size());
-            for (DiscussionPost post : posts) {
-                System.out.println("Пост ID=" + post.getId() +
-                        ", Заголовок: " + post.getTitle() +
-                        ", Комментариев в базе: " + post.getCommentCount() +
-                        ", Загружено комментариев: " + (post.getComments() != null ? post.getComments().size() : "null"));
-
-                // Вывод информации о каждом комментарии
-                if (post.getComments() != null && !post.getComments().isEmpty()) {
-                    for (DiscussionComment comment : post.getComments()) {
-                        System.out.println("  Комментарий ID=" + comment.getId() +
-                                ", Автор: " + (comment.getUser() != null ? comment.getUser().getUsername() : "null") +
-                                ", Текст: " + comment.getContent());
-                    }
-                }
-            }
-
             request.setAttribute("posts", posts);
-
             String success = request.getParameter("success");
             String error = request.getParameter("error");
             if (success != null) request.setAttribute("success", success);
             if (error != null) request.setAttribute("error", error);
-
             request.getRequestDispatcher("/WEB-INF/views/main.jsp").forward(request, response);
 
         } catch (AuthenticationException e) {
             response.sendRedirect(request.getContextPath() + "/login");
         } catch (Exception e) {
-            System.err.println("❌ Ошибка при загрузке главной страницы: " + e.getMessage());
+            System.err.println("Ошибка при загрузке главной страницы: " + e.getMessage());
             e.printStackTrace();
             request.setAttribute("error", "Ошибка при загрузке данных: " + e.getMessage());
             request.getRequestDispatcher("/WEB-INF/views/main.jsp").forward(request, response);

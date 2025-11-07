@@ -7,7 +7,6 @@ import jakarta.servlet.*;
 import jakarta.servlet.http.*;
 import jakarta.servlet.annotation.*;
 import java.io.IOException;
-// ❌ УБИРАЕМ import java.sql.Connection; и DatabaseUtil
 
 @WebServlet("/register")
 public class RegisterServlet extends HttpServlet {
@@ -25,16 +24,12 @@ public class RegisterServlet extends HttpServlet {
         String confirmPassword = request.getParameter("confirmPassword");
 
         try {
-            // ✅ ПРАВИЛЬНО: используем фабрику вместо Connection
             UserService userService = ServiceFactory.getUserService();
-
             String sessionId = userService.registerUser(username, password, confirmPassword);
-
             Cookie sessionCookie = new Cookie("sessionId", sessionId);
             sessionCookie.setMaxAge(30 * 24 * 60 * 60);
             sessionCookie.setPath("/");
             response.addCookie(sessionCookie);
-
             response.sendRedirect(request.getContextPath() + "/main");
 
         } catch (AuthenticationException e) {

@@ -23,11 +23,11 @@ public class MeetingService {
     public boolean createMeeting(String title, String description, String eventDate,
                                  int maxAttendance, String location, Long authorId) {
         try {
-            System.out.println("📅 Полученная дата на вход: " + eventDate);
+            System.out.println("Полученная дата на вход: " + eventDate);
 
             LocalDateTime dateTime = parseDateTime(eventDate);
             if (dateTime == null) {
-                System.err.println("❌ Не удалось распарсить дату: " + eventDate);
+                System.err.println("Не удалось распарсить дату: " + eventDate);
                 return false;
             }
 
@@ -39,11 +39,11 @@ public class MeetingService {
             meeting.setLocation(location);
             meeting.setAuthorId(authorId);
 
-            System.out.println("✅ Дата успешно преобразована: " + dateTime);
+            System.out.println("Дата успешно преобразована: " + dateTime);
 
             return meetingDao.create(meeting);
         } catch (Exception e) {
-            System.err.println("❌ Ошибка при создании встречи: " + e.getMessage());
+            System.err.println("Ошибка при создании встречи: " + e.getMessage());
             e.printStackTrace();
             return false;
         }
@@ -87,7 +87,7 @@ public class MeetingService {
 
             return meetingDao.update(meeting);
         } catch (Exception e) {
-            System.err.println("❌ Ошибка при обновлении встречи: " + e.getMessage());
+            System.err.println(" Ошибка при обновлении встречи: " + e.getMessage());
             e.printStackTrace();
             return false;
         }
@@ -121,9 +121,9 @@ public class MeetingService {
         if (dateTimeStr == null || dateTimeStr.trim().isEmpty()) {
             return null;
         }
-
+//TODO: разобраться с парсировкоц даты и сделать адекватную
         dateTimeStr = dateTimeStr.trim();
-        System.out.println("🔍 Пытаемся распарсить дату: " + dateTimeStr);
+        System.out.println("Пытаемся распарсить дату: " + dateTimeStr);
 
         // Пробуем разные форматы
         DateTimeFormatter[] formatters = {
@@ -138,7 +138,7 @@ public class MeetingService {
         for (DateTimeFormatter formatter : formatters) {
             try {
                 LocalDateTime result = LocalDateTime.parse(dateTimeStr, formatter);
-                System.out.println("✅ Дата успешно распарсена с форматом: " + formatter);
+                System.out.println("Дата успешно распарсена с форматом: " + formatter);
                 return result;
             } catch (DateTimeParseException e) {
                 // Пробуем следующий формат
@@ -172,10 +172,10 @@ public class MeetingService {
             }
 
         } catch (Exception e) {
-            System.err.println("❌ Ошибка при ручном парсинге даты: " + e.getMessage());
+            System.err.println("Ошибка при ручном парсинге даты: " + e.getMessage());
         }
 
-        System.err.println("❌ Не удалось распарсить дату ни одним из методов: " + dateTimeStr);
+        System.err.println("Не удалось распарсить дату ни одним из методов: " + dateTimeStr);
         return null;
     }
 }

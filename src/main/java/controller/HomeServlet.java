@@ -1,4 +1,3 @@
-// src/main/java/controller/HomeServlet.java
 package controller;
 
 import jakarta.servlet.*;

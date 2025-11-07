@@ -10,12 +10,12 @@ public class SessionDao {
 
     private static final String CREATE_TABLE_QUERY =
             "CREATE TABLE IF NOT EXISTS sessions (" +
-                    "session_id VARCHAR(36) PRIMARY KEY, " +
+                    "session_id VARCHAR(36) PRIMARY KEY, " + //использую uuid так как для публичных id безопаснее
                     "user_id BIGINT NOT NULL, " +
                     "expire_at TIMESTAMP NOT NULL, " +
                     "created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP, " +
                     "FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE" +
-                    ");";
+                    ");"; //сделала on delete чтобы когда пользователь удаляется из таблицы users, все его сессии автоматически удалялись из таблицы sessions
 
     private static final String ADD_SESSION_QUERY =
             "INSERT INTO sessions (session_id, user_id, expire_at) VALUES (?, ?, ?);";

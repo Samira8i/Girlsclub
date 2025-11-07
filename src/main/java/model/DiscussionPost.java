@@ -10,24 +10,14 @@ public class DiscussionPost {
     private LocalDateTime createdAt;
     private Long authorId;
     private User author;
-    private int likeCount;
-    private int commentCount;
+    private int likeCount; //количество лайков
+    private int commentCount; //количество комментариев
     private boolean userLiked; // лайкнул ли текущий пользователь
     private List<DiscussionComment> comments; // список комментариев
 
-    // Конструкторы
+
     public DiscussionPost() {}
 
-    public DiscussionPost(String title, String content, Long authorId) {
-        this.title = title;
-        this.content = content;
-        this.authorId = authorId;
-        this.createdAt = LocalDateTime.now();
-        this.likeCount = 0;
-        this.commentCount = 0;
-    }
-
-    // Геттеры и сеттеры
     public Long getId() { return id; }
     public void setId(Long id) { this.id = id; }
 
@@ -57,12 +47,4 @@ public class DiscussionPost {
 
     public List<DiscussionComment> getComments() { return comments; }
     public void setComments(List<DiscussionComment> comments) { this.comments = comments; }
-
-    // Метод для форматирования даты
-    public String getFormattedCreatedAt() {
-        if (createdAt == null) return "";
-        java.time.format.DateTimeFormatter formatter =
-                java.time.format.DateTimeFormatter.ofPattern("dd.MM.yyyy HH:mm");
-        return createdAt.format(formatter);
-    }
 }

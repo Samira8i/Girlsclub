@@ -6,21 +6,12 @@ import java.security.NoSuchAlgorithmException;
 import java.util.Base64;
 import java.util.UUID;
 
-/**
- * Утилита для работы с паролями с использованием соли
- */
 public class PasswordUtil {
 
-    /**
-     * Генерация случайной соли
-     */
     public static String generateSalt() {
         return UUID.randomUUID().toString();
     }
 
-    /**
-     * Хэшировать пароль с солью используя SHA-256
-     */
     public static String hashPassword(String password, String salt) {
         try {
             MessageDigest digest = MessageDigest.getInstance("SHA-256");
@@ -32,16 +23,11 @@ public class PasswordUtil {
         }
     }
 
-    /**
-     * Проверить пароль
-     */
     public static boolean checkPassword(String password, String salt, String hashedPassword) {
         return hashPassword(password, salt).equals(hashedPassword);
     }
 
-    /**
-     * Простая проверка сложности пароля
-     */
+
     public static boolean isPasswordValid(String password) {
         return password != null && password.length() >= 3;
     }

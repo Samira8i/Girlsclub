@@ -12,15 +12,12 @@ public class LogoutServlet extends HttpServlet {
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-
         try {
             UserService userService = ServiceFactory.getUserService();
-
             // Удаляем sessionId из кук
             String sessionId = extractSessionId(request.getCookies());
             if (sessionId != null) {
                 userService.logoutUser(sessionId); // Удаляем сессию из БД
-
                 // Удаляем куку
                 Cookie sessionCookie = new Cookie("sessionId", "");
                 sessionCookie.setMaxAge(0); // Удаляем куку

@@ -22,9 +22,6 @@ public class UserService {
         this.sessionDao = new SessionDao(connection);
     }
 
-    /**
-     * Регистрация нового пользователя
-     */
     public String registerUser(String username, String password, String passwordRepeat) {
         // Проверка совпадения паролей
         if (!password.equals(passwordRepeat)) {
@@ -36,7 +33,7 @@ public class UserService {
             throw new AuthenticationException("Пользователь с таким именем уже существует");
         }
 
-        // Генерация соли и хэширование пароля
+        // Генерацию соли и хэширование пароля передаю util
         String salt = PasswordUtil.generateSalt();
         String passwordHash = PasswordUtil.hashPassword(password, salt);
 
@@ -46,13 +43,13 @@ public class UserService {
         user.setPasswordHash(passwordHash);
         user.setSalt(salt);
 
-        // Сохраняем пользователя и получаем его ID
+        // Сохраняю пользователя и получаю его ID
         boolean created = userDao.create(user);
         if (!created) {
             throw new AuthenticationException("Ошибка при создании пользователя");
         }
 
-        // Создаем сессию
+        // Создаю сессию
         String sessionId = generateSessionId();
         Session session = new Session(sessionId, user.getId(), LocalDateTime.now().plus(sessionDuration));
         sessionDao.addSession(session);
@@ -60,9 +57,7 @@ public class UserService {
         return sessionId;
     }
 
-    /**
-     * Аутентификация пользователя
-     */
+
     public String loginUser(String username, String password) {
         User user = userDao.findByUsername(username);
         if (user == null) {
@@ -82,9 +77,7 @@ public class UserService {
         return sessionId;
     }
 
-    /**
-     * Получение пользователя по sessionId
-     */
+
     public User getUserBySessionId(String sessionId) {
         if (sessionId == null || sessionId.trim().isEmpty()) {
             throw new AuthenticationException("Session ID не может быть пустым");
@@ -95,7 +88,6 @@ public class UserService {
             throw new AuthenticationException("Сессия не найдена");
         }
 
-        // Проверка срока действия сессии
         if (session.getExpireAt().isBefore(LocalDateTime.now())) {
             sessionDao.deleteSession(sessionId);
             throw new AuthenticationException("Сессия истекла");
@@ -104,18 +96,12 @@ public class UserService {
         return userDao.findById(session.getUserId());
     }
 
-    /**
-     * Выход пользователя (удаление сессии)
-     */
     public void logoutUser(String sessionId) {
         if (sessionId != null) {
             sessionDao.deleteSession(sessionId);
         }
     }
 
-    /**
-     * Генерация уникального sessionId
-     */
     private String generateSessionId() {
         return UUID.randomUUID().toString();
     }

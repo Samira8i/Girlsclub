@@ -6,21 +6,12 @@ public class EventRegistration {
     private Long id;
     private Long postId;
     private Long userId; //ID пользователя который регистрируется
-    private User user; //TODO: избыточно, поменять логику
+    private User user; //для удобства
     private String status; // "registered", "cancelled"
     private LocalDateTime registrationDate;
 
-    // Конструкторы
     public EventRegistration() {}
 
-    public EventRegistration(Long postId, Long userId, String status) {
-        this.postId = postId;
-        this.userId = userId;
-        this.status = status;
-        this.registrationDate = LocalDateTime.now();
-    }
-
-    // Геттеры и сеттеры
     public Long getId() { return id; }
     public void setId(Long id) { this.id = id; }
 

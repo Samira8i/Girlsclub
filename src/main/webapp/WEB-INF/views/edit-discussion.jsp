@@ -1,6 +1,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
+<%@ taglib prefix="my" tagdir="/WEB-INF/tags" %>
 <!DOCTYPE html>
 <html lang="ru">
 <head>
@@ -10,191 +11,16 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Montserrat:wght@300;400;500&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="${pageContext.request.contextPath}/css/common.css">
-    <style>
-        /* Стили остаются без изменений */
-        .form-container {
-            max-width: 800px;
-            margin: 0 auto;
-            padding: 30px;
-        }
-
-        .form-title {
-            color: #EDEBDD;
-            font-family: 'Playfair Display', serif;
-            font-size: 2.5em;
-            margin-bottom: 30px;
-            text-align: center;
-        }
-
-        .discussion-form {
-            background: rgba(237, 235, 221, 0.05);
-            border: 1px solid rgba(129, 1, 0, 0.3);
-            border-radius: 12px;
-            padding: 30px;
-        }
-
-        .form-group {
-            margin-bottom: 25px;
-        }
-
-        .form-label {
-            display: block;
-            color: #EDEBDD;
-            font-weight: 500;
-            margin-bottom: 8px;
-            font-size: 1.1em;
-        }
-
-        .form-input, .form-textarea {
-            width: 100%;
-            background: rgba(237, 235, 221, 0.1);
-            border: 2px solid rgba(129, 1, 0, 0.5);
-            border-radius: 8px;
-            padding: 12px 16px;
-            color: #EDEBDD;
-            font-family: 'Montserrat', sans-serif;
-            font-size: 1em;
-            transition: all 0.3s ease;
-        }
-
-        .form-input:focus, .form-textarea:focus {
-            outline: none;
-            border-color: #810100;
-            background: rgba(237, 235, 221, 0.15);
-        }
-
-        .form-textarea {
-            min-height: 200px;
-            resize: vertical;
-        }
-
-        .form-actions {
-            display: flex;
-            gap: 15px;
-            justify-content: space-between;
-            margin-top: 30px;
-        }
-
-        .submit-btn {
-            background: linear-gradient(135deg, #810100 0%, #51080d 100%);
-            color: #EDEBDD;
-            border: none;
-            border-radius: 8px;
-            padding: 12px 30px;
-            font-family: 'Montserrat', sans-serif;
-            font-weight: 500;
-            font-size: 1.1em;
-            cursor: pointer;
-            transition: all 0.3s ease;
-        }
-
-        .submit-btn:hover {
-            background: linear-gradient(135deg, #51080d 0%, #810100 100%);
-            transform: translateY(-2px);
-        }
-
-        .cancel-btn {
-            background: rgba(237, 235, 221, 0.1);
-            color: #EDEBDD;
-            border: 2px solid rgba(129, 1, 0, 0.5);
-            border-radius: 8px;
-            padding: 12px 30px;
-            font-family: 'Montserrat', sans-serif;
-            font-weight: 500;
-            font-size: 1.1em;
-            cursor: pointer;
-            text-decoration: none;
-            transition: all 0.3s ease;
-            display: inline-block;
-        }
-
-        .cancel-btn:hover {
-            background: rgba(129, 1, 0, 0.2);
-            transform: translateY(-2px);
-        }
-
-        .delete-form {
-            display: inline;
-        }
-
-        .delete-btn {
-            background: rgba(255, 107, 107, 0.1);
-            color: #ff6b6b;
-            border: 2px solid rgba(255, 107, 107, 0.5);
-            border-radius: 8px;
-            padding: 12px 30px;
-            font-family: 'Montserrat', sans-serif;
-            font-weight: 500;
-            font-size: 1.1em;
-            cursor: pointer;
-            transition: all 0.3s ease;
-        }
-
-        .delete-btn:hover {
-            background: rgba(255, 107, 107, 0.2);
-            transform: translateY(-2px);
-        }
-
-        .error-message {
-            background: rgba(255, 107, 107, 0.1);
-            border: 1px solid rgba(255, 107, 107, 0.5);
-            border-radius: 8px;
-            padding: 15px;
-            margin-bottom: 20px;
-            color: #ff6b6b;
-        }
-
-        .character-count {
-            text-align: right;
-            color: #B8B4A6;
-            font-size: 0.9em;
-            margin-top: 5px;
-        }
-
-        .form-hint {
-            color: #B8B4A6;
-            font-size: 0.9em;
-            margin-top: 5px;
-            font-style: italic;
-        }
-
-        .discussion-info {
-            background: rgba(129, 1, 0, 0.1);
-            border: 1px solid rgba(129, 1, 0, 0.3);
-            border-radius: 8px;
-            padding: 15px;
-            margin-bottom: 20px;
-        }
-
-        .info-item {
-            display: flex;
-            justify-content: space-between;
-            margin-bottom: 5px;
-            color: #B8B4A6;
-        }
-
-        .info-label {
-            font-weight: 500;
-        }
-
-        .info-value {
-            color: #EDEBDD;
-        }
-    </style>
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/edit-discussion.css">
+    <script src="${pageContext.request.contextPath}/js/edit-discussion.js.js"></script>
 </head>
 <body>
 <div class="container">
-    <div class="user-header">
-        <div class="user-info">
-            <div class="user-avatar">
-                <i class="fas fa-user"></i>
-            </div>
-            <div class="user-name">
-                ${user.username}
-            </div>
-        </div>
-        <a href="${pageContext.request.contextPath}/main?section=discussions" class="logout-btn">Назад к обсуждениям</a>
-    </div>
+    <my:userHeader
+            username="${user.username}"
+            backUrl="${pageContext.request.contextPath}/main"
+            backText="Назад к обсуждениям"
+    />
 
     <div class="form-container">
         <h1 class="form-title">Редактировать обсуждение</h1>
@@ -277,57 +103,5 @@
         </form>
     </div>
 </div>
-
-<script>
-    // Подсчет символов для заголовка
-    const titleInput = document.getElementById('title');
-    const titleCount = document.getElementById('title-count');
-
-    titleInput.addEventListener('input', function() {
-        titleCount.textContent = this.value.length;
-    });
-
-    // Подсчет символов для содержания
-    const contentInput = document.getElementById('content');
-    const contentCount = document.getElementById('content-count');
-
-    contentInput.addEventListener('input', function() {
-        contentCount.textContent = this.value.length;
-    });
-
-    // Валидация формы
-    document.querySelector('.discussion-form').addEventListener('submit', function(e) {
-        const title = titleInput.value.trim();
-        const content = contentInput.value.trim();
-
-        if (!title) {
-            e.preventDefault();
-            alert('❌ Пожалуйста, введите заголовок обсуждения');
-            titleInput.focus();
-            return;
-        }
-
-        if (!content) {
-            e.preventDefault();
-            alert('❌ Пожалуйста, введите содержание обсуждения');
-            contentInput.focus();
-            return;
-        }
-
-        if (title.length > 200) {
-            e.preventDefault();
-            alert('❌ Заголовок не может превышать 200 символов');
-            titleInput.focus();
-            return;
-        }
-
-        if (content.length > 2000) {
-            e.preventDefault();
-            alert('❌ Содержание не может превышать 2000 символов');
-            contentInput.focus();
-            return;
-        }
-    });
-</script>
 </body>
 </html>

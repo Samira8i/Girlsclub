@@ -20,40 +20,31 @@ public class DatabaseUtil {
         initializeDriver();
     }
 
-    /**
-     * Загружает настройки из properties файла
-     */
     private static void loadProperties() {
         try (InputStream input = DatabaseUtil.class.getClassLoader()
                 .getResourceAsStream("database.properties")) {
 
             if (input == null) {
-                throw new RuntimeException("❌ Файл database.properties не найден в classpath");
+                throw new RuntimeException("Файл database.properties не найден в classpath");
             }
 
             properties.load(input);
-
-            // Читаем настройки
             URL = properties.getProperty("db.url");
             USERNAME = properties.getProperty("db.username");
             PASSWORD = properties.getProperty("db.password");
             DRIVER = properties.getProperty("db.driver");
-
-            // Проверяем что все настройки загружены
             if (URL == null || USERNAME == null || PASSWORD == null || DRIVER == null) {
-                throw new RuntimeException("❌ Не все обязательные настройки БД указаны в database.properties");
+                throw new RuntimeException("Не все обязательные настройки БД указаны в database.properties");
             }
 
-            System.out.println("✅ Настройки БД загружены из properties файла");
+            System.out.println(" Настройки БД загружены из properties файла");
 
         } catch (IOException e) {
-            throw new RuntimeException("❌ Ошибка загрузки database.properties", e);
+            throw new RuntimeException("Ошибка загрузки database.properties", e);
         }
     }
 
-    /**
-     * Регистрирует драйвер БД
-     */
+
     private static void initializeDriver() {
         try {
             Class.forName(DRIVER);
@@ -63,13 +54,11 @@ public class DatabaseUtil {
         }
     }
 
-    /**
-     * Возвращает подключение к БД
-     */
+
     public static Connection getConnection() throws SQLException {
         try {
             Connection connection = DriverManager.getConnection(URL, USERNAME, PASSWORD);
-            System.out.println("Подключение к БД установлено");
+            System.out.println(" Подключение к БД установлено");
             return connection;
         } catch (SQLException e) {
             System.err.println("Ошибка подключения к БД: " + e.getMessage());
@@ -77,9 +66,14 @@ public class DatabaseUtil {
         }
     }
 
-    /**
-     * Дополнительный метод для получения свойства по ключу
-     */
+    public static void initialize() {
+        System.out.println("DatabaseUtil инициализирован");
+    }
+
+    public static void cleanup() {
+        System.out.println(" DatabaseUtil очищен");
+    }
+
     public static String getProperty(String key) {
         return properties.getProperty(key);
     }
