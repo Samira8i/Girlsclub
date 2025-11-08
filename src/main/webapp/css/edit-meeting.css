@@ -8,11 +8,12 @@
     max-width: 800px;
     margin: 0 auto;
     padding: 30px;
+    animation: fadeInUp 0.6s ease-out;
 }
 
 .form-title {
-    color: #EDEBDD;
-    font-family: 'Playfair Display', serif;
+    color: var(--text-color);
+    font-family: var(--font-heading);
     font-size: 2.5em;
     margin-bottom: 30px;
     text-align: center;
@@ -20,8 +21,8 @@
 
 .meeting-info {
     background: rgba(237, 235, 221, 0.05);
-    border: 1px solid rgba(129, 1, 0, 0.3);
-    border-radius: 8px;
+    border: var(--border-light);
+    border-radius: var(--border-radius);
     padding: 20px;
     margin-bottom: 25px;
 }
@@ -38,58 +39,61 @@
 }
 
 .info-label {
-    font-family: 'Montserrat', sans-serif;
+    font-family: var(--font-body);
     font-weight: 500;
-    color: #B8B4A6;
+    color: var(--text-secondary);
 }
 
 .info-value {
-    font-family: 'Montserrat', sans-serif;
-    color: #EDEBDD;
+    font-family: var(--font-body);
+    color: var(--text-color);
     font-weight: 400;
 }
 
 .meeting-form {
     background: rgba(237, 235, 221, 0.05);
-    border: 1px solid rgba(129, 1, 0, 0.3);
-    border-radius: 12px;
+    border: var(--border-light);
+    border-radius: var(--border-radius-large);
     padding: 30px;
 }
 
 .form-group {
     margin-bottom: 25px;
+    animation: fadeInUp 0.6s ease-out;
+    animation-fill-mode: both;
 }
 
 .form-label {
     display: flex;
     align-items: center;
     gap: 10px;
-    color: #EDEBDD;
+    color: var(--text-color);
     font-weight: 500;
     margin-bottom: 8px;
     font-size: 1.1em;
+    font-family: var(--font-body);
 }
 
 .form-label i {
-    color: #810100;
+    color: var(--primary-color);
     width: 20px;
 }
 
 .form-input, .form-textarea {
     width: 100%;
     background: rgba(237, 235, 221, 0.1);
-    border: 2px solid rgba(129, 1, 0, 0.5);
-    border-radius: 8px;
+    border: var(--border-medium);
+    border-radius: var(--border-radius);
     padding: 12px 16px;
-    color: #EDEBDD;
-    font-family: 'Montserrat', sans-serif;
+    color: var(--text-color);
+    font-family: var(--font-body);
     font-size: 1em;
     transition: all 0.3s ease;
 }
 
 .form-input:focus, .form-textarea:focus {
     outline: none;
-    border-color: #810100;
+    border-color: var(--primary-color);
     background: rgba(237, 235, 221, 0.15);
 }
 
@@ -100,31 +104,23 @@
 }
 
 .form-input[type="datetime-local"] {
-    font-family: 'Montserrat', sans-serif;
-}
-
-.form-input[type="number"] {
-    -moz-appearance: textfield;
-}
-
-.form-input[type="number"]::-webkit-outer-spin-button,
-.form-input[type="number"]::-webkit-inner-spin-button {
-    -webkit-appearance: none;
-    margin: 0;
+    font-family: var(--font-body);
 }
 
 .character-count {
     text-align: right;
-    color: #B8B4A6;
+    color: var(--text-secondary);
     font-size: 0.9em;
     margin-top: 5px;
+    font-family: var(--font-body);
 }
 
 .form-hint {
-    color: #B8B4A6;
+    color: var(--text-secondary);
     font-size: 0.9em;
     margin-top: 5px;
     font-style: italic;
+    font-family: var(--font-body);
 }
 
 .form-actions {
@@ -140,12 +136,12 @@
 }
 
 .delete-btn {
-    background: linear-gradient(135deg, #810100 0%, #51080d 100%);
-    color: #EDEBDD;
+    background: linear-gradient(135deg, var(--primary-color) 0%, var(--primary-dark) 100%);
+    color: var(--text-color);
     border: none;
-    border-radius: 8px;
+    border-radius: var(--border-radius);
     padding: 12px 20px;
-    font-family: 'Montserrat', sans-serif;
+    font-family: var(--font-body);
     font-weight: 500;
     font-size: 1em;
     cursor: pointer;
@@ -156,17 +152,17 @@
 }
 
 .delete-btn:hover {
-    background: linear-gradient(135deg, #51080d 0%, #810100 100%);
+    background: linear-gradient(135deg, var(--primary-dark) 0%, var(--primary-color) 100%);
     transform: translateY(-2px);
 }
 
 .cancel-btn {
     background: rgba(237, 235, 221, 0.1);
-    color: #EDEBDD;
-    border: 2px solid rgba(129, 1, 0, 0.5);
-    border-radius: 8px;
+    color: var(--text-color);
+    border: var(--border-medium);
+    border-radius: var(--border-radius);
     padding: 12px 24px;
-    font-family: 'Montserrat', sans-serif;
+    font-family: var(--font-body);
     font-weight: 500;
     font-size: 1em;
     cursor: pointer;
@@ -180,17 +176,17 @@
 .cancel-btn:hover {
     background: rgba(129, 1, 0, 0.2);
     transform: translateY(-2px);
-    color: #EDEBDD;
+    color: var(--text-color);
     text-decoration: none;
 }
 
 .submit-btn {
-    background: linear-gradient(135deg, #810100 0%, #51080d 100%);
-    color: #EDEBDD;
+    background: linear-gradient(135deg, var(--primary-color) 0%, var(--primary-dark) 100%);
+    color: var(--text-color);
     border: none;
-    border-radius: 8px;
+    border-radius: var(--border-radius);
     padding: 12px 30px;
-    font-family: 'Montserrat', sans-serif;
+    font-family: var(--font-body);
     font-weight: 500;
     font-size: 1.1em;
     cursor: pointer;
@@ -201,41 +197,22 @@
 }
 
 .submit-btn:hover {
-    background: linear-gradient(135deg, #51080d 0%, #810100 100%);
+    background: linear-gradient(135deg, var(--primary-dark) 0%, var(--primary-color) 100%);
     transform: translateY(-2px);
 }
 
 .error-message {
     background: rgba(255, 107, 107, 0.1);
     border: 1px solid rgba(255, 107, 107, 0.5);
-    border-radius: 8px;
+    border-radius: var(--border-radius);
     padding: 15px;
     margin-bottom: 20px;
-    color: #ff6b6b;
+    color: var(--error-color);
     text-align: center;
+    font-family: var(--font-body);
 }
 
-/* Анимации */
-@keyframes fadeInUp {
-    from {
-        opacity: 0;
-        transform: translateY(30px);
-    }
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
-}
-
-.form-container {
-    animation: fadeInUp 0.6s ease-out;
-}
-
-.form-group {
-    animation: fadeInUp 0.6s ease-out;
-    animation-fill-mode: both;
-}
-
+/* Задержки анимаций */
 .form-group:nth-child(1) { animation-delay: 0.1s; }
 .form-group:nth-child(2) { animation-delay: 0.2s; }
 .form-group:nth-child(3) { animation-delay: 0.3s; }
@@ -258,8 +235,6 @@
         justify-content: center;
         margin-bottom: 10px;
     }
-
-
 
     .info-item {
         flex-direction: column;

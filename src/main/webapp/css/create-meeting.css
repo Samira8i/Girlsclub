@@ -1,36 +1,37 @@
-/* src/main/webapp/css/create-meeting.css */
-
 .create-meeting-container {
     max-width: 700px;
     margin: 0 auto;
     padding: 40px;
-    background: linear-gradient(135deg, rgba(24, 23, 23, 0.9) 0%, rgba(43, 3, 7, 0.9) 100%);
+    background: var(--background-gradient);
     border-radius: 20px;
-    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.5);
-    border: 1px solid rgba(129, 1, 0, 0.3);
+    box-shadow: var(--shadow-heavy);
+    border: var(--border-light);
     backdrop-filter: blur(10px);
+    animation: fadeInUp 0.6s ease-out;
 }
 
 .form-title {
-    font-family: 'Playfair Display', serif;
+    font-family: var(--font-heading);
     font-size: 2.5rem;
     text-align: center;
     margin-bottom: 40px;
-    color: #EDEBDD;
+    color: var(--text-color);
     text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
 }
 
 .form-group {
     margin-bottom: 2rem;
     position: relative;
+    animation: fadeInUp 0.6s ease-out;
+    animation-fill-mode: both;
 }
 
 .form-label {
     display: block;
     margin-bottom: 0.8rem;
-    font-family: 'Montserrat', sans-serif;
+    font-family: var(--font-body);
     font-weight: 500;
-    color: #EDEBDD;
+    color: var(--text-color);
     font-size: 1.1rem;
     text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);
 }
@@ -39,11 +40,11 @@
     width: 100%;
     padding: 15px 20px;
     background: rgba(237, 235, 221, 0.1);
-    border: 2px solid rgba(129, 1, 0, 0.5);
-    border-radius: 12px;
+    border: var(--border-medium);
+    border-radius: var(--border-radius-large);
     font-size: 1rem;
-    color: #EDEBDD;
-    font-family: 'Montserrat', sans-serif;
+    color: var(--text-color);
+    font-family: var(--font-body);
     transition: all 0.3s ease;
     backdrop-filter: blur(5px);
 }
@@ -54,7 +55,7 @@
 
 .form-input:focus, .form-textarea:focus {
     outline: none;
-    border-color: #810100;
+    border-color: var(--primary-color);
     background: rgba(237, 235, 221, 0.15);
     box-shadow: 0 0 20px rgba(129, 1, 0, 0.3);
     transform: translateY(-2px);
@@ -69,12 +70,12 @@
 .form-submit {
     width: 100%;
     padding: 18px;
-    background: linear-gradient(135deg, #810100 0%, #51080d 100%);
-    color: #EDEBDD;
+    background: linear-gradient(135deg, var(--primary-color) 0%, var(--primary-dark) 100%);
+    color: var(--text-color);
     border: none;
-    border-radius: 12px;
+    border-radius: var(--border-radius-large);
     font-size: 1.2rem;
-    font-family: 'Montserrat', sans-serif;
+    font-family: var(--font-body);
     font-weight: 500;
     cursor: pointer;
     transition: all 0.3s ease;
@@ -85,7 +86,7 @@
 }
 
 .form-submit:hover {
-    background: linear-gradient(135deg, #51080d 0%, #810100 100%);
+    background: linear-gradient(135deg, var(--primary-dark) 0%, var(--primary-color) 100%);
     transform: translateY(-3px);
     box-shadow: 0 8px 25px rgba(129, 1, 0, 0.6);
 }
@@ -98,22 +99,22 @@
     display: inline-flex;
     align-items: center;
     margin-top: 30px;
-    color: #EDEBDD;
+    color: var(--text-color);
     text-decoration: none;
-    font-family: 'Montserrat', sans-serif;
+    font-family: var(--font-body);
     font-size: 1rem;
     transition: all 0.3s ease;
     padding: 10px 20px;
     background: rgba(129, 1, 0, 0.2);
-    border-radius: 8px;
-    border: 1px solid rgba(129, 1, 0, 0.5);
+    border-radius: var(--border-radius);
+    border: var(--border-medium);
 }
 
 .back-link:hover {
     background: rgba(129, 1, 0, 0.4);
     transform: translateX(-5px);
     text-decoration: none;
-    color: #EDEBDD;
+    color: var(--text-color);
 }
 
 .back-link i {
@@ -122,24 +123,24 @@
 
 .error-message {
     background: linear-gradient(135deg, rgba(220, 53, 69, 0.9) 0%, rgba(200, 35, 51, 0.9) 100%);
-    color: #EDEBDD;
+    color: var(--text-color);
     padding: 20px;
-    border-radius: 12px;
+    border-radius: var(--border-radius-large);
     margin-bottom: 30px;
     border-left: 5px solid #dc3545;
-    font-family: 'Montserrat', sans-serif;
+    font-family: var(--font-body);
     font-size: 1rem;
     box-shadow: 0 5px 15px rgba(220, 53, 69, 0.3);
 }
 
 .success-message {
     background: linear-gradient(135deg, rgba(40, 167, 69, 0.9) 0%, rgba(33, 136, 56, 0.9) 100%);
-    color: #EDEBDD;
+    color: var(--text-color);
     padding: 20px;
-    border-radius: 12px;
+    border-radius: var(--border-radius-large);
     margin-bottom: 30px;
     border-left: 5px solid #28a745;
-    font-family: 'Montserrat', sans-serif;
+    font-family: var(--font-body);
     font-size: 1rem;
     box-shadow: 0 5px 15px rgba(40, 167, 69, 0.3);
 }
@@ -148,7 +149,7 @@
     position: absolute;
     right: 20px;
     top: 50px;
-    color: #810100;
+    color: var(--primary-color);
     font-size: 1.1rem;
 }
 
@@ -157,37 +158,19 @@
     color: rgba(237, 235, 221, 0.7);
     margin-top: 5px;
     font-style: italic;
+    font-family: var(--font-body);
 }
 
 .date-validation-message {
-    color: #ff6b6b;
+    color: var(--error-color);
     font-size: 0.9rem;
     margin-top: 5px;
     font-style: italic;
     display: none;
+    font-family: var(--font-body);
 }
 
-/* Анимации */
-@keyframes fadeInUp {
-    from {
-        opacity: 0;
-        transform: translateY(30px);
-    }
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
-}
-
-.create-meeting-container {
-    animation: fadeInUp 0.6s ease-out;
-}
-
-.form-group {
-    animation: fadeInUp 0.6s ease-out;
-    animation-fill-mode: both;
-}
-
+/* Задержки анимаций */
 .form-group:nth-child(1) { animation-delay: 0.1s; }
 .form-group:nth-child(2) { animation-delay: 0.2s; }
 .form-group:nth-child(3) { animation-delay: 0.3s; }

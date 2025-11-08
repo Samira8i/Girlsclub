@@ -1,5 +1,3 @@
-// src/main/webapp/js/create-meeting.js
-
 document.addEventListener('DOMContentLoaded', function() {
     initializeDateTime();
     setupFormValidation();
@@ -15,7 +13,7 @@ function initializeDateTime() {
         const minDateTime = formatDateTime(now);
         dateInput.min = minDateTime;
 
-        // Устанавливаем значение по умолчанию - через 1 час
+        // Устанавливаем значение по умолчанию
         const defaultDate = new Date(now.getTime() + 60 * 60 * 1000);
         dateInput.value = formatDateTime(defaultDate);
 
@@ -58,20 +56,20 @@ function validateForm() {
 
     // Проверка обязательных полей
     if (!title || !description || !eventDate || !maxAttendance || !location) {
-        alert('❌ Пожалуйста, заполните все обязательные поля');
+        alert('Пожалуйста, заполните все обязательные поля');
         return false;
     }
 
     // Проверка даты
     if (!validateDate()) {
-        alert('❌ Дата встречи должна быть в будущем');
+        alert('Дата встречи должна быть в будущем');
         return false;
     }
 
     // Проверка количества участников
     const attendance = parseInt(maxAttendance);
     if (attendance < 2 || attendance > 50) {
-        alert('❌ Количество участников должно быть от 2 до 50');
+        alert('Количество участников должно быть от 2 до 50');
         return false;
     }
 

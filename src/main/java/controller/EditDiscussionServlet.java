@@ -58,7 +58,7 @@ public class EditDiscussionServlet extends HttpServlet {
         } catch (NumberFormatException e) {
             response.sendRedirect(request.getContextPath() + "/main?error=Неверный_идентификатор_обсуждения&section=discussions");
         } catch (Exception e) {
-            System.err.println("❌ Ошибка при загрузке обсуждения для редактирования: " + e.getMessage());
+            System.err.println("Ошибка при загрузке обсуждения для редактирования: " + e.getMessage());
             e.printStackTrace();
             response.sendRedirect(request.getContextPath() + "/main?error=Ошибка_при_загрузке_обсуждения&section=discussions");
         }
@@ -120,11 +120,11 @@ public class EditDiscussionServlet extends HttpServlet {
             );
 
             if (success) {
-                System.out.println("✅ Обсуждение успешно обновлено!");
+                System.out.println("Обсуждение успешно обновлено!");
                 response.sendRedirect(request.getContextPath() + "/main?success=discussion_updated&section=discussions");
             } else {
-                System.err.println("❌ Ошибка при обновлении обсуждения в сервисе");
-                request.setAttribute("error", "❌ Ошибка при обновлении обсуждения. Проверьте введенные данные.");
+                System.err.println("Ошибка при обновлении обсуждения в сервисе");
+                request.setAttribute("error", "Ошибка при обновлении обсуждения. Проверьте введенные данные.");
                 request.setAttribute("discussion", existingDiscussion);
                 request.setAttribute("user", user);
                 request.getRequestDispatcher("/WEB-INF/views/edit-discussion.jsp").forward(request, response);
@@ -132,9 +132,9 @@ public class EditDiscussionServlet extends HttpServlet {
         } catch (AuthenticationException e) {
             response.sendRedirect(request.getContextPath() + "/login");
         } catch (Exception e) {
-            System.err.println("❌ Системная ошибка: " + e.getMessage());
+            System.err.println("Системная ошибка: " + e.getMessage());
             e.printStackTrace();
-            request.setAttribute("error", "❌ Системная ошибка: " + e.getMessage());
+            request.setAttribute("error", "Системная ошибка: " + e.getMessage());
 
             try {
                 DiscussionPost discussion = new DiscussionPost();

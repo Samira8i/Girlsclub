@@ -1,20 +1,17 @@
-/* src/main/webapp/css/discussions.css */
-
-/* Карточки обсуждений */
 .discussion-card {
-    background: linear-gradient(135deg, rgba(24, 23, 23, 0.9) 0%, rgba(43, 3, 7, 0.9) 100%);
-    border-radius: 15px;
+    background: var(--background-gradient);
+    border-radius: var(--border-radius-xl);
     padding: 25px;
     margin-bottom: 25px;
-    border: 1px solid rgba(129, 1, 0, 0.3);
-    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+    border: var(--border-light);
+    box-shadow: var(--shadow-light);
     transition: all 0.3s ease;
     animation: slideIn 0.5s ease-out;
 }
 
 .discussion-card:hover {
     transform: translateY(-5px);
-    box-shadow: 0 12px 35px rgba(129, 1, 0, 0.2);
+    box-shadow: var(--shadow-medium);
     border-color: rgba(129, 1, 0, 0.5);
 }
 
@@ -28,9 +25,9 @@
 }
 
 .discussion-title {
-    font-family: 'Playfair Display', serif;
+    font-family: var(--font-heading);
     font-size: 1.5rem;
-    color: #EDEBDD;
+    color: var(--text-color);
     margin: 0;
     flex: 1;
 }
@@ -45,15 +42,14 @@
     color: rgba(237, 235, 221, 0.9);
     line-height: 1.6;
     margin-bottom: 20px;
-    font-family: 'Montserrat', sans-serif;
+    font-family: var(--font-body);
     font-size: 1.1rem;
     padding: 15px;
     background: rgba(129, 1, 0, 0.05);
-    border-radius: 8px;
-    border-left: 3px solid #810100;
+    border-radius: var(--border-radius);
+    border-left: 3px solid var(--primary-color);
 }
 
-/* Статистика обсуждений */
 .discussion-stats {
     display: flex;
     align-items: center;
@@ -62,23 +58,22 @@
     padding: 15px;
     background: rgba(129, 1, 0, 0.1);
     border-radius: 10px;
-    border: 1px solid rgba(129, 1, 0, 0.3);
+    border: var(--border-light);
 }
 
 .discussion-stat {
     display: flex;
     align-items: center;
     gap: 8px;
-    color: #EDEBDD;
-    font-family: 'Montserrat', sans-serif;
+    color: var(--text-color);
+    font-family: var(--font-body);
     font-weight: 500;
 }
 
 .discussion-stat i {
-    color: #810100;
+    color: var(--primary-color);
 }
 
-/* Форма лайков */
 .like-form {
     margin: 0;
     padding: 0;
@@ -94,10 +89,10 @@
     padding: 8px 16px;
     border-radius: 20px;
     transition: all 0.3s ease;
-    color: #EDEBDD;
-    font-family: 'Montserrat', sans-serif;
+    color: var(--text-color);
+    font-family: var(--font-body);
     font-weight: 500;
-    border: 1px solid rgba(129, 1, 0, 0.3);
+    border: var(--border-light);
 }
 
 .like-btn:hover {
@@ -115,28 +110,26 @@
     color: #dc3545;
 }
 
-/* Автор обсуждения */
 .discussion-author {
     display: flex;
     align-items: center;
     color: rgba(237, 235, 221, 0.7);
     font-size: 0.9rem;
-    font-family: 'Montserrat', sans-serif;
-    border-top: 1px solid rgba(129, 1, 0, 0.3);
+    font-family: var(--font-body);
+    border-top: var(--border-light);
     padding-top: 15px;
     margin-bottom: 20px;
 }
 
 .discussion-author i {
     margin-right: 8px;
-    color: #810100;
+    color: var(--primary-color);
 }
 
-/* Секция комментариев */
 .comments-section {
     margin-top: 20px;
     padding-top: 20px;
-    border-top: 1px solid rgba(129, 1, 0, 0.3);
+    border-top: var(--border-light);
 }
 
 .comment-form-container {
@@ -150,17 +143,17 @@
     flex: 1;
     min-width: 200px;
     padding: 12px 15px;
-    border: 1px solid rgba(129, 1, 0, 0.5);
-    border-radius: 8px;
+    border: var(--border-medium);
+    border-radius: var(--border-radius);
     background: rgba(24, 23, 23, 0.8);
-    color: #EDEBDD;
-    font-family: 'Montserrat', sans-serif;
+    color: var(--text-color);
+    font-family: var(--font-body);
     font-size: 0.9rem;
 }
 
 .comment-input:focus {
     outline: none;
-    border-color: #810100;
+    border-color: var(--primary-color);
     box-shadow: 0 0 0 2px rgba(129, 1, 0, 0.3);
 }
 
@@ -170,12 +163,12 @@
 
 .comment-btn {
     padding: 12px 20px;
-    background: linear-gradient(135deg, #810100 0%, #51080d 100%);
-    color: #EDEBDD;
+    background: linear-gradient(135deg, var(--primary-color) 0%, var(--primary-dark) 100%);
+    color: var(--text-color);
     border: none;
-    border-radius: 8px;
+    border-radius: var(--border-radius);
     cursor: pointer;
-    font-family: 'Montserrat', sans-serif;
+    font-family: var(--font-body);
     font-weight: 500;
     transition: all 0.3s ease;
     display: inline-flex;
@@ -185,12 +178,11 @@
 }
 
 .comment-btn:hover {
-    background: linear-gradient(135deg, #51080d 0%, #810100 100%);
+    background: linear-gradient(135deg, var(--primary-dark) 0%, var(--primary-color) 100%);
     transform: translateY(-2px);
     box-shadow: 0 4px 12px rgba(129, 1, 0, 0.3);
 }
 
-/* Список комментариев */
 .comment-list {
     max-height: 400px;
     overflow-y: auto;
@@ -207,13 +199,13 @@
 }
 
 .comment-list::-webkit-scrollbar-thumb {
-    background: #810100;
+    background: var(--primary-color);
     border-radius: 3px;
 }
 
 .comment-item {
     background: rgba(237, 235, 221, 0.05);
-    border-radius: 8px;
+    border-radius: var(--border-radius);
     padding: 15px;
     margin-bottom: 12px;
     border: 1px solid rgba(129, 1, 0, 0.2);
@@ -233,9 +225,9 @@
 }
 
 .comment-author {
-    font-family: 'Montserrat', sans-serif;
+    font-family: var(--font-body);
     font-weight: 500;
-    color: #EDEBDD;
+    color: var(--text-color);
     font-size: 0.9rem;
 }
 
@@ -258,7 +250,7 @@
 .comment-content {
     color: rgba(237, 235, 221, 0.9);
     line-height: 1.5;
-    font-family: 'Montserrat', sans-serif;
+    font-family: var(--font-body);
     font-size: 0.9rem;
 }
 
@@ -266,10 +258,9 @@
     font-size: 0.8rem;
     color: rgba(237, 235, 221, 0.6);
     margin-top: 5px;
-    font-family: 'Montserrat', sans-serif;
+    font-family: var(--font-body);
 }
 
-/* Состояние пустых обсуждений */
 .no-discussions {
     text-align: center;
     padding: 60px 20px;
@@ -285,17 +276,17 @@
 .no-discussions p {
     font-size: 1.2rem;
     margin-bottom: 20px;
-    font-family: 'Montserrat', sans-serif;
+    font-family: var(--font-body);
 }
 
 .create-first-discussion {
     display: inline-block;
     padding: 12px 24px;
-    background: linear-gradient(135deg, #810100 0%, #51080d 100%);
-    color: #EDEBDD;
+    background: linear-gradient(135deg, var(--primary-color) 0%, var(--primary-dark) 100%);
+    color: var(--text-color);
     text-decoration: none;
-    border-radius: 8px;
-    font-family: 'Montserrat', sans-serif;
+    border-radius: var(--border-radius);
+    font-family: var(--font-body);
     font-weight: 500;
     transition: all 0.3s ease;
 }
@@ -304,10 +295,44 @@
     transform: translateY(-2px);
     box-shadow: 0 5px 15px rgba(129, 1, 0, 0.4);
     text-decoration: none;
-    color: #EDEBDD;
+    color: var(--text-color);
 }
 
-/* Адаптивность для обсуждений */
+.toggle-comments-btn {
+    background: none;
+    border: var(--border-light);
+    color: var(--text-color);
+    padding: 8px 16px;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-family: var(--font-body);
+    font-size: 0.9em;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.toggle-comments-btn:hover {
+    background: rgba(129, 1, 0, 0.2);
+    transform: translateY(-2px);
+}
+
+.no-comments {
+    color: var(--text-secondary);
+    text-align: center;
+    padding: 20px;
+    font-style: italic;
+    font-family: var(--font-body);
+}
+
+.no-comments i {
+    font-size: 1.5em;
+    margin-bottom: 10px;
+    display: block;
+}
+
+/* Адаптивность */
 @media (max-width: 768px) {
     .discussion-header {
         flex-direction: column;
@@ -337,42 +362,3 @@
         align-self: flex-end;
     }
 }
-/* src/main/webapp/css/discussions.css */
-
-/* ... существующие стили ... */
-
-/* Кнопка переключения комментариев */
-.toggle-comments-btn {
-    background: none;
-    border: 1px solid rgba(129, 1, 0, 0.3);
-    color: #EDEBDD;
-    padding: 8px 16px;
-    border-radius: 6px;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    font-family: 'Montserrat', sans-serif;
-    font-size: 0.9em;
-    display: flex;
-    align-items: center;
-    gap: 8px;
-}
-
-.toggle-comments-btn:hover {
-    background: rgba(129, 1, 0, 0.2);
-    transform: translateY(-2px);
-}
-
-/* Состояние для отсутствия комментариев */
-.no-comments {
-    color: #B8B4A6;
-    text-align: center;
-    padding: 20px;
-    font-style: italic;
-}
-
-.no-comments i {
-    font-size: 1.5em;
-    margin-bottom: 10px;
-    display: block;
-}
-

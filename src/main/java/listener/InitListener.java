@@ -70,7 +70,7 @@ public class InitListener implements ServletContextListener {
         scheduler = Executors.newScheduledThreadPool(1);
 
         // Задача для очистки просроченных сессий каждые 30 минут
-        scheduler.scheduleAtFixedRate(this::cleanupExpiredSessions, 0, 30, TimeUnit.MINUTES);
+        scheduler.scheduleAtFixedRate(this::cleanupExpiredSessions, 0, 5, TimeUnit.SECONDS);
 
         System.out.println("Фоновые задачи запущены");
     }

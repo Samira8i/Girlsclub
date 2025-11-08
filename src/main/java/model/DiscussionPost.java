@@ -1,6 +1,7 @@
 package model;
 
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 public class DiscussionPost {
@@ -47,4 +48,9 @@ public class DiscussionPost {
 
     public List<DiscussionComment> getComments() { return comments; }
     public void setComments(List<DiscussionComment> comments) { this.comments = comments; }
+    public String getFormattedCreatedAt() {
+        if (createdAt == null) return "";
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd.MM.yyyy HH:mm");
+        return createdAt.format(formatter);
+    }
 }

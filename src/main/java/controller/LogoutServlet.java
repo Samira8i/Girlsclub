@@ -20,7 +20,7 @@ public class LogoutServlet extends HttpServlet {
                 userService.logoutUser(sessionId); // Удаляем сессию из БД
                 // Удаляем куку
                 Cookie sessionCookie = new Cookie("sessionId", "");
-                sessionCookie.setMaxAge(0); // Удаляем куку
+                sessionCookie.setMaxAge(0);
                 sessionCookie.setPath("/");
                 response.addCookie(sessionCookie);
             }

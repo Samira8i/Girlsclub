@@ -43,7 +43,6 @@ public class AuthFilter implements Filter {
         }
 
         try (Connection conn = DatabaseUtil.getConnection()) {
-            // ✅ Инициализируем UserService внутри метода
             UserService userService = new UserService(conn);
 
             // Получаем пользователя по sessionId
@@ -56,7 +55,7 @@ public class AuthFilter implements Filter {
             httpResponse.sendRedirect(httpRequest.getContextPath() + "/login");
             return;
         } catch (Exception e) {
-            System.err.println("❌ Ошибка в AuthFilter: " + e.getMessage());
+            System.err.println("Ошибка в AuthFilter: " + e.getMessage());
             httpResponse.sendRedirect(httpRequest.getContextPath() + "/login");
             return;
         }

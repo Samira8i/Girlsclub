@@ -29,25 +29,29 @@ public class DeleteDiscussionServlet extends HttpServlet {
             String idParam = request.getParameter("id");
 
             if (idParam == null || idParam.trim().isEmpty()) {
-                response.sendRedirect(request.getContextPath() + "/main?error=ID_обсуждения_не_указан&section=discussions");
+                request.setAttribute("error", "ID обсуждения не указан");
+                response.sendRedirect(request.getContextPath() + "/main?section=discussions");
                 return;
             }
 
             Long id = Long.parseLong(idParam);
             var post = discussionService.getPostById(id);
             if (post == null) {
-                response.sendRedirect(request.getContextPath() + "/main?error=Обсуждение_не_найдено&section=discussions");
+                System.out.println(" Обсуждение с ID " + id + " не найдена");
+                request.setAttribute("error", "Обсуждение не найдено");
+                response.sendRedirect(request.getContextPath() + "/main?section=discussions");
                 return;
             }
+
             if (post.getAuthorId().equals(user.getId())) {
                 boolean deleted = discussionService.deletePost(id, user.getId());
                 if (deleted) {
-                    response.sendRedirect(request.getContextPath() + "/main?success=discussion_deleted&section=discussions");
+                    request.setAttribute("success", "discussion_deleted");
                 } else {
-                    response.sendRedirect(request.getContextPath() + "/main?error=Ошибка_при_удалении_обсуждения&section=discussions");
+                    request.setAttribute("error", "Ошибка при удалении обсуждения");
                 }
             } else {
-                response.sendRedirect(request.getContextPath() + "/main?error=Вы_можете_удалять_только_свои_обсуждения&section=discussions");
+                request.setAttribute("error", "Вы можете удалять только свои обсуждения");
             }
 
         } catch (AuthenticationException e) {
@@ -55,12 +59,14 @@ public class DeleteDiscussionServlet extends HttpServlet {
             return;
         } catch (NumberFormatException e) {
             System.out.println(" Ошибка парсинга ID: " + e.getMessage());
-            response.sendRedirect(request.getContextPath() + "/main?error=Неверный_идентификатор_обсуждения&section=discussions");
+            request.setAttribute("error", "Неверный идентификатор обсуждения");
         } catch (Exception e) {
             System.out.println("Общая ошибка: " + e.getMessage());
             e.printStackTrace();
-            response.sendRedirect(request.getContextPath() + "/main?error=Ошибка_сервера&section=discussions");
+            request.setAttribute("error", "Ошибка сервера: " + e.getMessage());
         }
+
+        response.sendRedirect(request.getContextPath() + "/main?section=discussions");
     }
 
     private String extractSessionId(Cookie[] cookies) {

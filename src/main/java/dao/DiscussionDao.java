@@ -103,7 +103,7 @@ public class DiscussionDao {
                             ");"
             );
 
-            // Создаею таблицу комментариев
+            // Создаю таблицу комментариев
             statement.executeUpdate(
                     "CREATE TABLE IF NOT EXISTS discussion_comments (" +
                             "id BIGSERIAL PRIMARY KEY, " +
@@ -197,30 +197,6 @@ public class DiscussionDao {
             }
         } catch (SQLException e) {
             System.err.println("Ошибка при поиске обсуждения: " + e.getMessage());
-            e.printStackTrace();
-        }
-        return null;
-    }
-
-    public DiscussionPost findByIdWithLikes(Long id, Long currentUserId) {
-        String query = "SELECT dp.*, u.username, " +
-                "EXISTS(SELECT 1 FROM discussion_likes dl WHERE dl.post_id = dp.id AND dl.user_id = ?) as user_liked " +
-                "FROM discussion_posts dp " +
-                "LEFT JOIN users u ON dp.author_id = u.id " +
-                "WHERE dp.id = ?";
-
-        try (PreparedStatement statement = connection.prepareStatement(query)) {
-            statement.setLong(1, currentUserId);
-            statement.setLong(2, id);
-
-            ResultSet resultSet = statement.executeQuery();
-            if (resultSet.next()) {
-                DiscussionPost post = mapResultSetToDiscussionPost(resultSet);
-                post.setUserLiked(resultSet.getBoolean("user_liked"));
-                return post;
-            }
-        } catch (SQLException e) {
-            System.err.println("Ошибка при поиске обсуждения с лайками: " + e.getMessage());
             e.printStackTrace();
         }
         return null;
@@ -444,14 +420,6 @@ public class DiscussionDao {
         return comment;
     }
 
-    public DiscussionPost findPostWithComments(Long postId, Long currentUserId) {
-        DiscussionPost post = findByIdWithLikes(postId, currentUserId);
-        if (post != null) {
-            List<DiscussionComment> comments = getCommentsByPost(postId);
-            post.setComments(comments);
-        }
-        return post;
-    }
 
     public boolean toggleLike(Long postId, Long userId) {
         if (hasUserLiked(postId, userId)) {

@@ -1,5 +1,3 @@
-// src/main/webapp/js/edit-meeting.js
-
 document.addEventListener('DOMContentLoaded', function() {
     initializeDateTime();
     setupFormValidation();
@@ -17,7 +15,7 @@ function initializeDateTime() {
     }
 }
 
-// Форматирование даты для input[type="datetime-local"]
+// Форматирование даты для input
 function formatDateTime(date) {
     const year = date.getFullYear();
     const month = String(date.getMonth() + 1).padStart(2, '0');
@@ -51,7 +49,7 @@ function validateForm() {
 
     // Проверка обязательных полей
     if (!title || !description || !eventDate || !maxAttendance || !location) {
-        alert('❌ Пожалуйста, заполните все обязательные поля');
+        alert('Пожалуйста, заполните все обязательные поля');
         return false;
     }
 
@@ -59,14 +57,14 @@ function validateForm() {
     const selectedDate = new Date(eventDate);
     const now = new Date();
     if (selectedDate <= now) {
-        alert('❌ Дата встречи должна быть в будущем');
+        alert('Дата встречи должна быть в будущем');
         return false;
     }
 
     // Проверка количества участников
     const attendance = parseInt(maxAttendance);
     if (attendance < 2 || attendance > 100) {
-        alert('❌ Количество участников должно быть от 2 до 100');
+        alert('Количество участников должно быть от 2 до 100');
         return false;
     }
 

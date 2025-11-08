@@ -1,5 +1,3 @@
-// src/main/webapp/js/create-discussion.js
-
 document.addEventListener('DOMContentLoaded', function() {
     setupCharacterCounters();
     setupFormValidation();
@@ -46,25 +44,25 @@ function validateForm() {
     const content = document.getElementById('content')?.value.trim();
 
     if (!title) {
-        alert('❌ Пожалуйста, введите заголовок обсуждения');
+        alert('Пожалуйста, введите заголовок обсуждения');
         document.getElementById('title').focus();
         return false;
     }
 
     if (!content) {
-        alert('❌ Пожалуйста, введите содержание обсуждения');
+        alert('Пожалуйста, введите содержание обсуждения');
         document.getElementById('content').focus();
         return false;
     }
 
     if (title.length > 200) {
-        alert('❌ Заголовок не может превышать 200 символов');
+        alert('Заголовок не может превышать 200 символов');
         document.getElementById('title').focus();
         return false;
     }
 
     if (content.length > 2000) {
-        alert('❌ Содержание не может превышать 2000 символов');
+        alert('Содержание не может превышать 2000 символов');
         document.getElementById('content').focus();
         return false;
     }

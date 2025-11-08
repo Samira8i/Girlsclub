@@ -2,6 +2,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%@ taglib prefix="my" tagdir="/WEB-INF/tags" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <!DOCTYPE html>
 <html lang="ru">
 <head>
@@ -12,7 +13,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Montserrat:wght@300;400;500&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="${pageContext.request.contextPath}/css/common.css">
     <link rel="stylesheet" href="${pageContext.request.contextPath}/css/edit-discussion.css">
-    <script src="${pageContext.request.contextPath}/js/edit-discussion.js.js"></script>
+    <script src="${pageContext.request.contextPath}/js/edit-discussion.js"></script>
 </head>
 <body>
 <div class="container">
@@ -41,7 +42,7 @@
             <c:if test="${not empty discussion.createdAt}">
                 <div class="info-item">
                     <span class="info-label">Создано:</span>
-                    <span class="info-value">${discussion.createdAt}</span>
+                    <span class="info-value">${discussion.formattedCreatedAt}</span>
                 </div>
             </c:if>
         </div>

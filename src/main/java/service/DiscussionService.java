@@ -36,14 +36,6 @@ public class DiscussionService {
         return discussionDao.findById(id);
     }
 
-    public DiscussionPost getPostByIdWithLikes(Long id, Long currentUserId) {
-        return discussionDao.findByIdWithLikes(id, currentUserId);
-    }
-
-    public DiscussionPost getPostWithComments(Long postId, Long currentUserId) {
-        return discussionDao.findPostWithComments(postId, currentUserId);
-    }
-
     public boolean updatePost(Long id, String title, String content, Long authorId) {
         try {
             DiscussionPost post = discussionDao.findById(id);
@@ -87,14 +79,6 @@ public class DiscussionService {
         return discussionDao.toggleLike(postId, userId);
     }
 
-    // Новые методы для AJAX функциональности
-    public boolean hasUserLiked(Long postId, Long userId) {
-        return discussionDao.hasUserLiked(postId, userId);
-    }
-
-    public int getLikeCount(Long postId) {
-        return discussionDao.getLikeCount(postId);
-    }
 
     public boolean addComment(Long postId, Long userId, String content) {
         try {

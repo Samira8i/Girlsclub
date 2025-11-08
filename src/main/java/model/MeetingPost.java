@@ -61,7 +61,7 @@ public class MeetingPost {
     public void setFull(boolean full) { this.full = full; }
 
 
-    public String getFormattedEventDate() { //TODO: понять используются ли и нужны ли
+    public String getFormattedEventDate() {
         if (eventDate == null) return "Дата не указана";
         try {
             DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd.MM.yyyy HH:mm");

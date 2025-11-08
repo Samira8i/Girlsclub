@@ -14,14 +14,16 @@
     max-width: 500px;
     margin: 0 auto;
     backdrop-filter: blur(10px);
+    border: var(--border-light);
+    width: 100%;
 }
 
 .form-title {
     text-align: center;
-    font-family: 'Playfair Display', serif;
+    font-family: var(--font-heading);
     font-size: 2rem;
     margin-bottom: 30px;
-    color: #EDEBDD;
+    color: var(--text-color);
 }
 
 .form-group {
@@ -32,72 +34,79 @@
     display: block;
     margin-bottom: 8px;
     font-weight: 500;
+    font-family: var(--font-body);
+    color: var(--text-color);
 }
 
 .form-input {
     width: 100%;
     padding: 15px;
     border: 1px solid rgba(237, 235, 221, 0.3);
-    border-radius: 8px;
+    border-radius: var(--border-radius);
     background: rgba(24, 23, 23, 0.5);
-    color: #EDEBDD;
+    color: var(--text-color);
     font-size: 1rem;
+    font-family: var(--font-body);
 }
 
 .form-input:focus {
     outline: none;
-    border-color: #810100;
+    border-color: var(--primary-color);
 }
 
 .form-submit {
     width: 100%;
     padding: 15px;
-    background: #810100;
-    color: #EDEBDD;
+    background: var(--primary-color);
+    color: var(--text-color);
     border: none;
-    border-radius: 8px;
+    border-radius: var(--border-radius);
     font-size: 1.1rem;
     cursor: pointer;
     transition: background 0.3s;
     margin-top: 10px;
+    font-family: var(--font-body);
 }
 
 .form-submit:hover {
-    background: #51080d;
+    background: var(--primary-dark);
 }
 
 .form-footer {
     text-align: center;
     margin-top: 25px;
+    font-family: var(--font-body);
 }
 
 .form-link {
-    color: #EDEBDD;
+    color: var(--text-color);
     text-decoration: none;
-    border-bottom: 1px dotted #810100;
+    border-bottom: 1px dotted var(--primary-color);
     transition: color 0.3s;
 }
 
 .form-link:hover {
-    color: #810100;
+    color: var(--primary-color);
 }
 
 .error-message {
     background: rgba(129, 1, 0, 0.3);
-    border: 1px solid #810100;
-    color: #EDEBDD;
+    border: 1px solid var(--primary-color);
+    color: var(--text-color);
     padding: 15px;
     border-radius: 5px;
     margin-bottom: 20px;
+    font-family: var(--font-body);
 }
 
 .success-message {
     background: rgba(0, 128, 0, 0.3);
     border: 1px solid green;
-    color: #EDEBDD;
+    color: var(--text-color);
     padding: 15px;
     border-radius: 5px;
     margin-bottom: 20px;
+    font-family: var(--font-body);
 }
 
 @media (max-width: 768px) {

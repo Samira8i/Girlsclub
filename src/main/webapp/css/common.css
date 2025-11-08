@@ -1,4 +1,34 @@
-@import url('https://fonts.googleapis.com/css2?family=Parisienne&family=Cormorant:wght@300;400;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Parisienne&family=Cormorant:wght@300;400;700&family=Playfair+Display:wght@400;700&family=Montserrat:wght@300;400;500&display=swap');
+
+:root {
+    /* Цвета */
+    --primary-color: #810100;
+    --primary-dark: #51080d;
+    --text-color: #EDEBDD;
+    --text-secondary: #B8B4A6;
+    --background-dark: #181717;
+    --background-gradient: linear-gradient(135deg, rgba(24, 23, 23, 0.9) 0%, rgba(43, 3, 7, 0.9) 100%);
+    --error-color: #ff6b6b;
+    --success-color: #28a745;
+
+    /* Шрифты */
+    --font-heading: 'Playfair Display', serif;
+    --font-body: 'Montserrat', sans-serif;
+    --font-special: 'Parisienne', cursive;
+    --font-cormorant: 'Cormorant', serif;
+
+    /* Тени */
+    --shadow-light: 0 8px 25px rgba(0, 0, 0, 0.3);
+    --shadow-medium: 0 12px 35px rgba(129, 1, 0, 0.2);
+    --shadow-heavy: 0 15px 35px rgba(0, 0, 0, 0.5);
+
+    /* Границы */
+    --border-light: 1px solid rgba(129, 1, 0, 0.3);
+    --border-medium: 2px solid rgba(129, 1, 0, 0.5);
+    --border-radius: 8px;
+    --border-radius-large: 12px;
+    --border-radius-xl: 15px;
+}
 
 * {
     margin: 0;
@@ -7,13 +37,14 @@
 }
 
 body {
-    font-family: 'Cormorant', serif;
+    font-family: var(--font-cormorant);
     background: linear-gradient(135deg, #19171b 0%, #2b0307 100%);
-    color: #EDEBDD;
+    color: var(--text-color);
     min-height: 100vh;
     display: flex;
     flex-direction: column;
     overflow-x: hidden;
+    line-height: 1.6;
 }
 
 .container {
@@ -25,15 +56,16 @@ body {
     min-height: 100vh;
 }
 
+/* Header */
 header {
     text-align: center;
     padding: 30px 0;
 }
 
 .logo {
-    font-family: 'Parisienne', cursive;
+    font-family: var(--font-special);
     font-size: 3.5rem;
-    color: #EDEBDD;
+    color: var(--text-color);
     text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
     margin-bottom: 10px;
     letter-spacing: 2px;
@@ -41,11 +73,12 @@ header {
 
 .tagline {
     font-size: 1.2rem;
-    color: #EDEBDD;
+    color: var(--text-color);
     opacity: 0.8;
     margin-bottom: 40px;
 }
 
+/* Footer */
 footer {
     text-align: center;
     padding: 20px;
@@ -54,6 +87,7 @@ footer {
     opacity: 0.7;
 }
 
+/* Кнопки */
 .btn {
     padding: 15px 40px;
     border: none;
@@ -67,15 +101,16 @@ footer {
     text-decoration: none;
     display: inline-block;
     text-align: center;
+    font-family: var(--font-cormorant);
 }
 
 .btn-login {
-    background: #810100;
-    color: #EDEBDD;
+    background: var(--primary-color);
+    color: var(--text-color);
 }
 
 .btn-register {
-    background: #EDEBDD;
+    background: var(--text-color);
     color: #2b0307;
 }
 
@@ -85,45 +120,68 @@ footer {
 }
 
 .btn-login:hover {
-    background: #51080d;
-    color: #EDEBDD;
+    background: var(--primary-dark);
 }
 
-.btn-register:hover {
-    background: #ffffff;
-    color: #2b0307;
-}
-
-.meeting-actions {
+/* User Header */
+.user-header {
     display: flex;
-    gap: 0.5rem;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 0;
+    margin-bottom: 30px;
+    border-bottom: 1px solid rgba(237, 235, 221, 0.3);
 }
 
-.edit-btn, .delete-btn {
-    background: none;
-    border: none;
+.user-info {
+    display: flex;
+    align-items: center;
+}
+
+.user-avatar {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    background: var(--primary-color);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-right: 15px;
+    font-size: 1.5rem;
+    overflow: hidden;
+    color: var(--text-color);
+}
+
+.user-name {
+    font-family: var(--font-heading);
+    font-size: 1.4rem;
+    color: var(--text-color);
+}
+
+/* Кнопки действий */
+.back-btn, .logout-btn {
+    padding: 10px 20px;
+    background: rgba(129, 1, 0, 0.2);
+    border: var(--border-light);
+    color: var(--text-color);
+    border-radius: var(--border-radius);
     cursor: pointer;
-    padding: 0.5rem;
-    border-radius: 4px;
-    transition: background-color 0.3s ease;
+    transition: all 0.3s;
+    text-decoration: none;
+    font-family: var(--font-body);
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
 }
 
-.edit-btn {
-    color: #2196f3;
+.back-btn:hover, .logout-btn:hover {
+    background: rgba(129, 1, 0, 0.4);
+    text-decoration: none;
+    color: var(--text-color);
+    transform: translateX(-3px);
 }
 
-.edit-btn:hover {
-    background: #e3f2fd;
-}
-
-.delete-btn {
-    color: #f44336;
-}
-
-.delete-btn:hover {
-    background: #ffebee;
-}
-
+/* Декоративные элементы */
 .decoration {
     position: absolute;
     opacity: 0.1;
@@ -144,9 +202,10 @@ footer {
 }
 
 .rose {
-    color: #810100;
+    color: var(--primary-color);
 }
 
+/* Управление страницами */
 .page {
     display: none;
 }
@@ -157,6 +216,41 @@ footer {
     min-height: 100vh;
 }
 
+/* Анимации */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes slideIn {
+    from {
+        opacity: 0;
+        transform: translateX(-30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Адаптивность */
 @media (max-width: 768px) {
     .logo {
         font-size: 2.5rem;
@@ -170,102 +264,6 @@ footer {
         padding: 15px;
     }
 
-    h1, h2, h3, h4, h5, h6 {
-        font-family: 'Parisienne', cursive;
-        font-weight: 400;
-    }
-
-    .btn {
-        font-family: 'Cormorant', serif;
-        font-weight: 500;
-    }
-
-    .form-title {
-        font-family: 'Parisienne', cursive;
-    }
-}
-
-
-.user-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 15px 0;
-    margin-bottom: 30px;
-    border-bottom: 1px solid rgba(237, 235, 221, 0.3);
-}
-
-.user-info {
-    display: flex;
-    align-items: center;
-}
-
-.user-avatar {
-    width: 50px;
-    height: 50px;
-    border-radius: 50%;
-    background: #810100;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    margin-right: 15px;
-    font-size: 1.5rem;
-    overflow: hidden;
-    color: #EDEBDD;
-}
-
-.user-name {
-    font-family: 'Playfair Display', serif;
-    font-size: 1.4rem;
-    color: #EDEBDD;
-}
-
-/* Стили для кнопки "Назад" */
-.back-btn {
-    padding: 10px 20px;
-    background: rgba(129, 1, 0, 0.2);
-    border: 1px solid rgba(129, 1, 0, 0.5);
-    color: #EDEBDD;
-    border-radius: 8px;
-    cursor: pointer;
-    transition: all 0.3s;
-    text-decoration: none;
-    font-family: 'Montserrat', sans-serif;
-    display: inline-flex;
-    align-items: center;
-    gap: 8px;
-}
-
-.back-btn:hover {
-    background: rgba(129, 1, 0, 0.4);
-    text-decoration: none;
-    color: #EDEBDD;
-    transform: translateX(-3px);
-}
-
-/* Стили для кнопки "Выйти" */
-.logout-btn {
-    padding: 10px 20px;
-    background: rgba(129, 1, 0, 0.2);
-    border: 1px solid rgba(129, 1, 0, 0.5);
-    color: #EDEBDD;
-    border-radius: 8px;
-    cursor: pointer;
-    transition: all 0.3s;
-    text-decoration: none;
-    font-family: 'Montserrat', sans-serif;
-    display: inline-flex;
-    align-items: center;
-    gap: 8px;
-}
-
-.logout-btn:hover {
-    background: rgba(129, 1, 0, 0.4);
-    text-decoration: none;
-    color: #EDEBDD;
-    transform: translateX(-3px);
-}
-@media (max-width: 768px) {
     .user-header {
         flex-direction: column;
         gap: 15px;

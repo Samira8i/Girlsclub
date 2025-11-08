@@ -1,6 +1,6 @@
 .meeting-date {
     font-weight: 500;
-    color: #EDEBDD;
+    color: var(--text-color);
 }
 
 .date-picker-container {
@@ -8,7 +8,7 @@
     padding: 20px;
     background: rgba(129, 1, 0, 0.1);
     border-radius: 10px;
-    border: 1px solid rgba(129, 1, 0, 0.3);
+    border: var(--border-light);
 }
 
 .date-filter {
@@ -19,37 +19,37 @@
 }
 
 .date-filter label {
-    color: #EDEBDD;
+    color: var(--text-color);
     font-weight: 500;
-    font-family: 'Montserrat', sans-serif;
+    font-family: var(--font-body);
     margin: 0;
 }
 
 .date-filter input {
     background: rgba(237, 235, 221, 0.1);
-    border: 2px solid rgba(129, 1, 0, 0.5);
-    border-radius: 8px;
+    border: var(--border-medium);
+    border-radius: var(--border-radius);
     padding: 10px 12px;
-    color: #EDEBDD;
-    font-family: 'Montserrat', sans-serif;
+    color: var(--text-color);
+    font-family: var(--font-body);
     min-width: 200px;
 }
 
 .date-filter input:focus {
     outline: none;
-    border-color: #810100;
+    border-color: var(--primary-color);
     background: rgba(237, 235, 221, 0.15);
     box-shadow: 0 0 0 2px rgba(129, 1, 0, 0.3);
 }
 
 .filter-btn {
-    background: linear-gradient(135deg, #810100 0%, #51080d 100%);
-    color: #EDEBDD;
+    background: linear-gradient(135deg, var(--primary-color) 0%, var(--primary-dark) 100%);
+    color: var(--text-color);
     border: none;
-    border-radius: 8px;
+    border-radius: var(--border-radius);
     padding: 10px 20px;
     cursor: pointer;
-    font-family: 'Montserrat', sans-serif;
+    font-family: var(--font-body);
     transition: all 0.3s ease;
     display: inline-flex;
     align-items: center;
@@ -57,62 +57,9 @@
 }
 
 .filter-btn:hover {
-    background: linear-gradient(135deg, #51080d 0%, #810100 100%);
+    background: linear-gradient(135deg, var(--primary-dark) 0%, var(--primary-color) 100%);
     transform: translateY(-2px);
     box-shadow: 0 4px 12px rgba(129, 1, 0, 0.3);
-}
-
-/* Основные стили header */
-.user-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 15px 0;
-    margin-bottom: 20px;
-    border-bottom: 1px solid rgba(237, 235, 221, 0.3);
-}
-
-.user-info {
-    display: flex;
-    align-items: center;
-}
-
-.user-avatar {
-    width: 50px;
-    height: 50px;
-    border-radius: 50%;
-    background: #810100;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    margin-right: 15px;
-    font-size: 1.5rem;
-    overflow: hidden;
-    color: #EDEBDD;
-}
-
-.user-name {
-    font-family: 'Playfair Display', serif;
-    font-size: 1.4rem;
-    color: #EDEBDD;
-}
-
-.logout-btn {
-    padding: 8px 20px;
-    background: transparent;
-    border: 1px solid #810100;
-    color: #EDEBDD;
-    border-radius: 20px;
-    cursor: pointer;
-    transition: all 0.3s;
-    text-decoration: none;
-    font-family: 'Montserrat', sans-serif;
-}
-
-.logout-btn:hover {
-    background: #810100;
-    text-decoration: none;
-    color: #EDEBDD;
 }
 
 /* Основная структура контента */
@@ -124,36 +71,36 @@
 
 .sidebar {
     flex: 0 0 250px;
-    background: linear-gradient(135deg, rgba(24, 23, 23, 0.9) 0%, rgba(43, 3, 7, 0.9) 100%);
-    border-radius: 15px;
+    background: var(--background-gradient);
+    border-radius: var(--border-radius-xl);
     padding: 25px;
-    border: 1px solid rgba(129, 1, 0, 0.3);
-    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+    border: var(--border-light);
+    box-shadow: var(--shadow-light);
 }
 
 .sidebar-title {
-    font-family: 'Playfair Display', serif;
+    font-family: var(--font-heading);
     font-size: 1.5rem;
     margin-bottom: 25px;
     text-align: center;
-    color: #EDEBDD;
+    color: var(--text-color);
 }
 
 .nav-item {
     padding: 15px;
     margin-bottom: 10px;
-    border-radius: 8px;
+    border-radius: var(--border-radius);
     cursor: pointer;
     transition: background 0.3s;
     display: flex;
     align-items: center;
-    color: #EDEBDD;
-    font-family: 'Montserrat', sans-serif;
+    color: var(--text-color);
+    font-family: var(--font-body);
 }
 
 .nav-item i {
     margin-right: 10px;
-    color: #810100;
+    color: var(--primary-color);
 }
 
 .nav-item:hover {
@@ -166,11 +113,11 @@
 
 .content {
     flex: 1;
-    background: linear-gradient(135deg, rgba(24, 23, 23, 0.9) 0%, rgba(43, 3, 7, 0.9) 100%);
-    border-radius: 15px;
+    background: var(--background-gradient);
+    border-radius: var(--border-radius-xl);
     padding: 30px;
-    border: 1px solid rgba(129, 1, 0, 0.3);
-    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+    border: var(--border-light);
+    box-shadow: var(--shadow-light);
 }
 
 /* Секции контента */
@@ -194,56 +141,55 @@
 }
 
 .section-title {
-    font-family: 'Playfair Display', serif;
+    font-family: var(--font-heading);
     font-size: 2rem;
-    color: #EDEBDD;
+    color: var(--text-color);
     margin: 0;
     text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
     flex: 1;
 }
 
-/* кнопка создания встречи */
-.create-meeting-btn {
+/* Кнопки */
+.create-meeting-btn, .create-first-meeting, .next-quote {
     display: inline-flex;
     align-items: center;
     gap: 8px;
     padding: 12px 24px;
-    background: linear-gradient(135deg, #810100 0%, #51080d 100%);
-    color: #EDEBDD;
+    background: linear-gradient(135deg, var(--primary-color) 0%, var(--primary-dark) 100%);
+    color: var(--text-color);
     text-decoration: none;
     border-radius: 10px;
-    font-family: 'Montserrat', sans-serif;
+    font-family: var(--font-body);
     font-weight: 500;
     font-size: 0.9rem;
     box-shadow: 0 3px 12px rgba(129, 1, 0, 0.3);
-    border: 1px solid rgba(129, 1, 0, 0.5);
-    position: relative;
-    overflow: hidden;
+    border: var(--border-medium);
+    transition: all 0.3s ease;
 }
 
-.create-meeting-btn:hover {
+.create-meeting-btn:hover, .create-first-meeting:hover, .next-quote:hover {
     transform: translateY(-2px);
     box-shadow: 0 5px 18px rgba(129, 1, 0, 0.4);
-    background: linear-gradient(135deg, #51080d 0%, #810100 100%);
+    background: linear-gradient(135deg, var(--primary-dark) 0%, var(--primary-color) 100%);
     text-decoration: none;
-    color: #EDEBDD;
+    color: var(--text-color);
 }
 
-/* Карточки встреч */
+/* Карточки */
 .meeting-card {
-    background: linear-gradient(135deg, rgba(24, 23, 23, 0.9) 0%, rgba(43, 3, 7, 0.9) 100%);
-    border-radius: 15px;
+    background: var(--background-gradient);
+    border-radius: var(--border-radius-xl);
     padding: 25px;
     margin-bottom: 20px;
-    border: 1px solid rgba(129, 1, 0, 0.3);
-    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+    border: var(--border-light);
+    box-shadow: var(--shadow-light);
     transition: all 0.3s ease;
     animation: slideIn 0.5s ease-out;
 }
 
 .meeting-card:hover {
     transform: translateY(-5px);
-    box-shadow: 0 12px 35px rgba(129, 1, 0, 0.2);
+    box-shadow: var(--shadow-medium);
     border-color: rgba(129, 1, 0, 0.5);
 }
 
@@ -257,9 +203,9 @@
 }
 
 .meeting-title {
-    font-family: 'Playfair Display', serif;
+    font-family: var(--font-heading);
     font-size: 1.5rem;
-    color: #EDEBDD;
+    color: var(--text-color);
     margin: 0;
     flex: 1;
 }
@@ -272,13 +218,14 @@
 
 .edit-btn, .delete-btn {
     background: rgba(237, 235, 221, 0.1);
-    border: 1px solid rgba(129, 1, 0, 0.5);
-    color: #EDEBDD;
+    border: var(--border-medium);
+    color: var(--text-color);
     padding: 8px 12px;
-    border-radius: 8px;
+    border-radius: var(--border-radius);
     cursor: pointer;
     transition: all 0.3s ease;
     font-size: 0.9rem;
+    font-family: var(--font-body);
 }
 
 .edit-btn:hover {
@@ -297,7 +244,7 @@
     color: rgba(237, 235, 221, 0.8);
     line-height: 1.6;
     margin-bottom: 20px;
-    font-family: 'Montserrat', sans-serif;
+    font-family: var(--font-body);
 }
 
 /* Блок регистрации и участников */
@@ -309,7 +256,7 @@
     padding: 15px;
     background: rgba(129, 1, 0, 0.1);
     border-radius: 10px;
-    border: 1px solid rgba(129, 1, 0, 0.3);
+    border: var(--border-light);
     flex-wrap: wrap;
 }
 
@@ -317,20 +264,20 @@
     display: flex;
     align-items: center;
     gap: 8px;
-    color: #EDEBDD;
-    font-family: 'Montserrat', sans-serif;
+    color: var(--text-color);
+    font-family: var(--font-body);
     font-weight: 500;
 }
 
 .spots-info i {
-    color: #810100;
+    color: var(--primary-color);
 }
 
 .register-btn, .cancel-registration-btn {
     padding: 10px 20px;
     border: none;
-    border-radius: 8px;
-    font-family: 'Montserrat', sans-serif;
+    border-radius: var(--border-radius);
+    font-family: var(--font-body);
     font-weight: 500;
     cursor: pointer;
     transition: all 0.3s ease;
@@ -365,7 +312,7 @@
 .event-full {
     color: #dc3545;
     font-weight: 500;
-    font-family: 'Montserrat', sans-serif;
+    font-family: var(--font-body);
 }
 
 /* Список участников */
@@ -374,8 +321,8 @@
 }
 
 .participants-list h4 {
-    font-family: 'Montserrat', sans-serif;
-    color: #EDEBDD;
+    font-family: var(--font-body);
+    color: var(--text-color);
     margin-bottom: 12px;
     font-size: 1.1rem;
 }
@@ -393,30 +340,30 @@
     padding: 8px 12px;
     background: rgba(237, 235, 221, 0.1);
     border-radius: 20px;
-    border: 1px solid rgba(129, 1, 0, 0.3);
+    border: var(--border-light);
 }
 
 .participant-avatar {
     width: 24px;
     height: 24px;
     border-radius: 50%;
-    background: #810100;
+    background: var(--primary-color);
     display: flex;
     align-items: center;
     justify-content: center;
     font-size: 0.8rem;
-    color: #EDEBDD;
+    color: var(--text-color);
 }
 
 .participant-name {
-    font-family: 'Montserrat', sans-serif;
-    color: #EDEBDD;
+    font-family: var(--font-body);
+    color: var(--text-color);
     font-size: 0.9rem;
 }
 
 .no-participants {
     color: rgba(237, 235, 221, 0.6);
-    font-family: 'Montserrat', sans-serif;
+    font-family: var(--font-body);
     font-style: italic;
     margin: 10px 0;
 }
@@ -432,12 +379,12 @@
     display: flex;
     align-items: center;
     color: rgba(237, 235, 221, 0.9);
-    font-family: 'Montserrat', sans-serif;
+    font-family: var(--font-body);
 }
 
 .meeting-detail i {
     margin-right: 10px;
-    color: #810100;
+    color: var(--primary-color);
     width: 16px;
 }
 
@@ -446,37 +393,37 @@
     align-items: center;
     color: rgba(237, 235, 221, 0.7);
     font-size: 0.9rem;
-    font-family: 'Montserrat', sans-serif;
-    border-top: 1px solid rgba(129, 1, 0, 0.3);
+    font-family: var(--font-body);
+    border-top: var(--border-light);
     padding-top: 15px;
 }
 
 .meeting-author i {
     margin-right: 8px;
-    color: #810100;
+    color: var(--primary-color);
 }
 
 /* Сообщения */
 .success-message {
     background: linear-gradient(135deg, rgba(40, 167, 69, 0.9) 0%, rgba(33, 136, 56, 0.9) 100%);
-    color: #EDEBDD;
+    color: var(--text-color);
     padding: 15px 20px;
-    border-radius: 8px;
+    border-radius: var(--border-radius);
     margin-bottom: 20px;
     border-left: 5px solid #28a745;
-    font-family: 'Montserrat', sans-serif;
+    font-family: var(--font-body);
     font-size: 1rem;
     box-shadow: 0 5px 15px rgba(40, 167, 69, 0.3);
 }
 
 .error-message {
     background: linear-gradient(135deg, rgba(220, 53, 69, 0.9) 0%, rgba(200, 35, 51, 0.9) 100%);
-    color: #EDEBDD;
+    color: var(--text-color);
     padding: 15px 20px;
-    border-radius: 8px;
+    border-radius: var(--border-radius);
     margin-bottom: 20px;
     border-left: 5px solid #dc3545;
-    font-family: 'Montserrat', sans-serif;
+    font-family: var(--font-body);
     font-size: 1rem;
     box-shadow: 0 5px 15px rgba(220, 53, 69, 0.3);
 }
@@ -497,26 +444,7 @@
 .no-meetings p, .no-content p {
     font-size: 1.2rem;
     margin-bottom: 20px;
-    font-family: 'Montserrat', sans-serif;
-}
-
-.create-first-meeting {
-    display: inline-block;
-    padding: 12px 24px;
-    background: linear-gradient(135deg, #810100 0%, #51080d 100%);
-    color: #EDEBDD;
-    text-decoration: none;
-    border-radius: 8px;
-    font-family: 'Montserrat', sans-serif;
-    font-weight: 500;
-    transition: all 0.3s ease;
-}
-
-.create-first-meeting:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 5px 15px rgba(129, 1, 0, 0.4);
-    text-decoration: none;
-    color: #EDEBDD;
+    font-family: var(--font-body);
 }
 
 /* Секция цитат */
@@ -524,22 +452,22 @@
     text-align: center;
     padding: 60px 40px;
     background: linear-gradient(135deg, rgba(129, 1, 0, 0.1) 0%, rgba(43, 3, 7, 0.1) 100%);
-    border-radius: 15px;
-    border: 1px solid rgba(129, 1, 0, 0.3);
+    border-radius: var(--border-radius-xl);
+    border: var(--border-light);
     box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
 }
 
 .main-quote {
-    font-family: 'Playfair Display', serif;
+    font-family: var(--font-heading);
     font-size: 2rem;
-    color: #EDEBDD;
+    color: var(--text-color);
     margin-bottom: 20px;
     line-height: 1.4;
     text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
 }
 
 .quote-author {
-    font-family: 'Montserrat', sans-serif;
+    font-family: var(--font-body);
     font-size: 1.2rem;
     color: rgba(237, 235, 221, 0.8);
     margin-bottom: 30px;
@@ -548,47 +476,6 @@
 
 .quote-controls {
     margin-top: 30px;
-}
-
-.next-quote {
-    padding: 12px 30px;
-    background: linear-gradient(135deg, #810100 0%, #51080d 100%);
-    color: #EDEBDD;
-    border: none;
-    border-radius: 8px;
-    cursor: pointer;
-    font-family: 'Montserrat', sans-serif;
-    font-weight: 500;
-    transition: all 0.3s ease;
-}
-
-.next-quote:hover {
-    background: linear-gradient(135deg, #51080d 0%, #810100 100%);
-    transform: translateY(-2px);
-    box-shadow: 0 5px 15px rgba(129, 1, 0, 0.4);
-}
-
-/* Анимации */
-@keyframes fadeIn {
-    from {
-        opacity: 0;
-        transform: translateY(20px);
-    }
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
-}
-
-@keyframes slideIn {
-    from {
-        opacity: 0;
-        transform: translateX(-30px);
-    }
-    to {
-        opacity: 1;
-        transform: translateX(0);
-    }
 }
 
 /* Адаптивность */
@@ -635,20 +522,5 @@
 
     .date-filter input {
         min-width: 100%;
-    }
-
-    .user-header {
-        flex-direction: column;
-        gap: 15px;
-        text-align: center;
-    }
-
-    .user-info {
-        flex-direction: column;
-        gap: 10px;
-    }
-
-    .user-avatar {
-        margin-right: 0;
     }
 }

@@ -1,5 +1,3 @@
-// src/main/webapp/js/main.js
-
 // Показ/скрытие секций
 function showSection(sectionName) {
     // Скрыть все секции
@@ -166,7 +164,7 @@ function displayQuote(index) {
     }
 }
 
-// Автоматическая смена цитат каждые 10 секунд (только на странице цитат)
+// Автоматическая смена цитат каждые 10 секунд
 function startQuoteRotation() {
     const quotesSection = document.getElementById('quotes-section');
     if (quotesSection && quotesSection.classList.contains('active')) {
@@ -176,7 +174,6 @@ function startQuoteRotation() {
     }
 }
 
-// Обработчики для форм лайков (предотвращение двойного отправления)
 document.addEventListener('DOMContentLoaded', function() {
     // Инициализация системы цитат
     if (document.getElementById('quotes-section')) {
@@ -275,7 +272,6 @@ function checkUrlSection() {
 // Вызвать при загрузке
 document.addEventListener('DOMContentLoaded', function() {
     checkUrlSection();
-    // остальной код инициализации...
 });
 
 // Глобальные переменные для доступа из консоли (для отладки)

@@ -121,7 +121,7 @@ public class MeetingService {
         if (dateTimeStr == null || dateTimeStr.trim().isEmpty()) {
             return null;
         }
-//TODO: разобраться с парсировкоц даты и сделать адекватную
+//TODO: все это лишний код, убрать парсинг полностью!
         dateTimeStr = dateTimeStr.trim();
         System.out.println("Пытаемся распарсить дату: " + dateTimeStr);
 
@@ -138,10 +138,8 @@ public class MeetingService {
         for (DateTimeFormatter formatter : formatters) {
             try {
                 LocalDateTime result = LocalDateTime.parse(dateTimeStr, formatter);
-                System.out.println("Дата успешно распарсена с форматом: " + formatter);
                 return result;
             } catch (DateTimeParseException e) {
-                // Пробуем следующий формат
             }
         }
 
