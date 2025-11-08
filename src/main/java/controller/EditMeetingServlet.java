@@ -5,7 +5,6 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.*;
 import model.MeetingPost;
 import model.User;
-import service.ServiceFactory;
 import service.MeetingService;
 import service.UserService;
 import exceptions.AuthenticationException;
@@ -17,7 +16,7 @@ public class EditMeetingServlet extends HttpServlet {
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         try {
-            UserService userService = ServiceFactory.getUserService();
+            UserService userService = new UserService();
             String sessionId = extractSessionId(request.getCookies());
             if (sessionId == null) {
                 response.sendRedirect(request.getContextPath() + "/login");
@@ -33,7 +32,7 @@ public class EditMeetingServlet extends HttpServlet {
                 return;
             }
 
-            MeetingService meetingService = ServiceFactory.getMeetingService();
+            MeetingService meetingService = new MeetingService();
             Long meetingId = Long.parseLong(idParam);
 
             MeetingPost meeting = meetingService.getMeetingById(meetingId);
@@ -68,7 +67,7 @@ public class EditMeetingServlet extends HttpServlet {
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         try {
-            UserService userService = ServiceFactory.getUserService();
+            UserService userService = new UserService();
 
             String sessionId = extractSessionId(request.getCookies());
             if (sessionId == null) {
@@ -98,7 +97,7 @@ public class EditMeetingServlet extends HttpServlet {
                 return;
             }
 
-            MeetingService meetingService = ServiceFactory.getMeetingService();
+            MeetingService meetingService = new MeetingService();
             Long meetingId = Long.parseLong(idParam);
             //TODO:повторная проверка в post и get, нужно ли?
             MeetingPost existingMeeting = meetingService.getMeetingById(meetingId);

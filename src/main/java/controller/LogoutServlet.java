@@ -1,6 +1,5 @@
 package controller;
 
-import service.ServiceFactory;
 import service.UserService;
 import jakarta.servlet.*;
 import jakarta.servlet.http.*;
@@ -13,7 +12,7 @@ public class LogoutServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         try {
-            UserService userService = ServiceFactory.getUserService();
+            UserService userService = new UserService();
             // Удаляем sessionId из кук
             String sessionId = extractSessionId(request.getCookies());
             if (sessionId != null) {

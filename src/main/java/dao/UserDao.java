@@ -1,12 +1,12 @@
 package dao;
 
 import model.User;
+import util.DatabaseUtil;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
 public class UserDao {
-    private final Connection connection;
 
     private static final String USER_TABLE_CREATE_QUERY =
             "CREATE TABLE IF NOT EXISTS users (" +
@@ -32,21 +32,24 @@ public class UserDao {
     private static final String DELETE_USER_QUERY =
             "DELETE FROM users WHERE id = ?;";
 
-    public UserDao(Connection connection) {
-        this.connection = connection;
+    public UserDao() {
         initializeTable();
     }
 
     private void initializeTable() {
-        try (Statement statement = connection.createStatement()) {
+        try (Connection connection = DatabaseUtil.getConnection();
+             Statement statement = connection.createStatement()) {
             statement.executeUpdate(USER_TABLE_CREATE_QUERY);
+            System.out.println("Таблица users создана или уже существует");
         } catch (SQLException e) {
             throw new RuntimeException("Ошибка при создании таблицы users", e);
         }
     }
 
     public boolean create(User user) {
-        try (PreparedStatement statement = connection.prepareStatement(CREATE_USER_QUERY)) {
+        try (Connection connection = DatabaseUtil.getConnection();
+             PreparedStatement statement = connection.prepareStatement(CREATE_USER_QUERY)) {
+
             statement.setString(1, user.getUsername());
             statement.setString(2, user.getPasswordHash());
             statement.setString(3, user.getSalt());
@@ -59,13 +62,14 @@ public class UserDao {
             }
         } catch (SQLException e) {
             System.err.println("Ошибка при создании пользователя: " + e.getMessage());
-            e.printStackTrace();
         }
         return false;
     }
 
     public User findByUsername(String username) {
-        try (PreparedStatement statement = connection.prepareStatement(FIND_BY_USERNAME_QUERY)) {
+        try (Connection connection = DatabaseUtil.getConnection();
+             PreparedStatement statement = connection.prepareStatement(FIND_BY_USERNAME_QUERY)) {
+
             statement.setString(1, username);
             ResultSet resultSet = statement.executeQuery();
 
@@ -74,13 +78,14 @@ public class UserDao {
             }
         } catch (SQLException e) {
             System.err.println("Ошибка при поиске пользователя: " + e.getMessage());
-            e.printStackTrace();
         }
         return null;
     }
 
     public User findById(Long id) {
-        try (PreparedStatement statement = connection.prepareStatement(FIND_BY_ID_QUERY)) {
+        try (Connection connection = DatabaseUtil.getConnection();
+             PreparedStatement statement = connection.prepareStatement(FIND_BY_ID_QUERY)) {
+
             statement.setLong(1, id);
             ResultSet resultSet = statement.executeQuery();
 
@@ -89,7 +94,6 @@ public class UserDao {
             }
         } catch (SQLException e) {
             System.err.println("Ошибка при поиске пользователя по ID: " + e.getMessage());
-            e.printStackTrace();
         }
         return null;
     }
@@ -97,7 +101,8 @@ public class UserDao {
     public List<User> findAll() {
         List<User> users = new ArrayList<>();
 
-        try (PreparedStatement statement = connection.prepareStatement(FIND_ALL_QUERY);
+        try (Connection connection = DatabaseUtil.getConnection();
+             PreparedStatement statement = connection.prepareStatement(FIND_ALL_QUERY);
              ResultSet resultSet = statement.executeQuery()) {
 
             while (resultSet.next()) {
@@ -105,20 +110,20 @@ public class UserDao {
             }
         } catch (SQLException e) {
             System.err.println("Ошибка при получении всех пользователей: " + e.getMessage());
-            e.printStackTrace();
         }
         return users;
     }
 
     public boolean delete(Long userId) {
-        try (PreparedStatement statement = connection.prepareStatement(DELETE_USER_QUERY)) {
-            statement.setLong(1, userId);
+        try (Connection connection = DatabaseUtil.getConnection();
+             PreparedStatement statement = connection.prepareStatement(DELETE_USER_QUERY)) {
 
+            statement.setLong(1, userId);
             int affectedRows = statement.executeUpdate();
             return affectedRows > 0;
+
         } catch (SQLException e) {
             System.err.println("Ошибка при удалении пользователя: " + e.getMessage());
-            e.printStackTrace();
         }
         return false;
     }

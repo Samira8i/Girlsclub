@@ -9,8 +9,8 @@ import java.util.List;
 public class DiscussionService {
     private DiscussionDao discussionDao;
 
-    public DiscussionService(Connection connection) {
-        this.discussionDao = new DiscussionDao(connection);
+    public DiscussionService() {
+        this.discussionDao = new DiscussionDao();
     }
 
     public boolean createPost(String title, String content, Long authorId) {

@@ -3,13 +3,13 @@ package dao;
 import model.DiscussionPost;
 import model.DiscussionComment;
 import model.User;
+import util.DatabaseUtil;
+
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
 public class DiscussionDao {
-    private final Connection connection;
-
     private static final String DISCUSSION_TABLE_CREATE_QUERY =
             "CREATE TABLE IF NOT EXISTS discussion_posts (" +
                     "id BIGSERIAL PRIMARY KEY, " +
@@ -81,12 +81,12 @@ public class DiscussionDao {
     private static final String FIND_COMMENT_BY_ID_QUERY =
             "SELECT * FROM discussion_comments WHERE id = ?;";
 
-    public DiscussionDao(Connection connection) {
-        this.connection = connection;
+    public DiscussionDao() {
         initializeTable();
     }
     private void initializeTable() {
-        try (Statement statement = connection.createStatement()) {
+        try (Connection connection = DatabaseUtil.getConnection();
+             Statement statement = connection.createStatement()) {
             // Создаю таблицу постов
             statement.executeUpdate(DISCUSSION_TABLE_CREATE_QUERY);
 
@@ -128,7 +128,8 @@ public class DiscussionDao {
         }
     }
     public boolean create(DiscussionPost post) {
-        try (PreparedStatement statement = connection.prepareStatement(CREATE_DISCUSSION_QUERY)) {
+        try (Connection connection = DatabaseUtil.getConnection();
+             PreparedStatement statement = connection.prepareStatement(CREATE_DISCUSSION_QUERY)) {
             statement.setString(1, post.getTitle());
             statement.setString(2, post.getContent());
             statement.setLong(3, post.getAuthorId());
@@ -147,7 +148,8 @@ public class DiscussionDao {
     public List<DiscussionPost> findAll() {
         List<DiscussionPost> posts = new ArrayList<>();
 
-        try (PreparedStatement statement = connection.prepareStatement(FIND_ALL_DISCUSSIONS_QUERY);
+        try (Connection connection = DatabaseUtil.getConnection();
+             PreparedStatement statement = connection.prepareStatement(FIND_ALL_DISCUSSIONS_QUERY);
              ResultSet resultSet = statement.executeQuery()) {
 
             while (resultSet.next()) {
@@ -168,7 +170,8 @@ public class DiscussionDao {
                 "LEFT JOIN users u ON dp.author_id = u.id " +
                 "ORDER BY dp.created_at DESC";
 
-        try (PreparedStatement statement = connection.prepareStatement(query)) {
+        try (Connection connection = DatabaseUtil.getConnection();
+             PreparedStatement statement = connection.prepareStatement(query)) {
             statement.setLong(1, currentUserId);
             ResultSet resultSet = statement.executeQuery();
 
@@ -188,7 +191,8 @@ public class DiscussionDao {
     }
 
     public DiscussionPost findById(Long id) {
-        try (PreparedStatement statement = connection.prepareStatement(FIND_DISCUSSION_BY_ID_QUERY)) {
+        try (Connection connection = DatabaseUtil.getConnection();
+             PreparedStatement statement = connection.prepareStatement(FIND_DISCUSSION_BY_ID_QUERY)) {
             statement.setLong(1, id);
 
             ResultSet resultSet = statement.executeQuery();
@@ -203,7 +207,8 @@ public class DiscussionDao {
     }
 
     public boolean update(DiscussionPost post) {
-        try (PreparedStatement statement = connection.prepareStatement(UPDATE_DISCUSSION_QUERY)) {
+        try (Connection connection = DatabaseUtil.getConnection();
+             PreparedStatement statement = connection.prepareStatement(UPDATE_DISCUSSION_QUERY)) {
             statement.setString(1, post.getTitle());
             statement.setString(2, post.getContent());
             statement.setLong(3, post.getId());
@@ -218,7 +223,8 @@ public class DiscussionDao {
     }
 
     public boolean delete(Long id) {
-        try (PreparedStatement statement = connection.prepareStatement(DELETE_DISCUSSION_QUERY)) {
+        try (Connection connection = DatabaseUtil.getConnection();
+             PreparedStatement statement = connection.prepareStatement(DELETE_DISCUSSION_QUERY)) {
             statement.setLong(1, id);
 
             int affectedRows = statement.executeUpdate();
@@ -231,7 +237,8 @@ public class DiscussionDao {
     }
 
     public boolean addLike(Long postId, Long userId) {
-        try (PreparedStatement statement = connection.prepareStatement(ADD_LIKE_QUERY)) {
+        try (Connection connection = DatabaseUtil.getConnection();
+             PreparedStatement statement = connection.prepareStatement(ADD_LIKE_QUERY)) {
             statement.setLong(1, postId);
             statement.setLong(2, userId);
             int affectedRows = statement.executeUpdate();
@@ -248,7 +255,8 @@ public class DiscussionDao {
     }
 
     public boolean removeLike(Long postId, Long userId) {
-        try (PreparedStatement statement = connection.prepareStatement(REMOVE_LIKE_QUERY)) {
+        try (Connection connection = DatabaseUtil.getConnection();
+             PreparedStatement statement = connection.prepareStatement(REMOVE_LIKE_QUERY)) {
             statement.setLong(1, postId);
             statement.setLong(2, userId);
             int affectedRows = statement.executeUpdate();
@@ -265,7 +273,8 @@ public class DiscussionDao {
     }
 
     public boolean hasUserLiked(Long postId, Long userId) {
-        try (PreparedStatement statement = connection.prepareStatement(CHECK_USER_LIKE_QUERY)) {
+        try (Connection connection = DatabaseUtil.getConnection();
+             PreparedStatement statement = connection.prepareStatement(CHECK_USER_LIKE_QUERY)) {
             statement.setLong(1, postId);
             statement.setLong(2, userId);
             ResultSet resultSet = statement.executeQuery();
@@ -278,7 +287,8 @@ public class DiscussionDao {
     }
 
     public int getLikeCount(Long postId) {
-        try (PreparedStatement statement = connection.prepareStatement(COUNT_LIKES_QUERY)) {
+        try (Connection connection = DatabaseUtil.getConnection();
+             PreparedStatement statement = connection.prepareStatement(COUNT_LIKES_QUERY)) {
             statement.setLong(1, postId);
             ResultSet resultSet = statement.executeQuery();
             if (resultSet.next()) {
@@ -291,7 +301,8 @@ public class DiscussionDao {
         return 0;
     }
     public boolean addComment(DiscussionComment comment) {
-        try (PreparedStatement statement = connection.prepareStatement(ADD_COMMENT_QUERY)) {
+        try (Connection connection = DatabaseUtil.getConnection();
+             PreparedStatement statement = connection.prepareStatement(ADD_COMMENT_QUERY)) {
             statement.setLong(1, comment.getPostId());
             statement.setLong(2, comment.getUserId());
             statement.setString(3, comment.getContent());
@@ -311,7 +322,8 @@ public class DiscussionDao {
 
     public List<DiscussionComment> getCommentsByPost(Long postId) {
         List<DiscussionComment> comments = new ArrayList<>();
-        try (PreparedStatement statement = connection.prepareStatement(GET_COMMENTS_BY_POST_QUERY)) {
+        try (Connection connection = DatabaseUtil.getConnection();
+             PreparedStatement statement = connection.prepareStatement(GET_COMMENTS_BY_POST_QUERY)) {
             statement.setLong(1, postId);
             ResultSet resultSet = statement.executeQuery();
             while (resultSet.next()) {
@@ -326,7 +338,8 @@ public class DiscussionDao {
     }
 
     public boolean deleteComment(Long commentId, Long userId) {
-        try (PreparedStatement statement = connection.prepareStatement(DELETE_COMMENT_QUERY)) {
+        try (Connection connection = DatabaseUtil.getConnection();
+             PreparedStatement statement = connection.prepareStatement(DELETE_COMMENT_QUERY)) {
             statement.setLong(1, commentId);
             statement.setLong(2, userId);
             int affectedRows = statement.executeUpdate();
@@ -345,7 +358,8 @@ public class DiscussionDao {
     }
 
     public DiscussionComment findCommentById(Long commentId) {
-        try (PreparedStatement statement = connection.prepareStatement(FIND_COMMENT_BY_ID_QUERY)) {
+        try (Connection connection = DatabaseUtil.getConnection();
+             PreparedStatement statement = connection.prepareStatement(FIND_COMMENT_BY_ID_QUERY)) {
             statement.setLong(1, commentId);
             ResultSet resultSet = statement.executeQuery();
 
@@ -360,7 +374,8 @@ public class DiscussionDao {
     }
 
     public int getCommentCount(Long postId) {
-        try (PreparedStatement statement = connection.prepareStatement(COUNT_COMMENTS_QUERY)) {
+        try (Connection connection = DatabaseUtil.getConnection();
+             PreparedStatement statement = connection.prepareStatement(COUNT_COMMENTS_QUERY)) {
             statement.setLong(1, postId);
             ResultSet resultSet = statement.executeQuery();
             if (resultSet.next()) {
@@ -373,7 +388,8 @@ public class DiscussionDao {
         return 0;
     }
     private void updatePostCounts(Long postId) {
-        try (PreparedStatement statement = connection.prepareStatement(UPDATE_POST_COUNTS_QUERY)) {
+        try (Connection connection = DatabaseUtil.getConnection();
+             PreparedStatement statement = connection.prepareStatement(UPDATE_POST_COUNTS_QUERY)) {
             int likeCount = getLikeCount(postId);
             int commentCount = getCommentCount(postId);
 

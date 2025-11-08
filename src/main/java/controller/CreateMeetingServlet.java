@@ -4,7 +4,6 @@ import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.*;
 import model.User;
-import service.ServiceFactory;
 import service.MeetingService;
 import service.UserService;
 import exceptions.AuthenticationException;
@@ -16,7 +15,7 @@ public class CreateMeetingServlet extends HttpServlet {
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         try {
-            UserService userService = ServiceFactory.getUserService();
+            UserService userService = new UserService();
 
             String sessionId = extractSessionId(request.getCookies());
             if (sessionId == null) {
@@ -38,7 +37,7 @@ public class CreateMeetingServlet extends HttpServlet {
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         try {
-            UserService userService = ServiceFactory.getUserService();
+            UserService userService = new UserService();
 
             String sessionId = extractSessionId(request.getCookies());
             if (sessionId == null) {
@@ -65,7 +64,7 @@ public class CreateMeetingServlet extends HttpServlet {
                 return;
             }
 
-            MeetingService meetingService = ServiceFactory.getMeetingService();
+            MeetingService meetingService = new MeetingService();
             int maxAttendance = Integer.parseInt(maxAttendanceStr);
 
             String formattedDate = eventDate.replace("T", " ") + ":00";

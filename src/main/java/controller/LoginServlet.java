@@ -1,6 +1,5 @@
 package controller;
 
-import service.ServiceFactory;
 import service.UserService;
 import exceptions.AuthenticationException;
 import jakarta.servlet.*;
@@ -23,7 +22,7 @@ public class LoginServlet extends HttpServlet {
         String password = request.getParameter("password");
 
         try {
-            UserService userService = ServiceFactory.getUserService();
+            UserService userService = new UserService();
             String sessionId = userService.loginUser(username, password);
 
             Cookie sessionCookie = new Cookie("sessionId", sessionId);

@@ -5,7 +5,6 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.*;
 import model.DiscussionPost;
 import model.User;
-import service.ServiceFactory;
 import service.DiscussionService;
 import service.UserService;
 import exceptions.AuthenticationException;
@@ -16,9 +15,9 @@ import java.io.IOException;
 public class EditDiscussionServlet extends HttpServlet {
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        try {
-            UserService userService = ServiceFactory.getUserService();
+        UserService userService = new UserService(); // Вынесено наружу
 
+        try {
             String sessionId = extractSessionId(request.getCookies());
             if (sessionId == null) {
                 response.sendRedirect(request.getContextPath() + "/login");
@@ -33,7 +32,7 @@ public class EditDiscussionServlet extends HttpServlet {
                 return;
             }
 
-            DiscussionService discussionService = ServiceFactory.getDiscussionService();
+            DiscussionService discussionService = new DiscussionService();
             Long discussionId = Long.parseLong(idParam);
 
             DiscussionPost discussion = discussionService.getPostById(discussionId);
@@ -65,9 +64,9 @@ public class EditDiscussionServlet extends HttpServlet {
     }
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        try {
-            UserService userService = ServiceFactory.getUserService();
+        UserService userService = new UserService(); // ВЫНЕСЕНО из try блока
 
+        try {
             String sessionId = extractSessionId(request.getCookies());
             if (sessionId == null) {
                 response.sendRedirect(request.getContextPath() + "/login");
@@ -98,7 +97,7 @@ public class EditDiscussionServlet extends HttpServlet {
                 return;
             }
 
-            DiscussionService discussionService = ServiceFactory.getDiscussionService();
+            DiscussionService discussionService = new DiscussionService();
             Long discussionId = Long.parseLong(idParam);
             DiscussionPost existingDiscussion = discussionService.getPostById(discussionId);
             if (existingDiscussion == null) {
@@ -137,13 +136,21 @@ public class EditDiscussionServlet extends HttpServlet {
             request.setAttribute("error", "Системная ошибка: " + e.getMessage());
 
             try {
+                // Восстанавливаем данные для повторного показа формы
                 DiscussionPost discussion = new DiscussionPost();
                 discussion.setId(Long.parseLong(request.getParameter("id")));
                 discussion.setTitle(request.getParameter("title"));
                 discussion.setContent(request.getParameter("content"));
                 request.setAttribute("discussion", discussion);
-                request.setAttribute("user", ServiceFactory.getUserService().getUserBySessionId(extractSessionId(request.getCookies())));
+
+                // Получаем пользователя заново
+                String sessionId = extractSessionId(request.getCookies());
+                if (sessionId != null) {
+                    User user = userService.getUserBySessionId(sessionId);
+                    request.setAttribute("user", user);
+                }
             } catch (Exception ex) {
+                System.err.println("Ошибка при восстановлении данных формы: " + ex.getMessage());
             }
 
             request.getRequestDispatcher("/WEB-INF/views/edit-discussion.jsp").forward(request, response);

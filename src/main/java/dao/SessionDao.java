@@ -2,11 +2,12 @@
 package dao;
 
 import model.Session;
+import util.DatabaseUtil;
+
 import java.sql.*;
 import java.time.LocalDateTime;
 
 public class SessionDao {
-    private final Connection connection;
 
     private static final String CREATE_TABLE_QUERY =
             "CREATE TABLE IF NOT EXISTS sessions (" +
@@ -29,13 +30,13 @@ public class SessionDao {
     private static final String DELETE_EXPIRED_SESSIONS_QUERY =
             "DELETE FROM sessions WHERE expire_at < CURRENT_TIMESTAMP;";
 
-    public SessionDao(Connection connection) {
-        this.connection = connection;
+    public SessionDao() {
         initializeTable();
     }
 
     private void initializeTable() {
-        try (Statement statement = connection.createStatement()) {
+        try (Connection connection = DatabaseUtil.getConnection();
+             Statement statement = connection.createStatement()) {
             statement.executeUpdate(CREATE_TABLE_QUERY);
         } catch (SQLException e) {
             throw new RuntimeException("Ошибка при создании таблицы sessions", e);
@@ -43,7 +44,8 @@ public class SessionDao {
     }
 
     public void addSession(Session session) {
-        try (PreparedStatement statement = connection.prepareStatement(ADD_SESSION_QUERY)) {
+        try (Connection connection = DatabaseUtil.getConnection();
+             PreparedStatement statement = connection.prepareStatement(ADD_SESSION_QUERY)) {
             statement.setString(1, session.getSessionId());
             statement.setLong(2, session.getUserId());
             statement.setTimestamp(3, Timestamp.valueOf(session.getExpireAt()));
@@ -54,7 +56,8 @@ public class SessionDao {
     }
 
     public Session findBySessionId(String sessionId) {
-        try (PreparedStatement statement = connection.prepareStatement(FIND_BY_SESSION_ID_QUERY)) {
+        try (Connection connection = DatabaseUtil.getConnection();
+             PreparedStatement statement = connection.prepareStatement(FIND_BY_SESSION_ID_QUERY)) {
             statement.setString(1, sessionId);
             ResultSet resultSet = statement.executeQuery();
 
@@ -68,7 +71,8 @@ public class SessionDao {
     }
 
     public void deleteSession(String sessionId) {
-        try (PreparedStatement statement = connection.prepareStatement(DELETE_SESSION_QUERY)) {
+        try (Connection connection = DatabaseUtil.getConnection();
+             PreparedStatement statement = connection.prepareStatement(DELETE_SESSION_QUERY)) {
             statement.setString(1, sessionId);
             statement.executeUpdate();
         } catch (SQLException e) {
@@ -77,7 +81,8 @@ public class SessionDao {
     }
 
     public void cleanupExpiredSessions() {
-        try (PreparedStatement statement = connection.prepareStatement(DELETE_EXPIRED_SESSIONS_QUERY)) {
+        try (Connection connection = DatabaseUtil.getConnection();
+             PreparedStatement statement = connection.prepareStatement(DELETE_EXPIRED_SESSIONS_QUERY)) {
             statement.executeUpdate();
         } catch (SQLException e) {
             throw new RuntimeException("Ошибка при очистке просроченных сессий", e);

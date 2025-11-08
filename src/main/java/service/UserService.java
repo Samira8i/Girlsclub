@@ -17,9 +17,9 @@ public class UserService {
     private SessionDao sessionDao;
     private final Duration sessionDuration = Duration.ofDays(30);
 
-    public UserService(Connection connection) {
-        this.userDao = new UserDao(connection);
-        this.sessionDao = new SessionDao(connection);
+    public UserService() {
+        this.userDao = new UserDao();
+        this.sessionDao = new SessionDao();
     }
 
     public String registerUser(String username, String password, String passwordRepeat) {

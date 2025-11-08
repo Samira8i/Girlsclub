@@ -43,7 +43,7 @@ public class AuthFilter implements Filter {
         }
 
         try (Connection conn = DatabaseUtil.getConnection()) {
-            UserService userService = new UserService(conn);
+            UserService userService = new UserService();
 
             // Получаем пользователя по sessionId
             var user = userService.getUserBySessionId(sessionId);

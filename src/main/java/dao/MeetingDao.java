@@ -2,12 +2,13 @@ package dao;
 
 import model.MeetingPost;
 import model.User;
+import util.DatabaseUtil;
+
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
 public class MeetingDao {
-    private final Connection connection;
 
     private static final String MEETING_TABLE_CREATE_QUERY =
             "CREATE TABLE IF NOT EXISTS meeting_posts (" +
@@ -45,13 +46,13 @@ public class MeetingDao {
     private static final String DELETE_MEETING_QUERY =
             "DELETE FROM meeting_posts WHERE id = ?;";
 
-    public MeetingDao(Connection connection) {
-        this.connection = connection;
+    public MeetingDao() {
         initializeTable();
     }
 
     private void initializeTable() {
-        try (Statement statement = connection.createStatement()) {
+        try (Connection connection = DatabaseUtil.getConnection();
+             Statement statement = connection.createStatement()) {
             statement.executeUpdate(MEETING_TABLE_CREATE_QUERY);
             System.out.println("Таблица meeting_posts создана или уже существует");
         } catch (SQLException e) {
@@ -60,7 +61,8 @@ public class MeetingDao {
     }
 
     public boolean create(MeetingPost meeting) {
-        try (PreparedStatement statement = connection.prepareStatement(CREATE_MEETING_QUERY)) {
+        try (Connection connection = DatabaseUtil.getConnection();
+             PreparedStatement statement = connection.prepareStatement(CREATE_MEETING_QUERY)) {
             statement.setString(1, meeting.getTitle());
             statement.setString(2, meeting.getDescription());
             statement.setTimestamp(3, Timestamp.valueOf(meeting.getEventDate()));
@@ -84,7 +86,8 @@ public class MeetingDao {
     public List<MeetingPost> findAll() {
         List<MeetingPost> meetings = new ArrayList<>();
 
-        try (PreparedStatement statement = connection.prepareStatement(FIND_ALL_MEETINGS_QUERY);
+        try (Connection connection = DatabaseUtil.getConnection();
+             PreparedStatement statement = connection.prepareStatement(FIND_ALL_MEETINGS_QUERY);
              ResultSet resultSet = statement.executeQuery()) {
 
             while (resultSet.next()) {
@@ -98,7 +101,8 @@ public class MeetingDao {
     }
 
     public MeetingPost findById(Long id) {
-        try (PreparedStatement statement = connection.prepareStatement(FIND_MEETING_BY_ID_QUERY)) {
+        try (Connection connection = DatabaseUtil.getConnection();
+             PreparedStatement statement = connection.prepareStatement(FIND_MEETING_BY_ID_QUERY)) {
             statement.setLong(1, id);
 
             ResultSet resultSet = statement.executeQuery();
@@ -113,7 +117,8 @@ public class MeetingDao {
     }
 
     public boolean update(MeetingPost meeting) {
-        try (PreparedStatement statement = connection.prepareStatement(UPDATE_MEETING_QUERY)) {
+        try (Connection connection = DatabaseUtil.getConnection();
+             PreparedStatement statement = connection.prepareStatement(UPDATE_MEETING_QUERY)) {
             statement.setString(1, meeting.getTitle());
             statement.setString(2, meeting.getDescription());
             statement.setTimestamp(3, Timestamp.valueOf(meeting.getEventDate()));
@@ -131,7 +136,8 @@ public class MeetingDao {
     }
 
     public boolean delete(Long id) {
-        try (PreparedStatement statement = connection.prepareStatement(DELETE_MEETING_QUERY)) {
+        try (Connection connection = DatabaseUtil.getConnection();
+             PreparedStatement statement = connection.prepareStatement(DELETE_MEETING_QUERY)) {
             statement.setLong(1, id);
 
             int affectedRows = statement.executeUpdate();

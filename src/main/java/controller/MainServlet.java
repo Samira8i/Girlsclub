@@ -1,7 +1,5 @@
 package controller;
 
-import model.DiscussionComment;
-import service.ServiceFactory;
 import service.UserService;
 import service.MeetingService;
 import service.EventRegistrationService;
@@ -22,7 +20,7 @@ public class MainServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         try {
-            UserService userService = ServiceFactory.getUserService();
+            UserService userService = new UserService();
             String sessionId = extractSessionId(request.getCookies());
             if (sessionId == null) {
                 response.sendRedirect(request.getContextPath() + "/login");
@@ -31,8 +29,8 @@ public class MainServlet extends HttpServlet {
             User user = userService.getUserBySessionId(sessionId);
             request.setAttribute("user", user);
             // Загружаю встречи
-            MeetingService meetingService = ServiceFactory.getMeetingService();
-            EventRegistrationService registrationService = ServiceFactory.getEventRegistrationService();
+            MeetingService meetingService = new MeetingService();
+            EventRegistrationService registrationService = new EventRegistrationService();
             List<MeetingPost> meetings = meetingService.getAllMeetings();
             for (MeetingPost meeting : meetings) {
                 boolean isRegistered = registrationService.isUserRegistered(meeting.getId(), user.getId());
@@ -49,7 +47,7 @@ public class MainServlet extends HttpServlet {
             }
             request.setAttribute("meetings", meetings);
             // загружаю посты с обсуждениями
-            DiscussionService discussionService = ServiceFactory.getDiscussionService();
+            DiscussionService discussionService = new DiscussionService();
             List<DiscussionPost> posts = discussionService.getAllPostsWithLikes(user.getId());
             request.setAttribute("posts", posts);
             String success = request.getParameter("success");

@@ -15,9 +15,9 @@ public class MeetingService {
     private MeetingDao meetingDao;
     private EventRegistrationDao eventRegistrationDao;
 
-    public MeetingService(Connection connection) {
-        this.meetingDao = new MeetingDao(connection);
-        this.eventRegistrationDao = new EventRegistrationDao(connection);
+    public MeetingService() {
+        this.meetingDao = new MeetingDao();
+        this.eventRegistrationDao = new EventRegistrationDao();
     }
 
     public boolean createMeeting(String title, String description, String eventDate,

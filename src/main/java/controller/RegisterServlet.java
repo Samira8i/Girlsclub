@@ -1,7 +1,6 @@
 package controller;
 
 import service.UserService;
-import service.ServiceFactory; // ← ИМПОРТИРУЕМ ФАБРИКУ
 import exceptions.AuthenticationException;
 import jakarta.servlet.*;
 import jakarta.servlet.http.*;
@@ -24,7 +23,7 @@ public class RegisterServlet extends HttpServlet {
         String confirmPassword = request.getParameter("confirmPassword");
 
         try {
-            UserService userService = ServiceFactory.getUserService();
+            UserService userService = new UserService();
             String sessionId = userService.registerUser(username, password, confirmPassword);
             Cookie sessionCookie = new Cookie("sessionId", sessionId);
             sessionCookie.setMaxAge(30 * 24 * 60 * 60);

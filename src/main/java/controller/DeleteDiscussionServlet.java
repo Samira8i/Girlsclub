@@ -4,7 +4,6 @@ import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.*;
 import model.User;
-import service.ServiceFactory;
 import service.DiscussionService;
 import service.UserService;
 import exceptions.AuthenticationException;
@@ -17,7 +16,7 @@ public class DeleteDiscussionServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         try {
-            UserService userService = ServiceFactory.getUserService();
+            UserService userService = new UserService();
             String sessionId = extractSessionId(request.getCookies());
             if (sessionId == null) {
                 response.sendRedirect(request.getContextPath() + "/login");
@@ -25,7 +24,7 @@ public class DeleteDiscussionServlet extends HttpServlet {
             }
 
             User user = userService.getUserBySessionId(sessionId);
-            DiscussionService discussionService = ServiceFactory.getDiscussionService();
+            DiscussionService discussionService = new DiscussionService();
             String idParam = request.getParameter("id");
 
             if (idParam == null || idParam.trim().isEmpty()) {

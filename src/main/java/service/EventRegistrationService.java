@@ -2,14 +2,13 @@ package service;
 
 import dao.EventRegistrationDao;
 import model.EventRegistration;
-import java.sql.Connection;
 import java.util.List;
 
 public class EventRegistrationService {
     private EventRegistrationDao eventRegistrationDao;
 
-    public EventRegistrationService(Connection connection) {
-        this.eventRegistrationDao = new EventRegistrationDao(connection);
+    public EventRegistrationService() {
+        this.eventRegistrationDao = new EventRegistrationDao();
     }
 
     public boolean registerForEvent(Long postId, Long userId) {

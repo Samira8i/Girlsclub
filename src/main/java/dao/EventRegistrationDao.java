@@ -2,12 +2,13 @@ package dao;
 
 import model.EventRegistration;
 import model.User;
+import util.DatabaseUtil;
+
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
 public class EventRegistrationDao {
-    private final Connection connection;
 
     private static final String CREATE_TABLE_QUERY =
             "CREATE TABLE IF NOT EXISTS event_registrations (" +
@@ -44,13 +45,13 @@ public class EventRegistrationDao {
     private static final String DELETE_REGISTRATION_QUERY =
             "DELETE FROM event_registrations WHERE post_id = ? AND user_id = ?;";
 
-    public EventRegistrationDao(Connection connection) {
-        this.connection = connection;
+    public EventRegistrationDao() {
         initializeTable();
     }
 
     private void initializeTable() {
-        try (Statement statement = connection.createStatement()) {
+        try (Connection connection = DatabaseUtil.getConnection();
+             Statement statement = connection.createStatement()) {
             statement.executeUpdate(CREATE_TABLE_QUERY);
             System.out.println("Таблица event_registrations создана или уже существует");
         } catch (SQLException e) {
@@ -59,7 +60,8 @@ public class EventRegistrationDao {
     }
 
     public boolean registerForEvent(Long postId, Long userId) {
-        try (PreparedStatement statement = connection.prepareStatement(REGISTER_QUERY)) {
+        try (Connection connection = DatabaseUtil.getConnection();
+             PreparedStatement statement = connection.prepareStatement(REGISTER_QUERY)) {
             statement.setLong(1, postId);
             statement.setLong(2, userId);
             int affectedRows = statement.executeUpdate();
@@ -72,7 +74,8 @@ public class EventRegistrationDao {
     }
 
     public boolean cancelRegistration(Long postId, Long userId) {
-        try (PreparedStatement statement = connection.prepareStatement(CANCEL_REGISTRATION_QUERY)) {
+        try (Connection connection = DatabaseUtil.getConnection();
+             PreparedStatement statement = connection.prepareStatement(CANCEL_REGISTRATION_QUERY)) {
             statement.setLong(1, postId);
             statement.setLong(2, userId);
             int affectedRows = statement.executeUpdate();
@@ -85,7 +88,8 @@ public class EventRegistrationDao {
     }
 
     public EventRegistration findByPostAndUser(Long postId, Long userId) {
-        try (PreparedStatement statement = connection.prepareStatement(FIND_BY_POST_AND_USER_QUERY)) {
+        try (Connection connection = DatabaseUtil.getConnection();
+             PreparedStatement statement = connection.prepareStatement(FIND_BY_POST_AND_USER_QUERY)) {
             statement.setLong(1, postId);
             statement.setLong(2, userId);
             ResultSet resultSet = statement.executeQuery();
@@ -102,7 +106,8 @@ public class EventRegistrationDao {
 
     public List<EventRegistration> findRegisteredUsersByPost(Long postId) {
         List<EventRegistration> registrations = new ArrayList<>();
-        try (PreparedStatement statement = connection.prepareStatement(FIND_REGISTERED_USERS_BY_POST_QUERY)) {
+        try (Connection connection = DatabaseUtil.getConnection();
+             PreparedStatement statement = connection.prepareStatement(FIND_REGISTERED_USERS_BY_POST_QUERY)) {
             statement.setLong(1, postId);
             ResultSet resultSet = statement.executeQuery();
 
@@ -123,7 +128,8 @@ public class EventRegistrationDao {
     }
 
     public int countRegisteredUsers(Long postId) {
-        try (PreparedStatement statement = connection.prepareStatement(COUNT_REGISTERED_USERS_QUERY)) {
+        try (Connection connection = DatabaseUtil.getConnection();
+             PreparedStatement statement = connection.prepareStatement(COUNT_REGISTERED_USERS_QUERY)) {
             statement.setLong(1, postId);
             ResultSet resultSet = statement.executeQuery();
 
@@ -139,7 +145,8 @@ public class EventRegistrationDao {
 
     //по факту при отписывания от события у нас статус меняется и смысла в этом методе нет, но пока пусть будет
     public boolean deleteRegistration(Long postId, Long userId) {
-        try (PreparedStatement statement = connection.prepareStatement(DELETE_REGISTRATION_QUERY)) {
+        try (Connection connection = DatabaseUtil.getConnection();
+             PreparedStatement statement = connection.prepareStatement(DELETE_REGISTRATION_QUERY)) {
             statement.setLong(1, postId);
             statement.setLong(2, userId);
             int affectedRows = statement.executeUpdate();

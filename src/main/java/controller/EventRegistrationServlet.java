@@ -6,7 +6,6 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import model.User;
-import service.ServiceFactory;
 import service.EventRegistrationService;
 import service.MeetingService;
 import service.UserService;
@@ -23,7 +22,7 @@ public class EventRegistrationServlet extends HttpServlet {
             return;
         }
         try {
-            UserService userService = ServiceFactory.getUserService();
+            UserService userService = new UserService();
             User user = userService.getUserBySessionId(sessionId);
             String postIdParam = request.getParameter("postId");
             String action = request.getParameter("action");
@@ -33,8 +32,8 @@ public class EventRegistrationServlet extends HttpServlet {
             }
 
             Long postId = Long.parseLong(postIdParam);
-            EventRegistrationService registrationService = ServiceFactory.getEventRegistrationService();
-            MeetingService meetingService = ServiceFactory.getMeetingService();
+            EventRegistrationService registrationService = new EventRegistrationService();
+            MeetingService meetingService = new MeetingService();
 
             var meeting = meetingService.getMeetingById(postId);
             if (meeting == null) {
