@@ -8,11 +8,19 @@ import java.io.IOException;
 
 @WebServlet("/logout")
 public class LogoutServlet extends HttpServlet {
+    private UserService userService;
+
+    @Override
+    public void init() throws ServletException {
+        userService = (UserService) getServletContext().getAttribute("userService");
+        if (userService == null) {
+            throw new ServletException("UserService не инициализирован");
+        }
+    }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         try {
-            UserService userService = new UserService();
             // Удаляем sessionId из кук
             String sessionId = extractSessionId(request.getCookies());
             if (sessionId != null) {

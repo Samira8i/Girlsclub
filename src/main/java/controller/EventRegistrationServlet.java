@@ -1,5 +1,6 @@
 package controller;
 
+import jakarta.servlet.ServletContext;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
@@ -14,6 +15,21 @@ import java.io.IOException;
 
 @WebServlet("/meeting/register")
 public class EventRegistrationServlet extends HttpServlet {
+    private UserService userService;
+    private EventRegistrationService registrationService;
+    private MeetingService meetingService;
+
+    @Override
+    public void init() throws ServletException {
+        ServletContext context = getServletContext();
+        userService = (UserService) context.getAttribute("userService");
+        registrationService = (EventRegistrationService) context.getAttribute("eventRegistrationService");
+        meetingService = (MeetingService) context.getAttribute("meetingService");
+
+        if (userService == null || registrationService == null || meetingService == null) {
+            throw new ServletException("Сервисы не инициализированы в контексте приложения");
+        }
+    }
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String sessionId = extractSessionId(request.getCookies());
@@ -22,7 +38,6 @@ public class EventRegistrationServlet extends HttpServlet {
             return;
         }
         try {
-            UserService userService = new UserService();
             User user = userService.getUserBySessionId(sessionId);
             String postIdParam = request.getParameter("postId");
             String action = request.getParameter("action");
@@ -32,8 +47,6 @@ public class EventRegistrationServlet extends HttpServlet {
             }
 
             Long postId = Long.parseLong(postIdParam);
-            EventRegistrationService registrationService = new EventRegistrationService();
-            MeetingService meetingService = new MeetingService();
 
             var meeting = meetingService.getMeetingById(postId);
             if (meeting == null) {

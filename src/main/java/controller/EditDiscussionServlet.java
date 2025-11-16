@@ -1,5 +1,6 @@
 package controller;
 
+import jakarta.servlet.ServletContext;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.*;
@@ -13,10 +14,21 @@ import java.io.IOException;
 
 @WebServlet("/discussion/edit")
 public class EditDiscussionServlet extends HttpServlet {
+    private UserService userService;
+    private DiscussionService discussionService;
+
+    @Override
+    public void init() throws ServletException {
+        ServletContext context = getServletContext();
+        userService = (UserService) context.getAttribute("userService");
+        discussionService = (DiscussionService) context.getAttribute("discussionService");
+
+        if (userService == null || discussionService == null) {
+            throw new ServletException("Сервисы не инициализированы в контексте приложения");
+        }
+    }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        UserService userService = new UserService(); // Вынесено наружу
-
         try {
             String sessionId = extractSessionId(request.getCookies());
             if (sessionId == null) {
@@ -32,7 +44,6 @@ public class EditDiscussionServlet extends HttpServlet {
                 return;
             }
 
-            DiscussionService discussionService = new DiscussionService();
             Long discussionId = Long.parseLong(idParam);
 
             DiscussionPost discussion = discussionService.getPostById(discussionId);
@@ -64,8 +75,6 @@ public class EditDiscussionServlet extends HttpServlet {
     }
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        UserService userService = new UserService(); // ВЫНЕСЕНО из try блока
-
         try {
             String sessionId = extractSessionId(request.getCookies());
             if (sessionId == null) {
@@ -97,7 +106,6 @@ public class EditDiscussionServlet extends HttpServlet {
                 return;
             }
 
-            DiscussionService discussionService = new DiscussionService();
             Long discussionId = Long.parseLong(idParam);
             DiscussionPost existingDiscussion = discussionService.getPostById(discussionId);
             if (existingDiscussion == null) {

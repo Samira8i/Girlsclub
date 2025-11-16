@@ -6,10 +6,8 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import service.UserService;
 import exceptions.AuthenticationException;
-import util.DatabaseUtil;
 
 import java.io.IOException;
-import java.sql.Connection;
 import java.util.List;
 
 @WebFilter("/*")
@@ -18,6 +16,19 @@ public class AuthFilter implements Filter {
     private final List<String> publicPaths = List.of(
             "/login", "/register", "/css/", "/js/", "/images/", "/test-db", "/"
     );
+
+    private UserService userService;
+
+    @Override
+    public void init(FilterConfig filterConfig) throws ServletException {
+        // Получаем UserService из контекста приложения
+        ServletContext context = filterConfig.getServletContext();
+        userService = (UserService) context.getAttribute("userService");
+
+        if (userService == null) {
+            throw new ServletException("UserService не инициализирован в контексте приложения");
+        }
+    }
 
     @Override
     public void doFilter(ServletRequest request, ServletResponse response,
@@ -42,9 +53,7 @@ public class AuthFilter implements Filter {
             return;
         }
 
-        try (Connection conn = DatabaseUtil.getConnection()) {
-            UserService userService = new UserService();
-
+        try {
             // Получаем пользователя по sessionId
             var user = userService.getUserBySessionId(sessionId);
             httpRequest.setAttribute("user", user);

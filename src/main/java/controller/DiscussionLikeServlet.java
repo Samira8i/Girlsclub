@@ -1,5 +1,6 @@
 package controller;
 
+import jakarta.servlet.ServletContext;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.*;
@@ -12,12 +13,23 @@ import java.io.IOException;
 
 @WebServlet("/discussion/like")
 public class DiscussionLikeServlet extends HttpServlet {
+    private UserService userService;
+    private DiscussionService discussionService;
+
+    @Override
+    public void init() throws ServletException {
+        ServletContext context = getServletContext();
+        userService = (UserService) context.getAttribute("userService");
+        discussionService = (DiscussionService) context.getAttribute("discussionService");
+
+        if (userService == null || discussionService == null) {
+            throw new ServletException("Сервисы не инициализированы в контексте приложения");
+        }
+    }
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         try {
-            UserService userService = new UserService();
-
             String sessionId = extractSessionId(request.getCookies());
             if (sessionId == null) {
                 response.sendRedirect(request.getContextPath() + "/login");
@@ -35,7 +47,6 @@ public class DiscussionLikeServlet extends HttpServlet {
             }
 
             Long postId = Long.parseLong(postIdParam);
-            DiscussionService discussionService = new DiscussionService();
 
             boolean success = false;
             if ("like".equals(action)) {

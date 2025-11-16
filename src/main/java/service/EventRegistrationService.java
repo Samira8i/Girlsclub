@@ -7,8 +7,8 @@ import java.util.List;
 public class EventRegistrationService {
     private EventRegistrationDao eventRegistrationDao;
 
-    public EventRegistrationService() {
-        this.eventRegistrationDao = new EventRegistrationDao();
+    public EventRegistrationService(EventRegistrationDao eventRegistrationDao) {
+        this.eventRegistrationDao = eventRegistrationDao;
     }
 
     public boolean registerForEvent(Long postId, Long userId) {

@@ -26,9 +26,4 @@ public class PasswordUtil {
     public static boolean checkPassword(String password, String salt, String hashedPassword) {
         return hashPassword(password, salt).equals(hashedPassword);
     }
-
-
-    public static boolean isPasswordValid(String password) {
-        return password != null && password.length() >= 3;
-    }
 }

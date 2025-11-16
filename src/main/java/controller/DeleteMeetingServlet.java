@@ -1,5 +1,6 @@
 package controller;
 
+import jakarta.servlet.ServletContext;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.*;
@@ -12,12 +13,23 @@ import java.io.IOException;
 
 @WebServlet("/meeting/delete")
 public class DeleteMeetingServlet extends HttpServlet {
+    private UserService userService;
+    private MeetingService meetingService;
+
+    @Override
+    public void init() throws ServletException {
+        ServletContext context = getServletContext();
+        userService = (UserService) context.getAttribute("userService");
+        meetingService = (MeetingService) context.getAttribute("meetingService");
+
+        if (userService == null || meetingService == null) {
+            throw new ServletException("Сервисы не инициализированы в контексте приложения");
+        }
+    }
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         try {
-            UserService userService = new UserService();
-
             String sessionId = extractSessionId(request.getCookies());
             if (sessionId == null) {
                 response.sendRedirect(request.getContextPath() + "/login");
@@ -25,8 +37,6 @@ public class DeleteMeetingServlet extends HttpServlet {
             }
 
             User user = userService.getUserBySessionId(sessionId);
-
-            MeetingService meetingService = new MeetingService();
 
             String idParam = request.getParameter("id");
 

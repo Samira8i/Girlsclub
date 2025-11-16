@@ -7,7 +7,6 @@ import model.Session;
 import exceptions.AuthenticationException;
 import util.PasswordUtil;
 
-import java.sql.Connection;
 import java.time.LocalDateTime;
 import java.time.Duration;
 import java.util.UUID;
@@ -17,11 +16,10 @@ public class UserService {
     private SessionDao sessionDao;
     private final Duration sessionDuration = Duration.ofDays(30);
 
-    public UserService() {
-        this.userDao = new UserDao();
-        this.sessionDao = new SessionDao();
+    public UserService(UserDao userDao, SessionDao sessionDao) {
+        this.userDao = userDao;
+        this.sessionDao = sessionDao;
     }
-
     public String registerUser(String username, String password, String passwordRepeat) {
         // Проверка совпадения паролей
         if (!password.equals(passwordRepeat)) {
@@ -57,7 +55,6 @@ public class UserService {
         return sessionId;
     }
 
-
     public String loginUser(String username, String password) {
         User user = userDao.findByUsername(username);
         if (user == null) {
@@ -76,7 +73,6 @@ public class UserService {
 
         return sessionId;
     }
-
 
     public User getUserBySessionId(String sessionId) {
         if (sessionId == null || sessionId.trim().isEmpty()) {

@@ -1,5 +1,6 @@
 package controller;
 
+import jakarta.servlet.ServletContext;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.*;
@@ -12,11 +13,22 @@ import java.io.IOException;
 
 @WebServlet("/discussion/create")
 public class CreateDiscussionServlet extends HttpServlet {
+    private UserService userService;
+    private DiscussionService discussionService;
+
+    @Override
+    public void init() throws ServletException {
+        ServletContext context = getServletContext();
+        userService = (UserService) context.getAttribute("userService");
+        discussionService = (DiscussionService) context.getAttribute("discussionService");
+
+        if (userService == null || discussionService == null) {
+            throw new ServletException("Сервисы не инициализированы в контексте приложения");
+        }
+    }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         try {
-            UserService userService = new UserService();
-
             String sessionId = extractSessionId(request.getCookies());
             if (sessionId == null) {
                 response.sendRedirect(request.getContextPath() + "/login");
@@ -37,8 +49,6 @@ public class CreateDiscussionServlet extends HttpServlet {
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         try {
-            UserService userService = new UserService();
-
             String sessionId = extractSessionId(request.getCookies());
             if (sessionId == null) {
                 response.sendRedirect(request.getContextPath() + "/login");
@@ -57,8 +67,6 @@ public class CreateDiscussionServlet extends HttpServlet {
                 request.getRequestDispatcher("/WEB-INF/views/create-discussion.jsp").forward(request, response);
                 return;
             }
-
-            DiscussionService discussionService = new DiscussionService();
 
             boolean success = discussionService.createPost(
                     title.trim(),

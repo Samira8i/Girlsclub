@@ -1,5 +1,6 @@
 package controller;
 
+import jakarta.servlet.ServletContext;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.*;
@@ -12,11 +13,22 @@ import java.io.IOException;
 
 @WebServlet("/meeting/create")
 public class CreateMeetingServlet extends HttpServlet {
+    private UserService userService;
+    private MeetingService meetingService;
+
+    @Override
+    public void init() throws ServletException {
+        ServletContext context = getServletContext();
+        userService = (UserService) context.getAttribute("userService");
+        meetingService = (MeetingService) context.getAttribute("meetingService");
+
+        if (userService == null || meetingService == null) {
+            throw new ServletException("Сервисы не инициализированы в контексте приложения");
+        }
+    }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         try {
-            UserService userService = new UserService();
-
             String sessionId = extractSessionId(request.getCookies());
             if (sessionId == null) {
                 response.sendRedirect(request.getContextPath() + "/login");
@@ -37,8 +49,6 @@ public class CreateMeetingServlet extends HttpServlet {
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         try {
-            UserService userService = new UserService();
-
             String sessionId = extractSessionId(request.getCookies());
             if (sessionId == null) {
                 response.sendRedirect(request.getContextPath() + "/login");
@@ -64,7 +74,6 @@ public class CreateMeetingServlet extends HttpServlet {
                 return;
             }
 
-            MeetingService meetingService = new MeetingService();
             int maxAttendance = Integer.parseInt(maxAttendanceStr);
 
             String formattedDate = eventDate.replace("T", " ") + ":00";

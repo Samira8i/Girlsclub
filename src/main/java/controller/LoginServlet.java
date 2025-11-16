@@ -9,6 +9,15 @@ import java.io.IOException;
 
 @WebServlet("/login")
 public class LoginServlet extends HttpServlet {
+    private UserService userService;
+
+    @Override
+    public void init() throws ServletException {
+        userService = (UserService) getServletContext().getAttribute("userService");
+        if (userService == null) {
+            throw new ServletException("UserService не инициализирован");
+        }
+    }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
@@ -22,7 +31,6 @@ public class LoginServlet extends HttpServlet {
         String password = request.getParameter("password");
 
         try {
-            UserService userService = new UserService();
             String sessionId = userService.loginUser(username, password);
 
             Cookie sessionCookie = new Cookie("sessionId", sessionId);

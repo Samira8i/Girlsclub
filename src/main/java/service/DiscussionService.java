@@ -3,14 +3,13 @@ package service;
 import dao.DiscussionDao;
 import model.DiscussionPost;
 import model.DiscussionComment;
-import java.sql.Connection;
 import java.util.List;
 
 public class DiscussionService {
     private DiscussionDao discussionDao;
 
-    public DiscussionService() {
-        this.discussionDao = new DiscussionDao();
+    public DiscussionService(DiscussionDao discussionDao) {
+        this.discussionDao = discussionDao;
     }
 
     public boolean createPost(String title, String content, Long authorId) {
@@ -78,7 +77,6 @@ public class DiscussionService {
     public boolean toggleLike(Long postId, Long userId) {
         return discussionDao.toggleLike(postId, userId);
     }
-
 
     public boolean addComment(Long postId, Long userId, String content) {
         try {

@@ -7,7 +7,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class UserDao {
-
     private static final String USER_TABLE_CREATE_QUERY =
             "CREATE TABLE IF NOT EXISTS users (" +
                     "id BIGSERIAL PRIMARY KEY, " +
@@ -54,11 +53,11 @@ public class UserDao {
             statement.setString(2, user.getPasswordHash());
             statement.setString(3, user.getSalt());
 
-            ResultSet resultSet = statement.executeQuery();
-
-            if (resultSet.next()) {
-                user.setId(resultSet.getLong(1));
-                return true;
+            try (ResultSet resultSet = statement.executeQuery()) {
+                if (resultSet.next()) {
+                    user.setId(resultSet.getLong(1));
+                    return true;
+                }
             }
         } catch (SQLException e) {
             System.err.println("Ошибка при создании пользователя: " + e.getMessage());
@@ -71,10 +70,11 @@ public class UserDao {
              PreparedStatement statement = connection.prepareStatement(FIND_BY_USERNAME_QUERY)) {
 
             statement.setString(1, username);
-            ResultSet resultSet = statement.executeQuery();
 
-            if (resultSet.next()) {
-                return mapResultSetToUser(resultSet);
+            try (ResultSet resultSet = statement.executeQuery()) {
+                if (resultSet.next()) {
+                    return mapResultSetToUser(resultSet);
+                }
             }
         } catch (SQLException e) {
             System.err.println("Ошибка при поиске пользователя: " + e.getMessage());
@@ -87,10 +87,11 @@ public class UserDao {
              PreparedStatement statement = connection.prepareStatement(FIND_BY_ID_QUERY)) {
 
             statement.setLong(1, id);
-            ResultSet resultSet = statement.executeQuery();
 
-            if (resultSet.next()) {
-                return mapResultSetToUser(resultSet);
+            try (ResultSet resultSet = statement.executeQuery()) {
+                if (resultSet.next()) {
+                    return mapResultSetToUser(resultSet);
+                }
             }
         } catch (SQLException e) {
             System.err.println("Ошибка при поиске пользователя по ID: " + e.getMessage());

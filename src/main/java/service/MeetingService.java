@@ -5,7 +5,6 @@ import dao.EventRegistrationDao;
 import model.MeetingPost;
 import model.EventRegistration;
 
-import java.sql.Connection;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
@@ -15,9 +14,9 @@ public class MeetingService {
     private MeetingDao meetingDao;
     private EventRegistrationDao eventRegistrationDao;
 
-    public MeetingService() {
-        this.meetingDao = new MeetingDao();
-        this.eventRegistrationDao = new EventRegistrationDao();
+    public MeetingService(MeetingDao meetingDao, EventRegistrationDao eventRegistrationDao) {
+        this.meetingDao = meetingDao;
+        this.eventRegistrationDao = eventRegistrationDao;
     }
 
     public boolean createMeeting(String title, String description, String eventDate,
@@ -121,7 +120,7 @@ public class MeetingService {
         if (dateTimeStr == null || dateTimeStr.trim().isEmpty()) {
             return null;
         }
-//TODO: все это лишний код, убрать парсинг полностью!
+
         dateTimeStr = dateTimeStr.trim();
         System.out.println("Пытаемся распарсить дату: " + dateTimeStr);
 
