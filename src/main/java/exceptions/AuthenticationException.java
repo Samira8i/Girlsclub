@@ -1,4 +1,3 @@
-// exceptions/AuthenticationException.java
 package exceptions;
 
 public class AuthenticationException extends RuntimeException {
