@@ -165,7 +165,7 @@
                                     </c:if>
 
                                     <c:if test="${meeting.full && not meeting.userRegistered}">
-                                        <span class="event-full">❌ Мест нет</span>
+                                        <span class="event-full">Мест нет</span>
                                     </c:if>
                                 </div>
 

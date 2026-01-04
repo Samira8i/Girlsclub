@@ -45,7 +45,7 @@ public class MainServlet extends HttpServlet {
             request.setAttribute("user", user);
 
             // Загружаю встречи
-            List<MeetingPost> meetings = meetingService.getAllMeetings();
+            List<MeetingPost> meetings = meetingService.getAllMeetings(user.getId());
             request.setAttribute("meetings", meetings);
 
             // Загружаю посты с обсуждениями
@@ -54,6 +54,8 @@ public class MainServlet extends HttpServlet {
 
             String success = request.getParameter("success");
             String error = request.getParameter("error");
+            String cancel = request.getParameter("cancel");
+            if (cancel != null) request.setAttribute("cancel", cancel);
             if (success != null) request.setAttribute("success", success);
             if (error != null) request.setAttribute("error", error);
 

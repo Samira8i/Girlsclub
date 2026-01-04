@@ -13,10 +13,12 @@ import java.util.List;
 public class MeetingService {
     private MeetingDao meetingDao;
     private EventRegistrationDao eventRegistrationDao;
+    private EventRegistrationService registrationService;
 
     public MeetingService(MeetingDao meetingDao, EventRegistrationDao eventRegistrationDao) {
         this.meetingDao = meetingDao;
         this.eventRegistrationDao = eventRegistrationDao;
+        this.registrationService = new EventRegistrationService(eventRegistrationDao);
     }
 
     public boolean createMeeting(String title, String description, String eventDate,
@@ -48,12 +50,12 @@ public class MeetingService {
         }
     }
 
-    public List<MeetingPost> getAllMeetings() {
+    public List<MeetingPost> getAllMeetings(Long userId) {
         List<MeetingPost> meetings = meetingDao.findAll();
 
         // Обогащаем данные о встречах информацией о регистрациях
         for (MeetingPost meeting : meetings) {
-            enrichMeetingWithRegistrationData(meeting);
+            enrichMeetingWithRegistrationData(meeting, userId);
         }
 
         return meetings;
@@ -62,7 +64,7 @@ public class MeetingService {
     public MeetingPost getMeetingById(Long id) {
         MeetingPost meeting = meetingDao.findById(id);
         if (meeting != null) {
-            enrichMeetingWithRegistrationData(meeting);
+            enrichMeetingWithRegistrationData(meeting, id);
         }
         return meeting;
     }
@@ -101,9 +103,10 @@ public class MeetingService {
         return meetingDao.delete(id);
     }
 
-    private void enrichMeetingWithRegistrationData(MeetingPost meeting) {
+    private void enrichMeetingWithRegistrationData(MeetingPost meeting, Long userId) {
         if (meeting == null) return;
-
+        boolean isRegistered = registrationService.isUserRegistered(meeting.getId(), userId);
+        meeting.setUserRegistered(isRegistered);
         // Получаем список участников
         List<EventRegistration> participants = eventRegistrationDao.findRegisteredUsersByPost(meeting.getId());
         meeting.setParticipants(participants);

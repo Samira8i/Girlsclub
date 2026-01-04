@@ -84,6 +84,7 @@ public class DiscussionDao {
     public DiscussionDao() {
         initializeTable();
     }
+
     private void initializeTable() {
         try (Connection connection = DatabaseUtil.getConnection();
              Statement statement = connection.createStatement()) {
@@ -121,22 +122,23 @@ public class DiscussionDao {
             statement.executeUpdate("CREATE INDEX IF NOT EXISTS idx_discussion_likes_user_id ON discussion_likes(user_id);");
             statement.executeUpdate("CREATE INDEX IF NOT EXISTS idx_discussion_comments_post_id ON discussion_comments(post_id);");
             statement.executeUpdate("CREATE INDEX IF NOT EXISTS idx_discussion_comments_user_id ON discussion_comments(user_id);");
-
-            System.out.println("Таблицы discussion_posts, discussion_likes и discussion_comments созданы или уже существуют");
         } catch (SQLException e) {
             throw new RuntimeException("Ошибка при создании таблиц обсуждений", e);
         }
     }
+
     public boolean create(DiscussionPost post) {
         try (Connection connection = DatabaseUtil.getConnection();
              PreparedStatement statement = connection.prepareStatement(CREATE_DISCUSSION_QUERY)) {
             statement.setString(1, post.getTitle());
             statement.setString(2, post.getContent());
             statement.setLong(3, post.getAuthorId());
-            ResultSet resultSet = statement.executeQuery();
-            if (resultSet.next()) {
-                post.setId(resultSet.getLong(1));
-                return true;
+
+            try (ResultSet resultSet = statement.executeQuery()) {
+                if (resultSet.next()) {
+                    post.setId(resultSet.getLong(1));
+                    return true;
+                }
             }
         } catch (SQLException e) {
             System.err.println("Ошибка при создании обсуждения: " + e.getMessage());
@@ -147,11 +149,9 @@ public class DiscussionDao {
 
     public List<DiscussionPost> findAll() {
         List<DiscussionPost> posts = new ArrayList<>();
-
         try (Connection connection = DatabaseUtil.getConnection();
              PreparedStatement statement = connection.prepareStatement(FIND_ALL_DISCUSSIONS_QUERY);
              ResultSet resultSet = statement.executeQuery()) {
-
             while (resultSet.next()) {
                 posts.add(mapResultSetToDiscussionPost(resultSet));
             }
@@ -173,15 +173,15 @@ public class DiscussionDao {
         try (Connection connection = DatabaseUtil.getConnection();
              PreparedStatement statement = connection.prepareStatement(query)) {
             statement.setLong(1, currentUserId);
-            ResultSet resultSet = statement.executeQuery();
 
-            while (resultSet.next()) {
-                DiscussionPost post = mapResultSetToDiscussionPost(resultSet);
-                post.setUserLiked(resultSet.getBoolean("user_liked"));
-                List<DiscussionComment> comments = getCommentsByPost(post.getId());
-                post.setComments(comments);
-
-                posts.add(post);
+            try (ResultSet resultSet = statement.executeQuery()) {
+                while (resultSet.next()) {
+                    DiscussionPost post = mapResultSetToDiscussionPost(resultSet);
+                    post.setUserLiked(resultSet.getBoolean("user_liked"));
+                    List<DiscussionComment> comments = getCommentsByPost(post.getId());
+                    post.setComments(comments);
+                    posts.add(post);
+                }
             }
         } catch (SQLException e) {
             System.err.println("Ошибка при получении постов с лайками: " + e.getMessage());
@@ -195,9 +195,10 @@ public class DiscussionDao {
              PreparedStatement statement = connection.prepareStatement(FIND_DISCUSSION_BY_ID_QUERY)) {
             statement.setLong(1, id);
 
-            ResultSet resultSet = statement.executeQuery();
-            if (resultSet.next()) {
-                return mapResultSetToDiscussionPost(resultSet);
+            try (ResultSet resultSet = statement.executeQuery()) {
+                if (resultSet.next()) {
+                    return mapResultSetToDiscussionPost(resultSet);
+                }
             }
         } catch (SQLException e) {
             System.err.println("Ошибка при поиске обсуждения: " + e.getMessage());
@@ -212,7 +213,6 @@ public class DiscussionDao {
             statement.setString(1, post.getTitle());
             statement.setString(2, post.getContent());
             statement.setLong(3, post.getId());
-
             int affectedRows = statement.executeUpdate();
             return affectedRows > 0;
         } catch (SQLException e) {
@@ -226,7 +226,6 @@ public class DiscussionDao {
         try (Connection connection = DatabaseUtil.getConnection();
              PreparedStatement statement = connection.prepareStatement(DELETE_DISCUSSION_QUERY)) {
             statement.setLong(1, id);
-
             int affectedRows = statement.executeUpdate();
             return affectedRows > 0;
         } catch (SQLException e) {
@@ -242,7 +241,6 @@ public class DiscussionDao {
             statement.setLong(1, postId);
             statement.setLong(2, userId);
             int affectedRows = statement.executeUpdate();
-
             if (affectedRows > 0) {
                 updatePostCounts(postId);
                 return true;
@@ -260,7 +258,6 @@ public class DiscussionDao {
             statement.setLong(1, postId);
             statement.setLong(2, userId);
             int affectedRows = statement.executeUpdate();
-
             if (affectedRows > 0) {
                 updatePostCounts(postId);
                 return true;
@@ -277,8 +274,10 @@ public class DiscussionDao {
              PreparedStatement statement = connection.prepareStatement(CHECK_USER_LIKE_QUERY)) {
             statement.setLong(1, postId);
             statement.setLong(2, userId);
-            ResultSet resultSet = statement.executeQuery();
-            return resultSet.next();
+
+            try (ResultSet resultSet = statement.executeQuery()) {
+                return resultSet.next();
+            }
         } catch (SQLException e) {
             System.err.println("Ошибка при проверке лайка: " + e.getMessage());
             e.printStackTrace();
@@ -290,9 +289,11 @@ public class DiscussionDao {
         try (Connection connection = DatabaseUtil.getConnection();
              PreparedStatement statement = connection.prepareStatement(COUNT_LIKES_QUERY)) {
             statement.setLong(1, postId);
-            ResultSet resultSet = statement.executeQuery();
-            if (resultSet.next()) {
-                return resultSet.getInt(1);
+
+            try (ResultSet resultSet = statement.executeQuery()) {
+                if (resultSet.next()) {
+                    return resultSet.getInt(1);
+                }
             }
         } catch (SQLException e) {
             System.err.println("Ошибка при подсчете лайков: " + e.getMessage());
@@ -300,6 +301,7 @@ public class DiscussionDao {
         }
         return 0;
     }
+
     public boolean addComment(DiscussionComment comment) {
         try (Connection connection = DatabaseUtil.getConnection();
              PreparedStatement statement = connection.prepareStatement(ADD_COMMENT_QUERY)) {
@@ -307,11 +309,12 @@ public class DiscussionDao {
             statement.setLong(2, comment.getUserId());
             statement.setString(3, comment.getContent());
 
-            ResultSet resultSet = statement.executeQuery();
-            if (resultSet.next()) {
-                comment.setId(resultSet.getLong(1));
-                updatePostCounts(comment.getPostId());
-                return true;
+            try (ResultSet resultSet = statement.executeQuery()) {
+                if (resultSet.next()) {
+                    comment.setId(resultSet.getLong(1));
+                    updatePostCounts(comment.getPostId());
+                    return true;
+                }
             }
         } catch (SQLException e) {
             System.err.println("Ошибка при добавлении комментария: " + e.getMessage());
@@ -325,10 +328,12 @@ public class DiscussionDao {
         try (Connection connection = DatabaseUtil.getConnection();
              PreparedStatement statement = connection.prepareStatement(GET_COMMENTS_BY_POST_QUERY)) {
             statement.setLong(1, postId);
-            ResultSet resultSet = statement.executeQuery();
-            while (resultSet.next()) {
-                DiscussionComment comment = mapResultSetToDiscussionComment(resultSet);
-                comments.add(comment);
+
+            try (ResultSet resultSet = statement.executeQuery()) {
+                while (resultSet.next()) {
+                    DiscussionComment comment = mapResultSetToDiscussionComment(resultSet);
+                    comments.add(comment);
+                }
             }
         } catch (SQLException e) {
             System.err.println("Ошибка при получении комментариев: " + e.getMessage());
@@ -361,10 +366,11 @@ public class DiscussionDao {
         try (Connection connection = DatabaseUtil.getConnection();
              PreparedStatement statement = connection.prepareStatement(FIND_COMMENT_BY_ID_QUERY)) {
             statement.setLong(1, commentId);
-            ResultSet resultSet = statement.executeQuery();
 
-            if (resultSet.next()) {
-                return mapResultSetToDiscussionComment(resultSet);
+            try (ResultSet resultSet = statement.executeQuery()) {
+                if (resultSet.next()) {
+                    return mapResultSetToDiscussionComment(resultSet);
+                }
             }
         } catch (SQLException e) {
             System.err.println("Ошибка при поиске комментария: " + e.getMessage());
@@ -377,9 +383,11 @@ public class DiscussionDao {
         try (Connection connection = DatabaseUtil.getConnection();
              PreparedStatement statement = connection.prepareStatement(COUNT_COMMENTS_QUERY)) {
             statement.setLong(1, postId);
-            ResultSet resultSet = statement.executeQuery();
-            if (resultSet.next()) {
-                return resultSet.getInt(1);
+
+            try (ResultSet resultSet = statement.executeQuery()) {
+                if (resultSet.next()) {
+                    return resultSet.getInt(1);
+                }
             }
         } catch (SQLException e) {
             System.err.println("Ошибка при подсчете комментариев: " + e.getMessage());
@@ -387,12 +395,12 @@ public class DiscussionDao {
         }
         return 0;
     }
+
     private void updatePostCounts(Long postId) {
         try (Connection connection = DatabaseUtil.getConnection();
              PreparedStatement statement = connection.prepareStatement(UPDATE_POST_COUNTS_QUERY)) {
             int likeCount = getLikeCount(postId);
             int commentCount = getCommentCount(postId);
-
             statement.setInt(1, likeCount);
             statement.setInt(2, commentCount);
             statement.setLong(3, postId);
@@ -435,7 +443,6 @@ public class DiscussionDao {
 
         return comment;
     }
-
 
     public boolean toggleLike(Long postId, Long userId) {
         if (hasUserLiked(postId, userId)) {
