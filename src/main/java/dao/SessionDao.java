@@ -1,4 +1,3 @@
-// SessionDao.java
 package dao;
 
 import model.Session;
