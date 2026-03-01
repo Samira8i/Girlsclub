@@ -5,8 +5,6 @@ import model.Session;
 import util.DatabaseUtil;
 
 import java.sql.*;
-import java.time.LocalDateTime;
-
 public class SessionDao {
 
     private static final String CREATE_TABLE_QUERY =
