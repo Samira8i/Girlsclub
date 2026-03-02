@@ -70,7 +70,7 @@
                         </label>
                         <input type="datetime-local" class="form-input" id="eventDate" name="eventDate" required>
                         <div class="date-validation-message" id="dateValidationMessage">
-                            ❌ Дата встречи должна быть в будущем
+                             Дата встречи должна быть в будущем
                         </div>
                         <div class="form-hint">Выберите дату и время проведения встречи</div>
                     </div>
